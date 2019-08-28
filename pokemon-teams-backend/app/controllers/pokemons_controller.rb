@@ -7,6 +7,9 @@ class PokemonsController < ApplicationController
     end
 
     def destroy
-
+        pokemon = Pokemon.find_by(id: params[:id])
+        # byebug
+        pokemon.destroy         
+        render json: pokemon
     end
 end

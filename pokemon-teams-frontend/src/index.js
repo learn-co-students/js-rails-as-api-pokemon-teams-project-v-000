@@ -11,13 +11,29 @@ function renderTrainers(trainers) {
 
 function generatePokemonLi(pokemon) {
     const li = document.createElement('li')
-    li.innerText = pokemon.nickname    
-    
+    li.innerText = pokemon.id
+    // debugger
     const releaseButton = document.createElement('button')
     releaseButton.className = 'release'
     releaseButton.innerHTML = 'Release' 
     //add listener, onlick, DEL /pokemons, rerender pokemon list, or grab parentLi & remove
-
+    releaseButton.addEventListener('click', ()=>{  
+        console.log(pokemon)
+        // debugger                
+        fetch(POKEMONS_URL + '/' + pokemon.id,  {
+            method: 'DELETE', // or 'PUT'
+            // body: JSON.stringify({"trainer_id": trainer.id} ), 
+            headers:{
+              'Content-Type': 'application/json',
+              Accept: "application/json"
+            }
+          })
+        .then(response => response.json())
+        .then(pokemon => {          
+               //add pokemon to DOM                    
+               
+        });
+    })
     li.appendChild(releaseButton)
 
     return li
@@ -33,6 +49,7 @@ function generateTrainerCard(trainer) {
 
         const addButton = document.createElement('button')
         addButton.innerHTML = 'Add Pokemon'
+
         //add listener, onlick, POST /pokemons, generate li, append to ul
         addButton.addEventListener('click', ()=>{                       
             fetch(POKEMONS_URL,  {
@@ -45,17 +62,14 @@ function generateTrainerCard(trainer) {
               })
             .then(response => response.json())
             .then(pokemon => {          
-                   //add pokemon to DOM
-                   console.log(pokemon)
+                   //add pokemon to DOM                    
                    const pokemonLi = generatePokemonLi(pokemon)
                    ul.appendChild(pokemonLi)
             });
         })
-
         trainerCard.appendChild(addButton)
  
         const ul = document.createElement('ul')
-
         trainer.pokemons.forEach(pokemon => {
             const li = generatePokemonLi(pokemon)
             ul.appendChild(li)
