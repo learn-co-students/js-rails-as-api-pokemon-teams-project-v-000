@@ -34,12 +34,10 @@ function generateTrainerCard(trainer) {
         const addButton = document.createElement('button')
         addButton.innerHTML = 'Add Pokemon'
         //add listener, onlick, POST /pokemons, generate li, append to ul
-        addButton.addEventListener('click', ()=>{
-            trainer = {"trainer_id": "1"}
-
+        addButton.addEventListener('click', ()=>{                       
             fetch(POKEMONS_URL,  {
                 method: 'POST', // or 'PUT'
-                body: JSON.stringify(trainer), 
+                body: JSON.stringify({"trainer_id": trainer.id} ), 
                 headers:{
                   'Content-Type': 'application/json',
                   Accept: "application/json"
