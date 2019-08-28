@@ -15,9 +15,10 @@ function generatePokemonLi(pokemon) {
     
     const releaseButton = document.createElement('button')
     releaseButton.className = 'release'
-    releaseButton.innerHTML = 'Release'
-    li.appendChild(releaseButton)
+    releaseButton.innerHTML = 'Release' 
     //add listener, onlick, DEL /pokemons, rerender pokemon list, or grab parentLi & remove
+
+    li.appendChild(releaseButton)
 
     return li
 }
@@ -33,6 +34,23 @@ function generateTrainerCard(trainer) {
         const addButton = document.createElement('button')
         addButton.innerHTML = 'Add Pokemon'
         //add listener, onlick, POST /pokemons, generate li, append to ul
+        addButton.addEventListener('click', ()=>{
+            trainer = {"trainer_id": "1"}
+
+            fetch(POKEMONS_URL,  {
+                method: 'POST', // or 'PUT'
+                body: JSON.stringify(trainer), 
+                headers:{
+                  'Content-Type': 'application/json',
+                  Accept: "application/json"
+                }
+              })
+            .then(response => response.json())
+            .then(pokemon => {          
+                   //add pokemon to DOM
+                   console.log(pokemon)
+            });
+        })
 
         trainerCard.appendChild(addButton)
  
