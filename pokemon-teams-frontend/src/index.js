@@ -7,4 +7,30 @@ const POKEMONS_URL = `${BASE_URL}/pokemons`
 
 fetch(TRAINERS_URL)
 .then(response => response.json())
-.then(json => console.log(json))
+.then(trainers => {          
+    trainers.forEach(trainer => {
+        const trainerCard = document.createElement('div')
+        trainerCard.className = 'card'
+        
+        const p = document.createElement('p')
+        p.innerHTML = trainer.name
+        trainerCard.appendChild(p)
+
+        const addButton = document.createElement('button')
+        addButton.innerHTML = 'Add Pokemon'
+        trainerCard.appendChild(addButton)
+
+        document.querySelector('main').appendChild(trainerCard)
+    });
+
+})
+  
+
+// const releaseButton = document.createElement('button')
+// releaseButton.className = 'release'
+// releaseButton.innerHTML = 'Release'
+
+// const ul = document.createElement('ul')
+
+// const li = document.createElement('li')
+// li.appendChild(releaseButton)
