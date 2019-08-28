@@ -5,10 +5,14 @@ const POKEMONS_URL = `${BASE_URL}/pokemons`
 //fetch trainers
 //createelements: div, button, ul, li
 
-fetch(TRAINERS_URL)
-.then(response => response.json())
-.then(trainers => {          
+function renderTrainers(trainers) {
     trainers.forEach(trainer => {
+        const trainerCard = generateTrainerCard(trainer)         
+        document.querySelector('main').appendChild(trainerCard)
+    })
+}
+
+function generateTrainerCard(trainer) {
         const trainerCard = document.createElement('div')
         trainerCard.className = 'card'
         
@@ -30,12 +34,15 @@ fetch(TRAINERS_URL)
         li.appendChild(releaseButton)
 
         ul.appendChild(li)
-        
-
+    
         trainerCard.appendChild(ul)
+        return trainerCard
+}
 
-        document.querySelector('main').appendChild(trainerCard)
+fetch(TRAINERS_URL)
+.then(response => response.json())
+.then(trainers => {          
+        renderTrainers(trainers)
     });
 
-})
-  
+
