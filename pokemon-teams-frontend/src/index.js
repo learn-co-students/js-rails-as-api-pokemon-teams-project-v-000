@@ -11,27 +11,24 @@ function renderTrainers(trainers) {
 
 function generatePokemonLi(pokemon) {
     const li = document.createElement('li')
-    li.innerText = pokemon.id
-    // debugger
+    li.innerText = pokemon.nickname
+
     const releaseButton = document.createElement('button')
     releaseButton.className = 'release'
     releaseButton.innerHTML = 'Release' 
     //add listener, onlick, DEL /pokemons, rerender pokemon list, or grab parentLi & remove
-    releaseButton.addEventListener('click', ()=>{  
-        console.log(pokemon)
-        // debugger                
+    releaseButton.addEventListener('click', (e)=>{  
+        console.log(pokemon)                      
         fetch(POKEMONS_URL + '/' + pokemon.id,  {
-            method: 'DELETE', // or 'PUT'
-            // body: JSON.stringify({"trainer_id": trainer.id} ), 
+            method: 'DELETE', // or 'PUT'             
             headers:{
               'Content-Type': 'application/json',
               Accept: "application/json"
             }
           })
         .then(response => response.json())
-        .then(pokemon => {          
-               //add pokemon to DOM                    
-               
+        .then(pokemon => {                                          
+            e.target.parentElement.remove();
         });
     })
     li.appendChild(releaseButton)
