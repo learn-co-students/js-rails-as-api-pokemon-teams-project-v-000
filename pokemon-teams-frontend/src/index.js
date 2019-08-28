@@ -20,17 +20,22 @@ fetch(TRAINERS_URL)
         addButton.innerHTML = 'Add Pokemon'
         trainerCard.appendChild(addButton)
 
+        const releaseButton = document.createElement('button')
+        releaseButton.className = 'release'
+        releaseButton.innerHTML = 'Release'
+
+        const ul = document.createElement('ul')
+        const li = document.createElement('li')
+        li.innerText = 'poke'
+        li.appendChild(releaseButton)
+
+        ul.appendChild(li)
+        
+
+        trainerCard.appendChild(ul)
+
         document.querySelector('main').appendChild(trainerCard)
     });
 
 })
   
-
-// const releaseButton = document.createElement('button')
-// releaseButton.className = 'release'
-// releaseButton.innerHTML = 'Release'
-
-// const ul = document.createElement('ul')
-
-// const li = document.createElement('li')
-// li.appendChild(releaseButton)
