@@ -47,6 +47,8 @@ function generateTrainerCard(trainer) {
             .then(pokemon => {          
                    //add pokemon to DOM
                    console.log(pokemon)
+                   const pokemonLi = generatePokemonLi(pokemon)
+                   ul.appendChild(pokemonLi)
             });
         })
 
