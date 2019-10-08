@@ -18,14 +18,18 @@ let getAllCards = () => {
 window.addEventListener('DOMContentLoaded', getAllCards)
 
 
+
 const listAllCards = (cards) => {
-	// console.log(cards)
+	console.log('pokemon: ', cards.data)
 	cards.data.forEach(card => createPokeTrainerCard(card))
 }
 
+
+// add trainers pokemon to the page. 
 const createPokeTrainerCard = (card) => {
 	console.log('27: ', card)
-	console.log('28: ', card.relationships.pokemons[0])
+	console.log('28: ', card.attributes.pokemons)
+	//render all the pokemon to get everything in the array. 
 
 	let div = document.createElement('div')
 	div.setAttribute('class', 'card' )
@@ -41,18 +45,29 @@ const createPokeTrainerCard = (card) => {
 	let p1 = document.createElement('p')
 	p1.innerHTML = 'pokemon names here'
 
-	let ul = document.createElement('ul')
-	ul.setAttribute('class', 'trainer-list')
+	
 
 
-	let li = document.createElement('li')
-	// li.innerHTML = 
+	// let li = document.createElement('li')
+	// li.innerHTML = renderPokemon(card.relationships.Pokemon..)
 	
 	
+	// const pokemons = card.attributes.pokemons
+	// console.log('pokemons :', pokemons[0].species)
+	// console.log('pokemons :', pokemons[0].nickname)
+
+	// pokemons.forEach(poke => {
+	// 	console.log('species: ', pokemon.species) 
+	// 	console.log('nickname: ', pokemon.nickname)
+	// })
 
 	// li.append(liButton)
-	ul.appendChild(li)
-	div.append(p, button, p1, ul)
+	 // or render them here 
+	let ul = document.createElement('ul')
+ 	ul.setAttribute('class', 'trainers-list-of-pokemons')
+	
+	ul.append(listPokemons)
+	div.append(p, button, p1, listPokemons)
 	const main = document.querySelector('main')
 	main.appendChild(div)
 }
@@ -65,7 +80,23 @@ const createPokeTrainerCard = (card) => {
 // 	liButton.setAttribute('class', 'trainer' )
 // 	liButton.setAttribute('data-pokemon-id', `${card.relationship.pokemons}`)
 
-
+// const =  renderPokemons(pokemons) => {
+// 	loop through all of them, create the li 
+	//render all the pokemon to get everything in the array. 
+	// create ul, then second method to render individual pokemoms, find by id == 
+// }
 
 //ul has li -- maybe another method? 
+const listPokemons = (card) => {
+ const poke = card.attributes.pokemons
+ 	poke.forEach(singlePokemon => {
+ 		let li = document.createElement('li')
+ 		li.innerHTML = `${pokemons.species} (${pokemons.nickname})`
+ 		return li
+	
+	// console.log('pokemons :', pokemons[0].species)
+	// console.log('pokemons :', pokemons[0].nickname)
+	})
+}
+
 //
