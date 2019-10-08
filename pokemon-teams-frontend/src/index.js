@@ -10,47 +10,60 @@ const POKEMONS_URL = `${BASE_URL}/pokemons`
 
 
 let getAllCards = () => {
-	// console.log('got here 1')
 	fetch(TRAINERS_URL)
 		.then(response => response.json())
 		.then(json => listAllCards(json))
-		// .then(json => listAllCards(json))
 }
 
 window.addEventListener('DOMContentLoaded', getAllCards)
 
 
 const listAllCards = (cards) => {
-	console.log(cards)
-	// debugger
-	cards.forEach(card => createPokeTrainerCard(card))
-
+	// console.log(cards)
+	cards.data.forEach(card => createPokeTrainerCard(card))
 }
+
 const createPokeTrainerCard = (card) => {
+	console.log('27: ', card)
+	console.log('28: ', card.relationships.pokemons[0])
 
 	let div = document.createElement('div')
-	div.className = 'card'
-	div.setAttribute('data-id', `${data.id}` )
+	div.setAttribute('class', 'card' )
+	div.setAttribute('data-id', `${card.id}` )
 
 	let p = document.createElement('p')
-	p.innerHMTML = `${data.attributes.name}`
+	p.innerHTML = `${card.attributes.name}`
 
 	let button = document.createElement('button')
-	button.setAttribute('data-trainer-id', `${data.id}`)
-	button.innerHMTML = 'Add Pokemon'
+	button.setAttribute('data-trainer-id', `${card.id}`)
+	button.innerHTML = 'Add Pokemon'
+	
+	let p1 = document.createElement('p')
+	p1.innerHTML = 'pokemon names here'
 
 	let ul = document.createElement('ul')
+	ul.setAttribute('class', 'trainer-list')
+
 
 	let li = document.createElement('li')
-	console.log('got here')
+	// li.innerHTML = 
+	
+	
 
+	// li.append(liButton)
 	ul.appendChild(li)
-	div.append(p, button, ul)
-	main = document.getElementsByTagName('main')
+	div.append(p, button, p1, ul)
+	const main = document.querySelector('main')
 	main.appendChild(div)
 }
-
-
+// <li>add name
+// for each pokemon -- make a button, with the id
+// const makePokemonButtons
+// const makePokemons = (card)
+// 	card.included
+// 	let liButton = document.createElement('button')
+// 	liButton.setAttribute('class', 'trainer' )
+// 	liButton.setAttribute('data-pokemon-id', `${card.relationship.pokemons}`)
 
 
 
