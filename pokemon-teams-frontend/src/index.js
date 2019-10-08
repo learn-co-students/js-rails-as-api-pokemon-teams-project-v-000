@@ -65,9 +65,13 @@ const createPokeTrainerCard = (card) => {
 	 // or render them here 
 	let ul = document.createElement('ul')
  	ul.setAttribute('class', 'trainers-list-of-pokemons')
+
+	// const poke = card.attributes.pokemons
+ 	let li = document.createElement('li')
+ 	li.innerHTML = `${card.attributes.pokemons.species} (${card.attributes.pokemons.nickname})`
 	
-	ul.append(listPokemons)
-	div.append(p, button, p1, listPokemons)
+	ul.append(li)
+	div.append(p, button, p1, ul)
 	const main = document.querySelector('main')
 	main.appendChild(div)
 }
@@ -87,16 +91,16 @@ const createPokeTrainerCard = (card) => {
 // }
 
 //ul has li -- maybe another method? 
-const listPokemons = (card) => {
- const poke = card.attributes.pokemons
- 	poke.forEach(singlePokemon => {
- 		let li = document.createElement('li')
- 		li.innerHTML = `${pokemons.species} (${pokemons.nickname})`
- 		return li
+// const listPokemons = (card) => {
+//  	const poke = card.attributes.pokemons
+//  	poke.forEach(singlePokemon => {
+//  		let li = document.createElement('li')
+//  		li.innerHTML = `${pokemons.species} (${pokemons.nickname})`
+ 		
 	
-	// console.log('pokemons :', pokemons[0].species)
-	// console.log('pokemons :', pokemons[0].nickname)
-	})
-}
+// 	// console.log('pokemons :', pokemons[0].species)
+// 	// console.log('pokemons :', pokemons[0].nickname)
+// 	})
+// }
 
 //
