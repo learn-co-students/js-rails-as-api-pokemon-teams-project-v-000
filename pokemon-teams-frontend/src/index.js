@@ -17,7 +17,7 @@ function renderTrainers(json) {
         const ul = document.createElement('ul')
         trainer.pokemons.forEach(pokemon => {
             const li = document.createElement('li')
-            li.innerHTML = `${pokemon.nickname}`
+            li.innerHTML = `${pokemon.nickname} (${pokemon.species}) <button class="release" data-pokemon-id="${pokemon.id}">Release</button>`
             ul.appendChild(li)
         })
         main.appendChild(ul)
