@@ -9,13 +9,12 @@ document.addEventListener('DOMContentLoaded', function() {
 function fetchTrainers() {
 	fetch(TRAINERS_URL)
 		.then(res => res.json())
-		.then(obj => {
-			createTrainer(obj)
-		})
+		.then(obj => { createTrainer(obj) })
 }
 
 function createTrainer(obj) {
 	obj.forEach(trainer => renderTrainer(trainer))
+	
 }
 
 function renderTrainer(trainer) {
@@ -40,25 +39,15 @@ function renderTrainer(trainer) {
 
 	trainer.pokemons.forEach(pokemon => {
 
-		const li = document.createElement('li')
+		let li = createPokemon(pokemon);
 
-		li.innerHTML = `${pokemon.nickname} (${pokemon.species})`
-
-		let relbtn = document.createElement('button')
-
-		relbtn.setAttribute("class", "release")
-		relbtn.setAttribute("data-pokemon-id", `${pokemon.id}`)
-		relbtn.innerHTML = "Release"
-		relbtn.addEventListener('click', destroyPokemon)
-		li.appendChild(relbtn)
-		ul.appendChild(li)
+		ul.appendChild(li);
 	})
 
 	main.appendChild(div)
 }
 
 function morePokemon(e) {
-
 	if (e.target.nextSibling.childElementCount < 6) {
 		fetchPokemon(e.target.attributes[0].value)
 	}
@@ -88,6 +77,12 @@ function renderPokemon(obj) {
 	
 	const trainerDiv = document.querySelector(`[data-id="${obj.trainer.id}"] ul`)
 
+	let li = createPokemon(obj)
+
+	trainerDiv.appendChild(li)
+}
+
+function createPokemon(obj) {
 	const li = document.createElement('li')
 
 	li.innerHTML = `${obj.nickname} (${obj.species})`
@@ -99,7 +94,8 @@ function renderPokemon(obj) {
 	relbtn.innerHTML = "Release"
 	relbtn.addEventListener('click', destroyPokemon)
 	li.appendChild(relbtn)
-	trainerDiv.appendChild(li)
+
+	return li;
 }
 
 function destroyPokemon(element) {
