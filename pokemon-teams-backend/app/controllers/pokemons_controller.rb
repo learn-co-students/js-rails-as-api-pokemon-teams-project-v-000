@@ -1,43 +1,22 @@
 class PokemonsController < ApplicationController
-	def index
+  def index
     pokemons = Pokemon.all
-    render json: PokemonSerializer.new(pokemons)
+    render json: PokemonSerializer.new(pokemons).to_serialized_json
   end
 
-  def new 
-    pokemon = Pokemon.new
-  end
-
-  def show  
-  	pokemon = Pokemon.find_by(id: params[:id])
-    render json: PokemonSerializer.new(pokemon)
+  def show
+    pokemon = Pokemon.find_by(id: params[:id])
+    render json: PokemonSerializer.new(pokemon).to_serialized_json
   end
 
   def create
-    pokemon = Pokemon.new(pokemon_params)
-    
-    if pokemon.valid?
-      pokemon.save
-      render json: PokemonSerializer.new(pokemon), status: :accepted
-    else 
-      render json: { errors: pokemon.errors.full_messages }, status: :unprocessible_entity
-    end
+    pokemon = Pokemon.create_new_pokemon(params[:pokemon][:trainer_id])
+    render json: PokemonSerializer.new(pokemon).to_serialized_json
   end
 
-  def update
-  	pokemon = Pokemon.find_by(id: params[:id])
-    pokemon.update(pokemon_params)
-    if pokemon.save
-      render json: PokemonSerializer.new(pokemon), status: :accepted
-    else
-      render json: { errors: pokemon.errors.full_messages }, status: :unprocessible_entity
-    end
+  def destroy
+    pokemon = Pokemon.find_by(:id => params[:id])
+    pokemon.delete
+    render json: PokemonSerializer.new(pokemon).to_serialized_json
   end
-
-  private
-
-  def pokemon_params
-    params.permit(:name)
-  end
-
 end
