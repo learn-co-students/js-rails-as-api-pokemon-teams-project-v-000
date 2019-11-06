@@ -41,7 +41,7 @@ const renderTrainerAndPokemon = (trainers) => {
 
         addPokemonButton.addEventListener('click', function (event) {
             console.log(event.target.dataset.trainerId, "button clicked");
-
+            console.log(event.target);
             fetch(POKEMONS_URL, {
                 method: "POST",
                 headers: {
@@ -49,9 +49,10 @@ const renderTrainerAndPokemon = (trainers) => {
                     'Accept': 'applicaiton/json'
                 },
                 body: JSON.stringify({
-                    species: 'species',
-                    nickname: 'nickname',
-                    trainerId: 'trainer_id'
+                    pokemon: {
+                    species: species,
+                    nickname: nickname,
+                    trainerId: trainerId}
                 })
             })
 
@@ -67,14 +68,15 @@ const renderTrainerAndPokemon = (trainers) => {
 
             const releasePokemonButton = document.createElement("button");
             releasePokemonButton.classList.add("release");
-            releasePokemonButton.dataset.pokemonName = pokemon.nickname;
+            releasePokemonButton.dataset.pokemonId = pokemon.id;
             releasePokemonButton.textContent = "Release";
 
             releasePokemonButton.addEventListener('click', function (event) {
-                console.log(event.target.dataset.pokemonName, "button clicked");
-                fetch(TRAINERS_URL/event.target.dataset.pokemonName, {
+                console.log(event.target.dataset.pokemonId, "button clicked");
+                return fetch(`${POKEMONS_URL}/${event.target.dataset.pokemonId}`,  {
                     method: "DELETE"
                 })
+                .then(response => response.json());
             })
 
             pokemonNameSpecies.appendChild(releasePokemonButton);
