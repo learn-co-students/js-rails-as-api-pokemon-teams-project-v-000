@@ -42,7 +42,7 @@ const renderTrainerAndPokemon = (trainers) => {
         addPokemonButton.addEventListener('click', function (event) {
             console.log(event.target.dataset.trainerId, "button clicked");
             console.log(event.target);
-            fetch(POKEMONS_URL, {
+            return fetch(POKEMONS_URL, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
@@ -50,11 +50,11 @@ const renderTrainerAndPokemon = (trainers) => {
                 },
                 body: JSON.stringify({
                     pokemon: {
-                    species: species,
-                    nickname: nickname,
-                    trainerId: trainerId}
+                    trainerId: trainer.id}
                 })
             })
+                // .then(response => response.json())
+                // .then(json => )
 
             // am I adding the pokemon from the backend, do i need to include a dropdown for user to select a pokemon?
         })
@@ -72,7 +72,7 @@ const renderTrainerAndPokemon = (trainers) => {
             releasePokemonButton.textContent = "Release";
 
             releasePokemonButton.addEventListener('click', function (event) {
-                console.log(event.target.dataset.pokemonId, "button clicked");
+                // console.log(event.target.dataset.pokemonId, "button clicked");
                 return fetch(`${POKEMONS_URL}/${event.target.dataset.pokemonId}`,  {
                     method: "DELETE"
                 })
