@@ -42,7 +42,7 @@ const renderTrainerAndPokemon = (trainers) => {
         addPokemonButton.addEventListener('click', function (event) {
             console.log(event.target.dataset.trainerId, "button clicked");
             console.log(event.target);
-            return fetch(POKEMONS_URL, {
+            fetch(POKEMONS_URL, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
@@ -53,18 +53,40 @@ const renderTrainerAndPokemon = (trainers) => {
                     trainerId: trainer.id}
                 })
             })
-                // .then(response => response.json())
-                // .then(json => )
+                .then(response => response.json())
+                .then(pokemon => {
+                    const ul = document.getElementById(trainer.id);
+                    
+                    const pokemonNameSpecies = document.createElement("li");
+                    pokemonNameSpecies.textContent = `${pokemon.nickname} (${pokemon.species})`;
+
+                    const releasePokemonButton = document.createElement("button");
+                    releasePokemonButton.classList.add("release");
+                    releasePokemonButton.dataset.pokemonId = pokemon.id;
+                    releasePokemonButton.textContent = "Release";
+
+                    releasePokemonButton.addEventListener('click', function (event) {
+                        // console.log(event.target.dataset.pokemonId, "button clicked");
+                        fetch(`${POKEMONS_URL}/${event.target.dataset.pokemonId}`, {
+                            method: "DELETE"
+                        })
+                            .then(console.log)
+                    })
+                    pokemonNameSpecies.appendChild(releasePokemonButton);
+                    ul.appendChild(pokemonNameSpecies)
+                })
 
             // am I adding the pokemon from the backend, do i need to include a dropdown for user to select a pokemon?
         })
         trainerDivCard.appendChild(addPokemonButton);
 
         const pokemonUl = document.createElement("ul");
+        pokemonUl.id = trainer.id;
         trainer.pokemons.forEach(pokemon => {
 
             const pokemonNameSpecies = document.createElement("li");
             pokemonNameSpecies.textContent = `${pokemon.nickname} (${pokemon.species})`;
+            pokemonNameSpecies.id = `pokemon-li-${pokemon.id}`;
 
             const releasePokemonButton = document.createElement("button");
             releasePokemonButton.classList.add("release");
@@ -73,10 +95,14 @@ const renderTrainerAndPokemon = (trainers) => {
 
             releasePokemonButton.addEventListener('click', function (event) {
                 // console.log(event.target.dataset.pokemonId, "button clicked");
-                return fetch(`${POKEMONS_URL}/${event.target.dataset.pokemonId}`,  {
+                fetch(`${POKEMONS_URL}/${event.target.dataset.pokemonId}`,  {
                     method: "DELETE"
                 })
-                .then(response => response.json());
+                .then(response => response.json())
+                .then(pokemon => {
+                    const li = document.getElementById(`pokemon-li-${pokemon.id}`)
+                    li.remove();
+                })
             })
 
             pokemonNameSpecies.appendChild(releasePokemonButton);

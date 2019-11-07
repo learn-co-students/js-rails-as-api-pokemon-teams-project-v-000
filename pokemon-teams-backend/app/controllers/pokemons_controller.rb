@@ -13,6 +13,7 @@ class PokemonsController < ApplicationController
     def create
         # use Faker to create a fake pokemon
         # binding.pry
+        # render json too many json 
         trainer_id = params[:pokemon][:trainerId]
         pokemon = Pokemon.create!(trainer_id: trainer_id, nickname: Faker::Name.first_name, species: Faker::Games::Pokemon.name)
         
@@ -22,6 +23,7 @@ class PokemonsController < ApplicationController
     def destroy
        pokemon = Pokemon.find(params[:id])
        pokemon.delete 
+       render json: PokemonSerializer.new(pokemon).to_serialized_json
     end
 
     # def pokemon_params
