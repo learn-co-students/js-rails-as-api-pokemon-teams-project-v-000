@@ -33,52 +33,15 @@ const renderTrainerAndPokemon = (trainers) => {
         const addPokemonButton = document.createElement("button");
         addPokemonButton.dataset.trainerId = trainer.id;
         addPokemonButton.textContent = "Add Pokemon";
-
+        addPokemonButton.addEventListener('click', addPokemon)
+        trainerDivCard.appendChild(addPokemonButton);
         // addeventlistener on addpokemonbutton click function to add pokemon
         // callback function to add target
         // access event.target.dataset.trainerId
         // post request trainerId in the fetch request
 
-        addPokemonButton.addEventListener('click', function (event) {
-            console.log(event.target.dataset.trainerId, "button clicked");
-            console.log(event.target);
-            fetch(POKEMONS_URL, {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'applicaiton/json'
-                },
-                body: JSON.stringify({
-                    pokemon: {
-                    trainerId: trainer.id}
-                })
-            })
-                .then(response => response.json())
-                .then(pokemon => {
-                    const ul = document.getElementById(trainer.id);
-                    
-                    const pokemonNameSpecies = document.createElement("li");
-                    pokemonNameSpecies.textContent = `${pokemon.nickname} (${pokemon.species})`;
-
-                    const releasePokemonButton = document.createElement("button");
-                    releasePokemonButton.classList.add("release");
-                    releasePokemonButton.dataset.pokemonId = pokemon.id;
-                    releasePokemonButton.textContent = "Release";
-
-                    releasePokemonButton.addEventListener('click', function (event) {
-                        // console.log(event.target.dataset.pokemonId, "button clicked");
-                        fetch(`${POKEMONS_URL}/${event.target.dataset.pokemonId}`, {
-                            method: "DELETE"
-                        })
-                            .then(console.log)
-                    })
-                    pokemonNameSpecies.appendChild(releasePokemonButton);
-                    ul.appendChild(pokemonNameSpecies)
-                })
-
-            // am I adding the pokemon from the backend, do i need to include a dropdown for user to select a pokemon?
-        })
-        trainerDivCard.appendChild(addPokemonButton);
+        
+        
 
         const pokemonUl = document.createElement("ul");
         pokemonUl.id = trainer.id;
@@ -115,3 +78,44 @@ const renderTrainerAndPokemon = (trainers) => {
         // mainPage.appendChild(trainerCollection);
     })
 }
+
+    const addPokemon = () => {
+        // const ul = document.getElementById(trainer.id);
+        const trainer = event.target.dataset.trainerId;
+        console.log(event.target.dataset.trainerId, "button clicked");
+        console.log(event.target);
+        fetch(POKEMONS_URL, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'applicaiton/json'
+            },
+            body: JSON.stringify({
+                pokemon: {
+                    trainerId: trainer.id
+                }
+            })
+        })
+            .then(response => response.json())
+            .then(pokemon => {
+                
+                const pokemonNameSpecies = document.createElement("li");
+                pokemonNameSpecies.textContent = `${pokemon.nickname} (${pokemon.species})`;
+
+                const releasePokemonButton = document.createElement("button");
+                releasePokemonButton.classList.add("release");
+                releasePokemonButton.dataset.pokemonId = pokemon.id;
+                releasePokemonButton.textContent = "Release";
+
+                releasePokemonButton.addEventListener('click', function (event) {
+                    // console.log(event.target.dataset.pokemonId, "button clicked");
+                    fetch(`${POKEMONS_URL}/${event.target.dataset.pokemonId}`, {
+                        method: "DELETE"
+                    })
+                        .then(console.log)
+                })
+                pokemonNameSpecies.appendChild(releasePokemonButton);
+                ul.appendChild(pokemonNameSpecies)
+            })
+    }
+    // am I adding the pokemon from the backend, do i need to include a dropdown for user to select a pokemon?
