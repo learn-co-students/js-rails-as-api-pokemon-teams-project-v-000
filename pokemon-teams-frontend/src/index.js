@@ -33,15 +33,12 @@ const renderTrainerAndPokemon = (trainers) => {
         const addPokemonButton = document.createElement("button");
         addPokemonButton.dataset.trainerId = trainer.id;
         addPokemonButton.textContent = "Add Pokemon";
-        addPokemonButton.addEventListener('click', addPokemon)
+        addPokemonButton.addEventListener('click', addPokemon);
         trainerDivCard.appendChild(addPokemonButton);
         // addeventlistener on addpokemonbutton click function to add pokemon
         // callback function to add target
         // access event.target.dataset.trainerId
         // post request trainerId in the fetch request
-
-        
-        
 
         const pokemonUl = document.createElement("ul");
         pokemonUl.id = trainer.id;
@@ -79,11 +76,10 @@ const renderTrainerAndPokemon = (trainers) => {
     })
 }
 
-    const addPokemon = () => {
-        // const ul = document.getElementById(trainer.id);
-        const trainer = event.target.dataset.trainerId;
+    const addPokemon = (event) => {
+        const trainerId = event.target.dataset.trainerId;
         console.log(event.target.dataset.trainerId, "button clicked");
-        console.log(event.target);
+        
         fetch(POKEMONS_URL, {
             method: "POST",
             headers: {
@@ -92,13 +88,14 @@ const renderTrainerAndPokemon = (trainers) => {
             },
             body: JSON.stringify({
                 pokemon: {
-                    trainerId: trainer.id
+                    trainerId: trainerId
                 }
             })
         })
             .then(response => response.json())
             .then(pokemon => {
-                
+                const ul = document.getElementById(trainerId);
+
                 const pokemonNameSpecies = document.createElement("li");
                 pokemonNameSpecies.textContent = `${pokemon.nickname} (${pokemon.species})`;
 

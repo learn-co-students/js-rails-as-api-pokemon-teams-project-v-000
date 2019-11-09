@@ -15,7 +15,7 @@ class PokemonsController < ApplicationController
         # binding.pry
         # render json too many json 
         trainer_id = params[:pokemon][:trainerId]
-        binding.pry
+        # binding.pry
         pokemon = Pokemon.create!(trainer_id: trainer_id, nickname: Faker::Name.first_name, species: Faker::Games::Pokemon.name)
         
         render json: PokemonSerializer.new(pokemon).to_serialized_json
