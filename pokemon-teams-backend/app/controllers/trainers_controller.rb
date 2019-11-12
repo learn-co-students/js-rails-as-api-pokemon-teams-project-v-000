@@ -3,7 +3,7 @@ class TrainersController < ApplicationController
 
   def show
     trainer = Trainer.find_by(id: params[:id])
-    render json: trainer, include: [:name]
+    render json: trainer.to_json
   end
 
   def index
