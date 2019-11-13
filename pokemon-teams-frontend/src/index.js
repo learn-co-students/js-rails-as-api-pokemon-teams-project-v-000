@@ -10,18 +10,31 @@ console.log('aaaa')
 
 document.addEventListener('DOMContentLoaded', function () {
 loadingPokemon()
+addPokemon()
+releasePokemon()
 
 });
 
 
 function loadingPokemon(){
   //load the trainer and all their pokemon
-
   fetch(TRAINERS_URL)
   .then(resp => resp.json())
   .then(trainers => {
-  console.log(trainers)
+  trainers.forEach
   })
 }
+
+function addPokemon(){
+// button = document.querySelector('Add Pokemon')
+//  button.addEventListener('click', event => {addPokemon(event, element.id)})
+}
+
+function releasePokemon(){
+
+}
+
+//event listener when they press add pokemon.
+
 
 //addpokemon, they should get a new pokemon
