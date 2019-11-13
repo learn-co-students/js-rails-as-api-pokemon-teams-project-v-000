@@ -15,4 +15,10 @@ class PokemonsController < ApplicationController
     #serializable hash for string.
   end
 
+  def destroy
+    # ded_pokemon =
+    render json: Pokemon.find_by(id: params[:id]).destroy
+
+  end
+
 end
