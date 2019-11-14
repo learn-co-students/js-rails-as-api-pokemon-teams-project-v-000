@@ -11,7 +11,7 @@ console.log('aaaa')
 document.addEventListener('DOMContentLoaded', function () {
 loadingPokemon()
 addPokemon()
-releasePokemon()
+
 
 });
 
@@ -38,28 +38,47 @@ function trainerCard(trainer){
    h.innerHTML = trainer.name
 
    var pokemon = document.createElement('li')
-   trainer.pokemons.forEach(animal => pokemon.innerHTML = animal.nickname )
+   //link id to the pokemon
+   trainer.pokemons.forEach( animal => console.log(animal)
+     // if (trainer.id === animal.trainer_id) {
+     //   pokemon.innerHTML = animal.nickname
+     )
+
+
+
 
 
 
    var releaseButton = document.createElement('button')
    releaseButton.setAttribute('class','data-pokemon-id')
    releaseButton.innerHTML = 'Release Pokemon'
+   releaseButton.addEventListener('click', event => {releasePokemon(event)})
 
-   var newButton = document.createElement('button')
-   newButton.setAttribute('class','data-trainer-id')
-   newButton.innerHTML = 'Add Pokemon'
+   var addButton = document.createElement('button')
+   addButton.setAttribute('class','data-trainer-id')
+   addButton.innerHTML = 'Add Pokemon'
+   addButton.addEventListener('click',event => {addPokemon(event)})
 
-   newElement.append(h,newButton,releaseButton,pokemon)
+   newElement.append(h,addButton,releaseButton,pokemon)
    listPokemon.appendChild(newElement)
 }
 
-function addPokemon(){
-// button = document.querySelector('Add Pokemon')
-//  button.addEventListener('click', event => {addPokemon(event, element.id)})
+function addPokemon(event){
+fetch(POKEMONS_URL,{
+  method: "POST",
+  headers:
+  {
+    "Content-Type": "application/json",
+  Accept: "application/json"
+},
+body:{
+  'hi'
+}
+})
 }
 
-function releasePokemon(){
+function releasePokemon(event){
+
 
 }
 
