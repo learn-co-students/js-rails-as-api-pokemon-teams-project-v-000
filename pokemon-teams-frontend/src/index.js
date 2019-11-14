@@ -42,7 +42,7 @@ function trainerCard(trainer){
     var releaseButton = document.createElement('button')
    releaseButton.setAttribute('class','data-pokemon-id')
    releaseButton.innerHTML = 'Release Pokemon'
-   releaseButton.addEventListener('click', event => {releasePokemon(event)})
+   releaseButton.addEventListener('click', event => {releasePokemon(event,trainer.id,'jack','dog')})
 
    var addButton = document.createElement('button')
    addButton.setAttribute('class','data-trainer-id')
@@ -81,8 +81,19 @@ function addPokemon(event,id,nickname,species){
 }
 
 
-function releasePokemon(event){
-
+function releasePokemon(event,id,nickname,species){
+fetch(POKEMONS_URL,{
+  method: "DELETE",
+  headers:{
+    "Content-Type": "application/json",
+    "Accept": "application/json"
+  },
+  body: JSON.stringify({
+    nickname: nickname,
+    species: species,
+    trainer_id: id
+  })
+})
 
 }
 
