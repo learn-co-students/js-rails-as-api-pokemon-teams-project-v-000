@@ -47,7 +47,8 @@ function trainerCard(trainer){
    var addButton = document.createElement('button')
    addButton.setAttribute('class','data-trainer-id')
    addButton.innerHTML = 'Add Pokemon'
-   addButton.addEventListener('click',event => {addPokemon(event,trainer.id,animal.nickname,animal.species)})
+   addButton.addEventListener('click',event => {addPokemon(event,trainer.id,'jack','dog')})
+   //adding attributes to post to the fetch
 
 
    newElement.append(h,addButton,releaseButton)
@@ -66,16 +67,16 @@ function trainerCard(trainer){
 
 function addPokemon(event,id,nickname,species){
 
-fetch(POKEMONS_URL,{
-  method: "POST",
-  headers:{
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    nickname: nickname,
-    species: species,
-    trainer_id: id
-  })
+  fetch(POKEMONS_URL,{
+    method: "POST",
+    headers:{
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      nickname: nickname,
+      species: species,
+      trainer_id: id
+    })
   })
 }
 
