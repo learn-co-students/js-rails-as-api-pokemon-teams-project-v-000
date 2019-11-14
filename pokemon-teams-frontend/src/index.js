@@ -21,6 +21,7 @@ function loadingPokemon(){
   fetch(TRAINERS_URL)
   .then(resp => resp.json())
   .then(trainers => {
+    console.log(trainers)
   trainers.forEach(trainer => trainerCard(trainer))
   //getting a trainer for each card
   })
@@ -36,11 +37,19 @@ function trainerCard(trainer){
    var h = document.createElement('h2')
    h.innerHTML = trainer.name
 
+   var pokemon = document.createElement('h3')
+   // console.log(trainer.pokemons)
+   // console.log(trainer.pokemons[nickname])
+   // pokemon.innerHTML = trainer.pokemons
+   var releaseButton = document.createElement('button')
+   releaseButton.setAttribute('class','data-pokemon-id')
+   releaseButton.innerHTML = 'Release Pokemon'
+
    var newButton = document.createElement('button')
    newButton.setAttribute('class','data-trainer-id')
    newButton.innerHTML = 'Add Pokemon'
 
-   newElement.append(h,newButton)
+   newElement.append(h,newButton,releaseButton,pokemon)
    listPokemon.appendChild(newElement)
 }
 
