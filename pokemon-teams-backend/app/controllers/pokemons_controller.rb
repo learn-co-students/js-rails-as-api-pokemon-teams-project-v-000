@@ -2,7 +2,8 @@ class PokemonsController < ApplicationController
   #new pokemon, and release pokemon
 
   def create
-    new_pokemon = Pokemon.new(params)
+    new_pokemon = Pokemon.create(nickname: params[:nickname], species: params[:species], trainer_id: params[:trainer_id])
+    render json: new_pokemon.to_json
   end
 
   def show

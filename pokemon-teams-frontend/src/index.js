@@ -10,9 +10,6 @@ console.log('aaaa')
 
 document.addEventListener('DOMContentLoaded', function () {
 loadingPokemon()
-addPokemon()
-
-
 });
 
 
@@ -21,7 +18,7 @@ function loadingPokemon(){
   fetch(TRAINERS_URL)
   .then(resp => resp.json())
   .then(trainers => {
-    console.log(trainers[0].name)
+    console.log(trainers)
   trainers.forEach(trainer => trainerCard(trainer))
   //getting a trainer for each card
   })
@@ -37,19 +34,12 @@ function trainerCard(trainer){
    var h = document.createElement('h2')
    h.innerHTML = trainer.name
 
-   var pokemon = document.createElement('li')
+
+
    //link id to the pokemon
-   trainer.pokemons.forEach( animal => console.log(animal)
-     // if (trainer.id === animal.trainer_id) {
-     //   pokemon.innerHTML = animal.nickname
-     )
 
 
-
-
-
-
-   var releaseButton = document.createElement('button')
+    var releaseButton = document.createElement('button')
    releaseButton.setAttribute('class','data-pokemon-id')
    releaseButton.innerHTML = 'Release Pokemon'
    releaseButton.addEventListener('click', event => {releasePokemon(event)})
@@ -57,25 +47,38 @@ function trainerCard(trainer){
    var addButton = document.createElement('button')
    addButton.setAttribute('class','data-trainer-id')
    addButton.innerHTML = 'Add Pokemon'
-   addButton.addEventListener('click',event => {addPokemon(event)})
+   addButton.addEventListener('click',event => {addPokemon(event,trainer.id,animal.nickname,animal.species)})
 
-   newElement.append(h,addButton,releaseButton,pokemon)
+
+   newElement.append(h,addButton,releaseButton)
+
+   trainer.pokemons.forEach(animal => {
+     var pokemon = document.createElement('li')
+     pokemon.innerHTML = `${animal.nickname}(${animal.species})`
+     newElement.append(pokemon)
+   })
    listPokemon.appendChild(newElement)
+
+
 }
 
-function addPokemon(event){
+
+
+function addPokemon(event,id,nickname,species){
+
 fetch(POKEMONS_URL,{
   method: "POST",
-  headers:
-  {
-    "Content-Type": "application/json",
-  Accept: "application/json"
-},
-body:{
-  'hi'
+  headers:{
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    nickname: nickname,
+    species: species,
+    trainer_id: id
+  })
+  })
 }
-})
-}
+
 
 function releasePokemon(event){
 
