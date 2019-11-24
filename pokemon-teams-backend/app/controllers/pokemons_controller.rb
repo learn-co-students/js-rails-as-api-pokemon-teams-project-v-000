@@ -2,15 +2,12 @@ class PokemonsController < ApplicationController
 
   def index
     pokemons = Pokemon.all
-    render json: PokemonSerializer.new(pokemons)
+    render json: PokemonSerializer.new(pokemons).to_serialized_json
   end
 
   def show
     pokemon = Pokemon.find_by(id: params[:id])
-    options = {
-      include: [:nickname, :species, :trainer_id]
-    }
-    render json: PokemonSerializer.new(pokemon, options)
+    render json: PokemonSerializer.new(pokemon).to_serialized_json
   end
 
 end
