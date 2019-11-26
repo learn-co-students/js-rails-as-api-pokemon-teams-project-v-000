@@ -55,6 +55,11 @@ body {
     float: right;
     background-color: #E1332D;
   }
+
+  button.invite {
+    float: right;
+    background-color: blue;
+  }
   
   @media only screen and (min-width: 500px) {
     main {
