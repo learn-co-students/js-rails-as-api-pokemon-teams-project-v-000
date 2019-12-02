@@ -1,36 +1,42 @@
 const BASE_URL = "http://localhost:3000"
 const TRAINERS_URL = `${BASE_URL}/trainers`
 const POKEMONS_URL = `${BASE_URL}/pokemons`
-let pokemonCollection = document.querySelector('#pokemon-collection')
+let trainers = document.querySelector('#trainers')
 
 document.addEventListener("DOMContentLoaded", function() {
     
-    getAllPokemon()
+    getAllTrainers()
    
-    .then(pokemons => {
-      pokemons.forEach(pokemon => {
-        postPokemon(pokemon)
+    .then(trainers => {
+      trainers.forEach(trainer => {
+        postTrainers(trainer)
       })
     })
+    
   });
 
-  function getAllPokemon() {
-    return fetch('http://localhost:3000/pokemons')
+  function getAllTrainers() {
+    return fetch('http://localhost:3000/trainers')
     .then(function(response) {
       return response.json();
     }) 
   }
 
-  function postPokemon(pokemon) {
+  function postTrainers(trainer) {
     //variables are declared and initialized with elements and attributes
     //let element = document.createElement(tagName);
     let h2 = document.createElement('h2')
-    h2.innerText = pokemon.nickname
+    let h1 = document.createElement('h1')
+    h2.innerText = trainer.name
+    h1.innerText = trainer.pokemons
+     
+
+    
   
     let divparentcard = document.createElement('div')
     divparentcard.setAttribute('class', 'card')
     // div card is created and all newly created elements with their
     //associated attributes are appended
-    divparentcard.append(h2)
-    pokemonCollection.append(divparentcard)
+    divparentcard.append(h2, h1)
+    trainers.append(divparentcard)
   }
