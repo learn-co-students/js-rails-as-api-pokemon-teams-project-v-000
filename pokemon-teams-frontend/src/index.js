@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", function() {
     .then(trainers => {
       trainers.forEach(trainer => {
         postTrainers(trainer)
+        
       })
     })
     
@@ -26,9 +27,9 @@ document.addEventListener("DOMContentLoaded", function() {
     //variables are declared and initialized with elements and attributes
     //let element = document.createElement(tagName);
     let h2 = document.createElement('h2')
-    let h1 = document.createElement('h1')
+    let h4 = document.createElement('h4')
     h2.innerText = trainer.name
-    h1.innerText = trainer.pokemons
+    h4.innerText = trainer.pokemons[0].nickname
      
 
     
@@ -37,6 +38,6 @@ document.addEventListener("DOMContentLoaded", function() {
     divparentcard.setAttribute('class', 'card')
     // div card is created and all newly created elements with their
     //associated attributes are appended
-    divparentcard.append(h2, h1)
+    divparentcard.append(h2, h4)
     trainers.append(divparentcard)
   }
