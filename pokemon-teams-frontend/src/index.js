@@ -1,43 +1,83 @@
 const BASE_URL = "http://localhost:3000"
 const TRAINERS_URL = `${BASE_URL}/trainers`
 const POKEMONS_URL = `${BASE_URL}/pokemons`
-let trainers = document.querySelector('#trainers')
+let main = document.querySelector('main')
 
 document.addEventListener("DOMContentLoaded", function() {
     
     getAllTrainers()
    
-    .then(trainers => {
-      trainers.forEach(trainer => {
-        postTrainers(trainer)
+    // .then(trainers => {
+    //   trainers.forEach(trainer => {
+    //     postTrainer(trainer)
         
-      })
-    })
-    
+    //   })
+    // })
+  
   });
 
   function getAllTrainers() {
-    return fetch('http://localhost:3000/trainers')
-    .then(function(response) {
-      return response.json();
-    }) 
+    fetch('http://localhost:3000/trainers')
+    .then(response => response.json())
+    .then(jsonTrainers => renderTrainers(jsonTrainers))
+  }
+  
+  function renderTrainers(jsonTrainers) {
+    for (trainer of jsonTrainers){
+      postTrainer(trainer)
+    }
   }
 
-  function postTrainers(trainer) {
-    //variables are declared and initialized with elements and attributes
-    //let element = document.createElement(tagName);
-    let h2 = document.createElement('h2')
-    let h4 = document.createElement('h4')
-    h2.innerText = trainer.name
-    h4.innerText = trainer.pokemons[0].nickname
+  function postTrainer(trainer) {
+
+    const div = document.createElement('div')
+    div.setAttribute('class', 'card')
+    div.setAttribute('data-id', `${trainer.id}`)
+    main.append(div)
+    
+    const p = document.createElement('p')
+    p.innerText = trainer.name
+    div.append(p)
+
+    const btn = document.createElement('button')
+
+    btn.setAttribute('trainer-id', `${trainer.id}`)
+    btn.innerText = 'Add Pokemon'
+    div.append(btn)
+
+   
+    
+    const ul = document.createElement('ul')
+    div.append(ul)
+
+    renderPokemon(trainer)
+    
+    function renderPokemon(trainer) {
+      const li = document.createElement('li')
+      
+      // const pokemon = trainer.pokemons.shift()
+
+      for (pokemon of trainer.pokemons){
+        let dBtn = document.createElement('button')
+        dBtn.innerText = 'Remove Pokemon'
+        li.append(pokemon.nickname)  
+        li.append(dBtn)
+        ul.append(li)
+        
+      }
+      
+    }
+    
+    
+    
+
+    function removePokemon(pokemon) {
+      
+      console.log(pokemon.nickname)
      
+      // pokemon.splice(index, `${pokemon.id}`)
+    }
 
     
-  
-    let divparentcard = document.createElement('div')
-    divparentcard.setAttribute('class', 'card')
-    // div card is created and all newly created elements with their
-    //associated attributes are appended
-    divparentcard.append(h2, h4)
-    trainers.append(divparentcard)
+
   }
