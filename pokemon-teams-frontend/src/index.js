@@ -53,11 +53,12 @@ document.addEventListener("DOMContentLoaded", function() {
     renderPokemon(trainer)
     
     function renderPokemon(trainer) {
-      const li = document.createElement('li')
+      
       
       // const pokemon = trainer.pokemons.shift()
 
       for (pokemon of trainer.pokemons){
+        const li = document.createElement('li')
         let dBtn = document.createElement('button')
         dBtn.innerText = 'Remove Pokemon'
         li.append(pokemon.nickname)  
