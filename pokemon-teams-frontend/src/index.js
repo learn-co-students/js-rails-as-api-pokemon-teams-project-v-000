@@ -6,14 +6,7 @@ let main = document.querySelector('main')
 document.addEventListener("DOMContentLoaded", function() {
     
     getAllTrainers()
-   
-    // .then(trainers => {
-    //   trainers.forEach(trainer => {
-    //     postTrainer(trainer)
-        
-    //   })
-    // })
-  
+    
   });
 
   function getAllTrainers() {
@@ -41,37 +34,33 @@ document.addEventListener("DOMContentLoaded", function() {
 
     const btn = document.createElement('button')
 
-    btn.setAttribute('trainer-id', `${trainer.id}`)
+    btn.setAttribute('data-trainer-id', `${trainer.id}`)
     btn.innerText = 'Add Pokemon'
     div.append(btn)
-
-   
-    
     const ul = document.createElement('ul')
     div.append(ul)
 
     renderPokemon(trainer)
     
     function renderPokemon(trainer) {
-      
-      
-      // const pokemon = trainer.pokemons.shift()
-
+    
       for (pokemon of trainer.pokemons){
         const li = document.createElement('li')
-        let dBtn = document.createElement('button')
-        dBtn.innerText = 'Remove Pokemon'
+        const dBtn = document.createElement('button')
+        dBtn.setAttribute("class", "release")
+        dBtn.innerText = 'Release'
         li.append(pokemon.nickname)  
         li.append(dBtn)
         ul.append(li)
-        
+         let test = {...pokemon} //spread operator
+        dBtn.addEventListener("click", () => {
+          removePokemon(test)
+        })
       }
       
     }
     
     
-    
-
     function removePokemon(pokemon) {
       
       console.log(pokemon.nickname)
