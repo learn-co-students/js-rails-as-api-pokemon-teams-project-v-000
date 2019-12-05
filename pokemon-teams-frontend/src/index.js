@@ -39,7 +39,9 @@ document.addEventListener("DOMContentLoaded", function() {
     div.append(btn)
     const ul = document.createElement('ul')
     div.append(ul)
-
+    btn.addEventListener("click", () => {
+      addPokemon(trainer.id)
+    })
     renderPokemon(trainer)
     
     function renderPokemon(trainer) {
@@ -52,21 +54,61 @@ document.addEventListener("DOMContentLoaded", function() {
         li.append(pokemon.nickname)  
         li.append(dBtn)
         ul.append(li)
-         let test = {...pokemon} //spread operator
+         let test = {...pokemon} //spread operator making a non referencing copy or clone that does not destroy original
         dBtn.addEventListener("click", () => {
-          removePokemon(test)
+          removePokemon(test, trainer)
         })
       }
       
     }
-    
-    
-    function removePokemon(pokemon) {
+
+    function addPokemon(trainerId){
+      fetch(`${TRAINERS_URL}/${trainerId}`)
+      .then(results => results.json())
+      .then(trainer => {
+        if (trainer.pokemons.length < 6){
+          fetch(`${POKEMONS_URL}`, {
+            method: "POST",
+            headers: {
+
+              "Content-Type": "application/json",
+              "Accept": "application/json"
       
-      console.log(pokemon.nickname)
-     
-      // pokemon.splice(index, `${pokemon.id}`)
+            },
+    
+            body: JSON.stringify({
+              "trainer_id": trainer.id
+              
+            })
+            })
+          .then(results => results.json())
+          .then(data => {
+            console.log(data)
+          })
+        }
+      })
     }
+
+    function removePokemon(pokemon, trainer) {
+      console.log(pokemon)
+      fetch(`${POKEMONS_URL}/${pokemon.id}`, {
+        method: "DELETE"
+        })
+      .then(results => results.json())
+      .then(data => {
+        console.log(data)
+      })
+      
+    }
+    
+    
+    // function removePokemon(pokemon, trainer) {
+    //   console.log(pokemon.nickname)
+    //   console.log(trainer)
+    //   let idx = trainer.pokemons.indexOf("pokemon.nickname")
+    //   if (idx != -1) trainer.pokemons.splice(idx, 1)
+    //   debugger
+    // }
 
     
 
