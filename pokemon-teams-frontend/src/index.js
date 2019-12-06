@@ -4,6 +4,7 @@ const POKEMONS_URL = `${BASE_URL}/pokemons`
 const mainDiv = document.querySelector('main')
 
 mainDiv.addEventListener('click', e => {
+  // debugger
   if (e.target.dataset.trainerId !== undefined) {
     fetch(POKEMONS_URL, {
       method: "POST",
@@ -15,7 +16,13 @@ mainDiv.addEventListener('click', e => {
       })
     })
       .then(res => res.json())
-      .then(addPokemon)
+      .then(pokemon => addPokemon(pokemon))
+  }
+  if (e.target.dataset.pokemonId !== undefined) {
+    e.target.parentElement.remove()
+    fetch(POKEMONS_URL + '/' + e.target.dataset.pokemonId, {
+      method: "DELETE"
+    });
   }
 });
 
@@ -42,7 +49,8 @@ function putTrainersOnPage(trainers) {
 }
 
 function addPokemon(pokemon) {
-  mainDiv.children[pokemon.trainer_id-1].lastElementChild.innerHTML +=
+  // debugger
+  mainDiv.querySelector(`div.card[data-id="${pokemon.trainer_id}"]`).lastElementChild.innerHTML +=
   `<li>${pokemon.nickname} (${pokemon.species}) <button class="release"
   data-pokemon-id="${pokemon.id}">Release</button></li>`
 }
