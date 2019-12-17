@@ -16,8 +16,10 @@ class PokemonsController < ApplicationController
     trainer = Trainer.find_by(id: params[:trainer_id])
     if trainer.pokemons.count <6
       pokemon.save
+      render json: PokemonSerializer.new(pokemon).to_serialized_json
+    else
+      render json: { message: "This trainer already has 6 pokemon."}
     end
-    render json: PokemonSerializer.new(pokemon).to_serialized_json
   end
 
   def destroy

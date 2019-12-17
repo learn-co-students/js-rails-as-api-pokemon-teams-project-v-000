@@ -22,8 +22,6 @@ function renderTrainer(trainer) {
   let trainerCollection = document.getElementById("trainer-collection")
   let div = document.createElement('div')
   div.className = 'card'
-  //div.id = `${trainer.id.toString()}`
-  //console.log(div.id)
 
   let p = document.createElement('p')
   p.innerText = trainer.name
@@ -32,32 +30,37 @@ function renderTrainer(trainer) {
   addBtn.className = 'addBtn'
   addBtn.textContent = 'Add Pokemon'
   addBtn.setAttribute('id', trainer.id)
+  console.log(addBtn.id)
   addBtn.addEventListener("click", event => {
     event.preventDefault()
     addPokemon(event)
   })
-
   let ul = document.createElement('ul')
-  trainer.pokemons.forEach(pokemon => {
-    let li = document.createElement('li')
-    li.textContent = `${pokemon.nickname} (${pokemon.species})`
-    let relBtn = document.createElement('button')
-    relBtn.setAttribute('class', 'release')
-    relBtn.textContent = 'Release'
-    relBtn.setAttribute('id', pokemon.id)
-    relBtn.addEventListener("click", event => {
-      event.preventDefault()
-      releasePokemon(event)
-    })
-    li.appendChild(relBtn)
-    ul.appendChild(li)
-  })
   div.append(p, addBtn, ul)
   trainerCollection.appendChild(div)
+
+
+  trainer.pokemons.forEach(pokemon => {
+    renderPokemon(pokemon)
+  //  let li = document.createElement('li')
+  //  li.textContent = `${pokemon.nickname} (${pokemon.species})`
+  //  let relBtn = document.createElement('button')
+  //  relBtn.setAttribute('class', 'release')
+  //  relBtn.textContent = 'Release'
+    //relBtn.setAttribute('id', `${pokemon.id}-rel`)
+  //  relBtn.addEventListener("click", event => {
+  //    event.preventDefault()
+  //    releasePokemon(event)
+  //  })
+  //  li.appendChild(relBtn)
+  //  ul.appendChild(li)
+  })
+
 }
 
 function releasePokemon(event) {
-  let pokemon_id = event.target.id
+  //debugger;
+  let pokemon_id = parseInt(event.target.id, 10)
   fetch(`http://localhost:3000/pokemons/${pokemon_id}`, {
     method: "DELETE",
     headers: {
@@ -82,7 +85,7 @@ function releasePokemon(event) {
       return response.json()
     })
     .then(jsonResponse => {
-      //console.log(jsonResponse)
+      console.log(jsonResponse)
       renderPokemon(jsonResponse)
     })
     .catch(error => {
@@ -90,15 +93,18 @@ function releasePokemon(event) {
     })
   }
 
-  function renderPokemon(Object) {
-
-    let trainer_ul = document.getElementById(`${Object.trainer_id.toString()}`).nextSibling
-    let li = document.createElement('li')
-    li.textContent = `${Object.nickname} (${Object.species})`
-    let relBtn = document.createElement('button')
+  function renderPokemon(object) {
+    //console.log(object)
+    var trainer_ul = document.getElementById(`${object.trainer_id.toString()}`).nextSibling
+    //console.log(trainer_ul)
+    //console.log(document.getElementById(`${object.trainer_id.toString()}`))
+    //console.log(`${object.trainer_id.toString()}`)
+    var li = document.createElement('li')
+    li.textContent = `${object.nickname} (${object.species})`
+    var relBtn = document.createElement('button')
     relBtn.setAttribute('class', 'release')
     relBtn.textContent = 'Release'
-    relBtn.setAttribute('id', Object.id)
+    relBtn.setAttribute('id', `${object.id}-rel`)
     relBtn.addEventListener("click", event => {
       event.preventDefault()
       releasePokemon(event)
