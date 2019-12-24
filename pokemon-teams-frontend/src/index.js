@@ -1,41 +1,38 @@
 const BASE_URL = "http://localhost:3000";
 const TRAINERS_URL = `${BASE_URL}/trainers`;
 const POKEMONS_URL = `${BASE_URL}/pokemons`;
-// DESIRED HTML
-/* <div class="card">
-<p>Coach name</p>
-<button>Add Pokemon</button>
-<ul>
-  <li>
-    Pokemon Name
-    <button class="release">Release</button>
-  </li>
-</ul>
-</div> */
 
 const addButton = document.getElementById("add");
-addButton.addEventListener("click", addPokemon);
+addButton.addEventListener("click", createPokemon);
 
-function addPokemon() {
-  console.log("addPokemon called");
+function createPokemon() {
+  // const post = postData;
 }
 
-const gatherTrainerData = fetch(TRAINERS_URL)
-  .then(function(response) {
-    return response.json();
-  })
-  .then(function(json) {
-    json.data.forEach((trainer, index) => {
-      let resource = TRAINERS_URL + "/" + index;
-      fetch(resource)
-        .then(function(response) {
-          return response.json();
-        })
-        .then(function(json2) {
-          buildCard(json2);
-        });
+function releasePokemon(e) {
+  let id = e["target"]["attributes"]["0"]["value"];
+  let releaseURL = "http://localhost:3000/pokemons/" + id;
+  fetch(releaseURL, { method: "DELETE" });
+}
+
+function gatherTrainerData() {
+  fetch(TRAINERS_URL)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(json) {
+      json.data.forEach((trainer, index) => {
+        let resource = TRAINERS_URL + "/" + index;
+        fetch(resource)
+          .then(function(response) {
+            return response.json();
+          })
+          .then(function(json2) {
+            buildCard(json2);
+          });
+      });
     });
-  });
+}
 
 function buildCard(json2) {
   if (json2["data"] != null) {
@@ -71,7 +68,9 @@ function buildCard(json2) {
       let pokemonId = pokemonsArray[index]["attributes"]["id"];
       let releaseButton = document.createElement("button");
       releaseButton.setAttribute("data-pokemon-id", pokemonId);
+      releaseButton.setAttribute("id", "release");
       releaseButton.setAttribute("class", "release");
+      releaseButton.addEventListener("click", releasePokemon);
       releaseButton.innerText = "Release";
       let li = document.createElement("li");
       li.innerText = pokemonNickName + " (" + pokemonSpecies + ")";
@@ -80,3 +79,5 @@ function buildCard(json2) {
     });
   }
 }
+
+gatherTrainerData();
