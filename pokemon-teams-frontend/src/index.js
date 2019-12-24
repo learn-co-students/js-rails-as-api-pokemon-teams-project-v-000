@@ -53,18 +53,20 @@ const trainersWithIndex = fetch(TRAINERS_URL)
           return response.json();
         })
         .then(function(json2) {
-          console.log(json2);
+          buildCard(json2);
         });
     });
   });
 
 function buildCard(json2) {
+  let trainerId = json2["data"]["id"];
   let trainerName = json2["data"]["attributes"]["name"];
-  let pokemons = json2["included"];
-  let pokemonArray = Array.from(pokemons);
-  for (const attribute in pokemonArray) {
-    console.log(`${attribute}: ${pokemonArray[attribute]}`);
-  }
+
+  let pokemonsArray = json2["included"];
+  pokemonsArray.forEach((pokemon, index) => {
+    let pokemonNickName = pokemonsArray[index]["attributes"]["nickname"];
+    let pokemonSpecies = pokemonsArray[index]["attributes"]["species"];
+  });
 }
 
 // const trainers = await trainersResponse.json();
