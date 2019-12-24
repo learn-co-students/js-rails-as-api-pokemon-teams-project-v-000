@@ -21,7 +21,18 @@ const POKEMONS_URL = `${BASE_URL}/pokemons`;
 //   console.log("addPokemon called");
 // }
 
-const trainersResponse = fetch(TRAINERS_URL);
+const trainersResponse = fetch(TRAINERS_URL)
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(json) {
+    createTrainersHash(json);
+  });
+
+function createTrainersHash(trainersResponse) {
+  console.log(trainersResponse);
+  debugger;
+}
 // const trainers = await trainersResponse.json();
 
 // trainers.data.forEach(trainer => {
