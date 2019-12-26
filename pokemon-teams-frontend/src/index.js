@@ -2,18 +2,28 @@ const BASE_URL = "http://localhost:3000";
 const TRAINERS_URL = `${BASE_URL}/trainers`;
 const POKEMONS_URL = `${BASE_URL}/pokemons`;
 
-const addButton = document.getElementById("add");
-addButton.addEventListener("click", createPokemon);
-
-function createPokemon() {
-  // const post = postData;
+function createPokemon(e) {
+  let trainerId = e["srcElement"]["attributes"]["0"]["value"];
+  let addURL = "http://localhost:3000/pokemons/";
+  (async () => {
+    const rawResponse = await fetch(addURL, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ id: trainerId })
+    });
+    const content = await rawResponse.json();
+  })();
+  location.reload(); //necessary to reload local file. Would abstract away to render view if real app
 }
 
 function releasePokemon(e) {
-  let id = e["target"]["attributes"]["0"]["value"];
-  let releaseURL = "http://localhost:3000/pokemons/" + id;
+  let pokemonId = e["target"]["attributes"]["0"]["value"];
+  let releaseURL = "http://localhost:3000/pokemons/" + pokemonId;
   fetch(releaseURL, { method: "DELETE" });
-  location.reload()
+  location.reload();
 }
 
 function gatherTrainerData() {
@@ -52,16 +62,19 @@ function buildCard(json2) {
     p.innerText = trainerName;
     card.appendChild(p);
 
-    //Add the button to add a pokemon by trainer-id
+    //Add the button for adding a pokemon by trainer-id to the trainer's card
     let addButton = document.createElement("button");
     addButton.setAttribute("data-trainer-id", trainerId);
+    addButton.setAttribute("class", "add");
     addButton.innerText = "Add Pokemon";
+    addButton.addEventListener("click", createPokemon);
     card.appendChild(addButton);
 
-    //establish the <ul> and append to card
+    //Create a <ul> and append to card
     let ul = document.createElement("ul");
     card.appendChild(ul);
 
+    //Create <li> for each pokemon with bespoke release button and append to trainer's <ul> of pokemon
     let pokemonsArray = json2["included"];
     pokemonsArray.forEach((pokemon, index) => {
       let pokemonNickName = pokemonsArray[index]["attributes"]["nickname"];

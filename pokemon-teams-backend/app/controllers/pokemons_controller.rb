@@ -1,3 +1,4 @@
+require 'faker'
 class PokemonsController < ApplicationController
     def index
         pokemons = Pokemon.all
@@ -9,16 +10,17 @@ class PokemonsController < ApplicationController
       render json: PokemonSerializer.new(pokemon)
     end
 
-    def create
-      console.log('hit Pokemon create action')
-      
+    def create()
+      @pokemon = Pokemon.new
+      @pokemon.nickname = Faker::Name.first_name
+      @pokemon.species = Faker::Games::Pokemon.name
+      @pokemon.trainer_id = params[:id]
+      @pokemon.save
     end
-  
+
     def destroy
       pokemon = Pokemon.find_by(id: params[:id])
       pokemon.destroy
-      # render :json => response_hash and return
-      render 'file:///home/shaun/code/labs/js-rails-as-api-pokemon-teams-project-v-000/pokemon-teams-frontend/index.html'
-        end
+    end
   
   end
