@@ -13,6 +13,7 @@ function releasePokemon(e) {
   let id = e["target"]["attributes"]["0"]["value"];
   let releaseURL = "http://localhost:3000/pokemons/" + id;
   fetch(releaseURL, { method: "DELETE" });
+  location.reload()
 }
 
 function gatherTrainerData() {
