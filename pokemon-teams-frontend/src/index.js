@@ -3,20 +3,28 @@ const TRAINERS_URL = `${BASE_URL}/trainers`;
 const POKEMONS_URL = `${BASE_URL}/pokemons`;
 
 function createPokemon(e) {
-  let trainerId = e["srcElement"]["attributes"]["0"]["value"];
   let addURL = "http://localhost:3000/pokemons/";
-  (async () => {
-    const rawResponse = await fetch(addURL, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ id: trainerId })
-    });
-    const content = await rawResponse.json();
-  })();
-  location.reload(); //necessary to reload local file. Would abstract away to render view if real app
+  let trainerId = e["srcElement"]["attributes"]["0"]["value"];
+  let card = document.getElementById(trainerId);
+  let list = card.getElementsByClassName("list");
+  if (list["0"]["children"].length <= 6) {
+    (async () => {
+      const rawResponse = await fetch(addURL, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ id: trainerId })
+      });
+      const content = await rawResponse.json();
+    })();
+    location.reload(); //necessary to reload local file. Would abstract away to render view if real app
+  } else {
+    alert(
+      "Trainer limit reached. You must remove at least one Pokemon before you can add new pokemons to the team."
+    );
+  }
 }
 
 function releasePokemon(e) {
@@ -53,6 +61,7 @@ function buildCard(json2) {
 
     //Create the div
     const card = document.createElement("div");
+    card.setAttribute("id", trainerId);
     card.setAttribute("data-id", trainerId);
     card.setAttribute("class", "card");
     document.getElementById("main").appendChild(card);
@@ -72,6 +81,7 @@ function buildCard(json2) {
 
     //Create a <ul> and append to card
     let ul = document.createElement("ul");
+    ul.setAttribute("class", "list");
     card.appendChild(ul);
 
     //Create <li> for each pokemon with bespoke release button and append to trainer's <ul> of pokemon
