@@ -6,8 +6,8 @@ class TrainerSerializer
    
     def to_serialized_json
         @trainer.to_json(:include => {
-            :pokemons => {:only => [:species, :nickname]}
-        }, :only => [:name])
+            :pokemons => {:only => [:id, :species, :nickname]}
+        }, :only => [:id, :name])
     end
     
 

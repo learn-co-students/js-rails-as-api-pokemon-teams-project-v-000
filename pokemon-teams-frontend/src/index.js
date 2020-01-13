@@ -1,10 +1,9 @@
 const BASE_URL = "http://localhost:3000"
 const TRAINERS_URL = `${BASE_URL}/trainers`
 const POKEMONS_URL = `${BASE_URL}/pokemons`
+const main = document.querySelector('main');
 
 document.addEventListener('DOMContentLoaded',()=> {
-
-    const main = document.querySelector('main');
 
     function createTrainerCard(trainer) {
         let cardButton = document.createElement('button');
@@ -40,14 +39,13 @@ document.addEventListener('DOMContentLoaded',()=> {
     }
 
 
-    function getTrainers() {
+    function renderTrainers() {
         return fetch(TRAINERS_URL)
-        .then(resp => resp.json());
+        .then(resp => resp.json())
+        .then(json => appendTrainerCards(json));
     };
 
-    getTrainers().then(trainers => {
-        appendTrainerCards(trainers);
-    });
+    renderTrainers()
 
 })
 

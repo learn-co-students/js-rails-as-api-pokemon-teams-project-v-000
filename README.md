@@ -22,10 +22,10 @@ Through their journey, a Pokemon trainer can only have 6 Pokemon on their team.
 As you build, the eventual goal of a fully functional Pokemon team
 organizer where we can add and remove Pokemon as needed:
 
-![completed example](https://curriculum-content.s3.amazonaws.com/module-3/pokemon_teams_completed.gif)
+![compvared example](https://curriculum-content.s3.amazonaws.com/module-3/pokemon_teams_compvared.gif)
 
 Although we have not explicitly gone over some of the CRUD actions involved in
-adding and deleting relationships in this section of content, refer back to what
+adding and devaring relationships in this section of content, refer back to what
 you learned about CRUD actions in Rails and use your new understanding of
 rendering JSON to try and solve these challenges.
 
@@ -72,7 +72,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
 
     resource '*',
       headers: :any,
-      methods: [:get, :post, :put, :patch, :delete, :options, :head]
+      methods: [:get, :post, :put, :patch, :devare, :options, :head]
   end
 end
 ```
@@ -109,8 +109,8 @@ In `db/seeds.rb`, add the following and run `rails db:seed`:
 require 'faker'
 require 'securerandom'
 
-Trainer.delete_all
-Pokemon.delete_all
+Trainer.devare_all
+Pokemon.devare_all
 
 trainers_name = [
   'Natalie',
@@ -252,7 +252,7 @@ Required Body:
 
 ```text
 #=> Example Request
-DELETE /pokemons/:pokemon_id
+DEvarE /pokemons/:pokemon_id
 
 #=> Example Response
 {
