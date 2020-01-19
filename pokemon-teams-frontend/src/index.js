@@ -39,6 +39,7 @@ function createTrainerCard(obj) {
     let addPkmBtn = document.createElement('button')
     let ulElem = document.createElement('ul')
     let para = document.createElement('p')
+    let mainBody = document.querySelector('main')
     
     cardDiv["data-id"] = obj.id
     para.textContent = obj.attributes.name
@@ -50,16 +51,18 @@ function createTrainerCard(obj) {
     cardDiv.appendChild(ulElem)
 
     let pokemons = obj.relationships.pokemons.data
-    console.log(pokemons)
+
     for (i = 0; i < pokemons.length; i++) {
-        console.log(pokemons[i])
-        // getPokemonFromApi(pokemons[i])
+        
+        getPokemonFromApi(pokemons[i], cardDiv)
+        mainBody.appendChild(cardDiv)
+
     }
     
     
 }
 
-function getPokemonFromApi(pokemon) {
+function getPokemonFromApi(pokemon, cardDiv) {
     const requestConfigs = {
         method: 'GET',
         headers: {
@@ -71,19 +74,28 @@ function getPokemonFromApi(pokemon) {
     return fetch(`${POKEMONS_URL}/${pokemon.id}`, requestConfigs).then(function (response) {
         return response.json();
     }).then(function (json) {
-        // console.log(json.data)
-        // json.data.forEach(object => createTrainerCard(object))
+        cardDiv.appendChild(addPokemonToList(json.data))
 
     })
 }
 
-function addPokemon(pokemon) {
-    let ilElem = document.createElement('li')
+function addPokemonToList(pokemon) {
+    let liElem = document.createElement('li')
     let releasePkmBtn = document.createElement('button')
     releasePkmBtn.className = "release"
-    ilElem
+    releasePkmBtn['data-pokemon-id'] = pokemon.id
+    releasePkmBtn.addEventListener('click', removePokemon(event))
+    liElem.textContent = `${pokemon.attributes.nickname} (${pokemon.attributes.species})`
+    liElem.appendChild(releasePkmBtn)
+    return liElem
+
 }
 
 function addNewPokemon(event) {
     ///this is where i will create fake pokemon data
+}
+
+
+function removePokemon(event) {
+
 }
