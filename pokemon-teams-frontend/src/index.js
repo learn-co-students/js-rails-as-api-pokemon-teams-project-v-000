@@ -83,6 +83,7 @@ function addPokemonToList(pokemon) {
     let liElem = document.createElement('li')
     let releasePkmBtn = document.createElement('button')
     releasePkmBtn.className = "release"
+    releasePkmBtn.textContent = "Release"
     releasePkmBtn['data-pokemon-id'] = pokemon.id
     releasePkmBtn.addEventListener('click', removePokemon(event))
     liElem.textContent = `${pokemon.attributes.nickname} (${pokemon.attributes.species})`
