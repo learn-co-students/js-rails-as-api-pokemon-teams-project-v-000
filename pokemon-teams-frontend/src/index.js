@@ -41,11 +41,13 @@ function createTrainerCard(obj) {
     let para = document.createElement('p')
     let mainBody = document.querySelector('main')
     
-    cardDiv["data-id"] = obj.id
+    cardDiv.setAttribute("data-id", obj.id)
     para.textContent = obj.attributes.name
     addPkmBtn.textContent = "Add Pokemon"
-    addPkmBtn['data-trainer-id'] = obj.id
-    addPkmBtn.addEventListener('click', addNewPokemon(event))
+    addPkmBtn.setAttribute('data-trainer-id', obj.id)
+    addPkmBtn.addEventListener('click', event => {
+        addNewPokemon(event)
+    })
     cardDiv.appendChild(para)
     cardDiv.appendChild(addPkmBtn)
     cardDiv.appendChild(ulElem)
@@ -79,13 +81,16 @@ function getPokemonFromApi(pokemon, cardDiv) {
     })
 }
 
+
 function addPokemonToList(pokemon) {
     let liElem = document.createElement('li')
     let releasePkmBtn = document.createElement('button')
     releasePkmBtn.className = "release"
     releasePkmBtn.textContent = "Release"
-    releasePkmBtn['data-pokemon-id'] = pokemon.id
-    releasePkmBtn.addEventListener('click', removePokemon(event))
+    releasePkmBtn.setAttribute('data-pokemon-id', pokemon.id)
+    releasePkmBtn.addEventListener('click', event => {
+        removePokemon(event)
+    })
     liElem.textContent = `${pokemon.attributes.nickname} (${pokemon.attributes.species})`
     liElem.appendChild(releasePkmBtn)
     return liElem
@@ -93,9 +98,42 @@ function addPokemonToList(pokemon) {
 }
 
 function addNewPokemon(event) {
-    ///this is where i will create fake pokemon data
+    const requestConfigs = {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify(
+            {   
+                "trainer_id": event.target.getAttribute('data-trainer-id')
+            }
+        )
+    }
+
+    return fetch(POKEMONS_URL, requestConfigs).then(function (response) {
+        return response.json();
+    }).then(function(json) {
+        if (json.status === 'error') {
+            console.log(json.message)
+        }
+        else
+        {let trainerId = json.data.relationships.trainer.data.id
+        let pokemonLi = addPokemonToList(json.data)
+        
+        findTrainerCardAndAddPokemon(trainerId, pokemonLi)}
+    })
 }
 
+function findTrainerCardAndAddPokemon(trainerId, pokemonLi) {
+    let allCards = document.querySelectorAll('.card')
+    allCards.forEach(function(card){
+        if (card.getAttribute('data-id') === trainerId) {
+            card.appendChild(pokemonLi)
+        }
+    })
+    
+}
 
 function removePokemon(event) {
 
