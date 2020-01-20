@@ -136,5 +136,18 @@ function findTrainerCardAndAddPokemon(trainerId, pokemonLi) {
 }
 
 function removePokemon(event) {
+    const requestConfigs = {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        }
+    }
 
+    fetch(`${POKEMONS_URL}/${event.target.getAttribute('data-pokemon-id')}`, requestConfigs).then(function(response){
+        return response.json();
+    }).then(function(json){
+
+        event.target.parentNode.parentNode.removeChild(event.target.parentNode)
+    })
 }
