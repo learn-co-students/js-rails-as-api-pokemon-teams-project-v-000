@@ -9,13 +9,13 @@ document.addEventListener("DOMContentLoaded", function(e) {
 // show all the trainers and their teams
 // fetch trainers
 function fetchTrainers() {
-    fetch (TRAINERS_URL)
-    .then(response => response.json()
+    return fetch (TRAINERS_URL)
+    .then(response => response.json())
     .then(json => renderTeams(json))
-    )}
+    }
 
-function renderTeams(json) {
-    json.forEach(trainer => {
+function renderTeams(trainers) {
+    trainers.data.forEach(trainer => {
         renderTeam(trainer);
     })
 }
@@ -23,6 +23,8 @@ function renderTeams(json) {
 // building the div that each team lives in
 
 function renderTeam(trainer) {
+    //console.log(trainer)
+
     const main = document.querySelector('main')
     const div = document.createElement('div')
     div.className = 'card'
@@ -48,6 +50,7 @@ function renderTeam(trainer) {
 
     div.appendChild(ul)
     main.appendChild(div)
+    
 }
 
 // renderPokemon function
@@ -95,7 +98,7 @@ function addPokemon(trainer_id) {
 
 // releasePokemon function
 
-function  releasePokemon(pokemon) {
+function releasePokemon(pokemon) {
     const li = document.querySelector(`[data-id="${pokemon.trainer_id}"] ul li [data-pokemon-id="${pokemon.id}"]`).parentNode
 
     fetch(`${POKEMONS_URL}/${pokemon.id}`, {
