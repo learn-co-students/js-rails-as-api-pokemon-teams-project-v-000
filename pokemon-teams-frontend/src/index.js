@@ -11,8 +11,8 @@ document.addEventListener("DOMContentLoaded", function(e) {
 function fetchTrainers() {
     fetch (TRAINERS_URL)
     .then(response => response.json()
-    .then(json => renderTeams(json));
-}
+    .then(json => renderTeams(json))
+    )}
 
 function renderTeams(json) {
     json.forEach(trainer => {
