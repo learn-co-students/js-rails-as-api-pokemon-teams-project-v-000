@@ -1,5 +1,10 @@
 # Pokemon Teams Project
 
+## Cool Graphics
+
+- As always, here's a cool graphic to show what I've been up to in this lab.
+<a href="https://imgur.com/EHW3YhJ"><img src="https://i.imgur.com/EHW3YhJ.jpg" title="source: imgur.com" /></a>
+
 ## Learning Goals
 
 - Combine both a JavaScript frontend with an API-Only build of Rails
@@ -60,7 +65,7 @@ build, add the following gem to the Gemfile:
 gem 'faker'
 ```
 
-While we are in the Gemfile, uncomment `gem 'rack-cors'`, then run 
+While we are in the Gemfile, uncomment `gem 'rack-cors'`, then run
 `bundle install`. If you recall, `rack-cors` is necessary for cross-origin
 resource sharing. To get rack-cors working, once the gem is installed, uncomment
 the following code in `config/initializers/cors.rb`:
