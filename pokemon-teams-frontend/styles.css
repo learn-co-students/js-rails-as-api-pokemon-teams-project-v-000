@@ -51,11 +51,12 @@ body {
     border-radius: 10px;
   }
   
-  button.release {
+  button.release-button {
     float: right;
     background-color: #E1332D;
   }
   
+
   @media only screen and (min-width: 500px) {
     main {
       grid-template-columns: 1fr 1fr;
