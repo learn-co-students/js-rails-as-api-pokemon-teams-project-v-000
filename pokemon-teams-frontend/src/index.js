@@ -13,25 +13,27 @@ function cardCreation(obj){
   const div = document.createElement("div");
   const p = document.createElement("p");
   const add_button = document.createElement("button")
-  const ul = document.createElement("ul");
   div.setAttribute("class", "card");
   div.setAttribute("data-id", obj.id);
   p.innerText = text;
   add_button.setAttribute("data-trainer-id", obj.id);
   add_button.innerText = "Add Pokemon"
+  const ul = document.createElement("ul");
+    pokemonlist(pokemons)
   
-  // sets up the pokemons info and action button
-  pokemons.forEach(poke => {
-    const release_button = document.createElement("button");
-    const li = document.createElement("li") 
-    release_button.setAttribute("class","release")
-    release_button.setAttribute("data-pokemon-id", poke.id)
-    release_button.innerText = "Release"
-    li.innerText = (`${poke.nickname}  (${poke.species})`)
-    li.append(release_button);
-    ul.appendChild(li);  
-  });
-  
+    // sets up the pokemons info and action button
+    function pokemonlist(pokemons) {
+        pokemons.forEach(poke => {
+        const release_button = document.createElement("button");
+        const li = document.createElement("li") 
+        release_button.setAttribute("class","release")
+        release_button.setAttribute("data-pokemon-id", poke.id)
+        release_button.innerText = "Release"
+        li.innerText = (`${poke.nickname}  (${poke.species})`)
+        li.append(release_button);
+        ul.appendChild(li);
+        });
+      }
   // putting everything together
   div.appendChild(p);
   div.appendChild(add_button);
