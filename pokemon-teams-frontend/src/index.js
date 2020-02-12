@@ -1,12 +1,14 @@
 const BASE_URL = "http://localhost:3000"
 const TRAINERS_URL = `${BASE_URL}/trainers`
 const POKEMONS_URL = `${BASE_URL}/pokemons`
+let pokemons = []; 
 
+document.addEventListener('DOMContentLoaded', () => {
+	getAllCards()
+	getPokemons()
+})
 
-document.addEventListener('DOMContentLoaded', getAllCards())
-document.addEventListener("DOMContentLoaded", getPokemons)
-
-let pokemons = [] //global variable, available everywhere 
+//global variable, available everywhere 
 
 function getAllCards() {
 	fetch(TRAINERS_URL)
@@ -18,11 +20,8 @@ function getPokemons() {
 	fetch(POKEMONS_URL)
 		.then(response => response.json())
 		.then(json => {
-			// console.log(json.data)
-			pokemons = json.data //we're putting the json.data into the global 
-			//pokemons array 
-		})
-		
+			pokemons = json.data // put json.data into  global pokemons array 
+    })
 }
 
 const showAllCards = (cards) => {
@@ -34,7 +33,6 @@ const createTrainerCard = (card) => {
 	let div = document.createElement('div')
 	div.setAttribute('class', 'card' )
 	div.setAttribute('data-id', `${card.id}` )
-	//div.innerHTML = "hello" 
 
 	//attach div to main element in index.html
 	main = document.getElementById("pokemon-teams")
@@ -49,57 +47,53 @@ const createTrainerCard = (card) => {
 
 	//create add Pokemon button 
 	let button = document.createElement('button')
-	let trainerID = button.setAttribute('data-trainer-id', `${card.id}`) //
+	button.setAttribute('data-trainer-id', `${card.id}`) //refactor 
 	button.innerHTML = "Add Pokemon"
 	button.id = "add-pokemon-button"
 	div.append(button) 
 		
-	// let array = card.relationships.pokemon
-	// let number = array.count
-
 	button.addEventListener('click', (e) => {
 		const numberOfPokemonsOnTeam = e.target.nextSibling.childElementCount
  		// console.log("on team:", numberOfPokemonsOnTeam)
  		if (numberOfPokemonsOnTeam < 6) {
 			createNewPokemon(card.id, button.id)
 			} else {
-			console.log("too many, can't add more")
-			//add reroute here, or put on screen 
+			alert("too many, can't add more")
 		}
 	})
-	
+	//create ul 
 	const ul = document.createElement('ul')
 	div.append(ul)
 
+	//create individual cards for pokemon
 	card.relationships.pokemon.data.forEach(pokemon => {
 		let li = document.createElement('li')
 		const pokemonName  = mapIDNumberToPokemons(pokemon.id).attributes.nickname 
-		// li.innerHTML =  name 
 		li.appendChild(document.createTextNode(pokemonName))
 		
 		let releaseButton = document.createElement("button")
 		releaseButton.appendChild(li)
 		releaseButton.innerHTML = "Release"
 		releaseButton.className = "release-button"
-		// releaseButton.id = pokemon.id 
 		releaseButton.setAttribute('data-pokemon-id', `${pokemon.id}`)
 		
 		releaseButton.addEventListener('click', (e) => {
 			releasePokemon(card.id, pokemon.id, e)
 		})
+
 		li.appendChild(releaseButton)
 		ul.appendChild(li)
 	})
 }
-const createNewPokemon = (trainer_id, button) => {   
-	console.log("here", trainer_id, button)
+
+const createNewPokemon = (trainer_id) => {   
+	console.log("here", trainer_id)
 
 	let trainer = {
 		"trainer_id" : trainer_id
 	} 
 
-	
-	 let config = {
+	let config = {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
@@ -109,33 +103,33 @@ const createNewPokemon = (trainer_id, button) => {
 
 	fetch(POKEMONS_URL, config)
 		.then(response => response.json())
-		.then(data => console.log(data))
-		.then(data => renderNewPokemon(trainer, data))
-
+		.then(newPokemon => renderNewPokemon(trainer, newPokemon))
 }
 
-// object.trainer.id
+const renderNewPokemon = (trainer, newPokemon) => {
+	console.group("renderNewPokemon")
+	console.log("trainer:", trainer)
+	console.log("new pokemon:", newPokemon)
+	console.groupEnd()
 
-const renderNewPokemon = (trainer, object => {
-	console.log("trainer")
-	const trainerBox = document.querySelector(`[data-id="${trainer}"] ul`)
-	const li = document.createElement('li')
-	li.innerHTML = `${object.nickname} -${object.species}`
 	
+	const trainerBox = document.querySelectorAll('[data-id="${trainer}"] ul' )
+	console.log("trainerbox:", trainerBox)
+	
+	const li = document.createElement('li')
+	li.innerHTML = `${newPokemon.nickname} - ${newPokemon.species}`
 	let releaseButton = document.createElement("button")
 	releaseButton.className = "release-button"
-	releaseButton.setAttribute('data-pokemon-id', `${pokemon.id}`)
+	releaseButton.setAttribute('data-pokemon-id', `${newPokemon.id}`)
 	releaseButton.innerHTML = "Release"
 	li.appendChild(releaseButton)
-		
+
 	releaseButton.addEventListener('click', (e) => {
-			releasePokemon(card.id, pokemon.id, e)
-	})
-	
-	trainerBox.appendChild(li)
+		releasePokemon(trainer, newPokemon.id, e)
+	})	
 }
 
-const mapIDNumberToPokemons = (id) => {
+function mapIDNumberToPokemons(id) {
 	let pokemonArray = pokemons.filter(pokemon => {
 		return id === pokemon.id
 	})
@@ -154,9 +148,3 @@ const deletePokemonFromPage = (e) => {
     console.log(el)
 	el.remove()
 }
-
-
-// function morePokemon(e) {
-//     if (e.target.nextSibling.childElementCount < 6) {
-//         fetchPokemon(e.target.attributes[0].value)
-//     }
