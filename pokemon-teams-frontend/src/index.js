@@ -3,11 +3,6 @@ const TRAINERS_URL = `${BASE_URL}/trainers`
 const POKEMONS_URL = `${BASE_URL}/pokemons`
 
 
-//user loads a page -- they see all trainers with their pokemon 
-//user hits "Add pokemon" button, if they have space on their team, they get a new P 
-//user hits "release pokemon" button on a specific Pok team
-// that P is released from the team 
-
 document.addEventListener('DOMContentLoaded', getAllCards())
 document.addEventListener("DOMContentLoaded", getPokemons)
 
@@ -16,7 +11,6 @@ let pokemons = [] //global variable, available everywhere
 function getAllCards() {
 	fetch(TRAINERS_URL)
 		.then(response => response.json())
-		// .then(console.log("here"))
 		.then(json => showAllCards(json))
 }
 
@@ -55,11 +49,24 @@ const createTrainerCard = (card) => {
 
 	//create add Pokemon button 
 	let button = document.createElement('button')
-	button.id = "add-pokemon-button"
 	let trainerID = button.setAttribute('data-trainer-id', `${card.id}`) //
 	button.innerHTML = "Add Pokemon"
+	button.id = "add-pokemon-button"
 	div.append(button) 
-	
+		
+	// let array = card.relationships.pokemon
+	// let number = array.count
+
+	button.addEventListener('click', (e) => {
+		const numberOfPokemonsOnTeam = e.target.nextSibling.childElementCount
+ 		// console.log("on team:", numberOfPokemonsOnTeam)
+ 		if (numberOfPokemonsOnTeam < 6) {
+			createNewPokemon(card.id, button.id)
+			} else {
+			console.log("too many, can't add more")
+			//add reroute here, or put on screen 
+		}
+	})
 	
 	const ul = document.createElement('ul')
 	div.append(ul)
@@ -77,30 +84,65 @@ const createTrainerCard = (card) => {
 		// releaseButton.id = pokemon.id 
 		releaseButton.setAttribute('data-pokemon-id', `${pokemon.id}`)
 		
-		releaseButton.addEventListener('click', function(e) {
+		releaseButton.addEventListener('click', (e) => {
 			releasePokemon(card.id, pokemon.id, e)
 		})
 		li.appendChild(releaseButton)
 		ul.appendChild(li)
 	})
 }
+const createNewPokemon = (trainer_id, button) => {   
+	console.log("here", trainer_id, button)
+
+	let trainer = {
+		"trainer_id" : trainer_id
+	} 
+
+	
+	 let config = {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify(trainer)
+	}
+
+	fetch(POKEMONS_URL, config)
+		.then(response => response.json())
+		.then(data => console.log(data))
+		.then(data => renderNewPokemon(trainer, data))
+
+}
+
+// object.trainer.id
+
+const renderNewPokemon = (trainer, object => {
+	console.log("trainer")
+	const trainerBox = document.querySelector(`[data-id="${trainer}"] ul`)
+	const li = document.createElement('li')
+	li.innerHTML = `${object.nickname} -${object.species}`
+	
+	let releaseButton = document.createElement("button")
+	releaseButton.className = "release-button"
+	releaseButton.setAttribute('data-pokemon-id', `${pokemon.id}`)
+	releaseButton.innerHTML = "Release"
+	li.appendChild(releaseButton)
+		
+	releaseButton.addEventListener('click', (e) => {
+			releasePokemon(card.id, pokemon.id, e)
+	})
+	
+	trainerBox.appendChild(li)
+}
 
 const mapIDNumberToPokemons = (id) => {
-	// console.log("pokemons object:", pokemons)
-	let array = pokemons.filter(pokemon => {
-		// console.log("pokemon:", pokemon)
+	let pokemonArray = pokemons.filter(pokemon => {
 		return id === pokemon.id
 	})
-	// console.log('array:', array)
-	//  console.log('array 0:', array[0])//returns pokemon object
-	return array[0]
+	return pokemonArray[0]
 }
 
 const releasePokemon = (trainerID, pokemonId, e) => {
-	// console.log("release button pressed")
-	//collect the id of the trainer -- data-trainer-id
-	//collect id of that pokemon. == releaseButton.id
-	//delete that id from the trainer -- with Delete request 
 	fetch(TRAINERS_URL + '/' + trainerID + '/pokemons/' + pokemonId, {
 		method: 'DELETE'
 		}).then(console.log(`${pokemonId} has been removed`))
@@ -109,18 +151,12 @@ const releasePokemon = (trainerID, pokemonId, e) => {
 
 const deletePokemonFromPage = (e) => {
     let el = e.target.parentElement
+    console.log(el)
 	el.remove()
-     }
-// const addPokemon = () => {
-//     let randomNumber = Math.floor(Math.random() * 31) + 1
-//     let pokemonIds
-// 	console.log(pokemons.filter(pokemon => {
+}
 
-// 	})
-//  }
 
-// addPokemon()
-listen for add 
-fetch from pokemons, get the trainer id. 
-fetch from trainer. show if they have less than 6, if so, create a random 
-fethc (post, for new pokemon )
+// function morePokemon(e) {
+//     if (e.target.nextSibling.childElementCount < 6) {
+//         fetchPokemon(e.target.attributes[0].value)
+//     }
