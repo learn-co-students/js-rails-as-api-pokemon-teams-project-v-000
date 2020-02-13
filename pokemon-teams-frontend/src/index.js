@@ -1,14 +1,13 @@
 const BASE_URL = "http://localhost:3000"
 const TRAINERS_URL = `${BASE_URL}/trainers`
 const POKEMONS_URL = `${BASE_URL}/pokemons`
+
 let pokemons = []; 
 
 document.addEventListener('DOMContentLoaded', () => {
 	getAllCards()
 	getPokemons()
 })
-
-//global variable, available everywhere 
 
 function getAllCards() {
 	fetch(TRAINERS_URL)
@@ -112,7 +111,7 @@ const renderNewPokemon = (trainer, newPokemon) => {
 	console.log("new pokemon:", newPokemon)
 	console.groupEnd()
 
-		// document.querySelector('[data-num="' + num + '"]'
+	
 	const trainerBox = document.querySelector(`[data-id="${trainer.trainer_id}"] ul`)
 
 	const li = document.createElement('li')
