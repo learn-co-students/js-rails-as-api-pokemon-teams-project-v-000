@@ -117,16 +117,30 @@ const renderNewPokemon = (trainer, newPokemon) => {
 	console.log("trainerbox:", trainerBox)
 	
 	const li = document.createElement('li')
-	li.innerHTML = `${newPokemon.nickname} - ${newPokemon.species}`
+	const name = li.innerHTML = `${newPokemon.nickname}`
+	// - ${newPokemon.species}
+	
+
+	const div = document.querySelector('div').querySelector('ul')
+	// console.log(div)
+	div.appendChild(li)
+// const pokemonName  = mapIDNumberToPokemons(pokemon.id).attributes.nickname 
+// li.appendChild(document.createTextNode(pokemonName))
+
+
 	let releaseButton = document.createElement("button")
 	releaseButton.className = "release-button"
 	releaseButton.setAttribute('data-pokemon-id', `${newPokemon.id}`)
 	releaseButton.innerHTML = "Release"
 	li.appendChild(releaseButton)
 
+
 	releaseButton.addEventListener('click', (e) => {
 		releasePokemon(trainer, newPokemon.id, e)
 	})	
+
+	div.appendChild(li)
+	li.appendChild(document.createTextNode(name))
 }
 
 function mapIDNumberToPokemons(id) {
