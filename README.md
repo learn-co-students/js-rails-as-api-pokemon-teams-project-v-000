@@ -1,3 +1,7 @@
+# This began as a Flatiron lab, which gave us only some basic structures and CSS. The entire JS Frontend was written by me, as was the Rails backend, and it was the first project in which I fully understood and could debug the entire fullstack process. 
+
+-- Miriam 
+
 # Pokemon Teams Project
 
 ## Learning Goals

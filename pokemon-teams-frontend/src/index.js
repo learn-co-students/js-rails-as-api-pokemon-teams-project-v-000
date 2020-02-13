@@ -68,7 +68,7 @@ const createTrainerCard = (card) => {
 	//create individual cards for pokemon
 	card.relationships.pokemon.data.forEach(pokemon => {
 		let li = document.createElement('li')
-		const pokemonName  = mapIDNumberToPokemons(pokemon.id).attributes.nickname 
+		const pokemonName  = mapIDNumberToPokemons(pokemon.id).attributes.nickname + ' (' +  mapIDNumberToPokemons(pokemon.id).attributes.species + ')'
 		li.appendChild(document.createTextNode(pokemonName))
 		
 		let releaseButton = document.createElement("button")
@@ -80,8 +80,8 @@ const createTrainerCard = (card) => {
 		releaseButton.addEventListener('click', (e) => {
 			releasePokemon(card.id, pokemon.id, e)
 		})
-
 		li.appendChild(releaseButton)
+		
 		ul.appendChild(li)
 	})
 }
@@ -108,39 +108,27 @@ const createNewPokemon = (trainer_id) => {
 
 const renderNewPokemon = (trainer, newPokemon) => {
 	console.group("renderNewPokemon")
-	console.log("trainer:", trainer)
+	console.log("trainer:", trainer.trainer_id)
 	console.log("new pokemon:", newPokemon)
 	console.groupEnd()
 
-	
-	const trainerBox = document.querySelectorAll('[data-id="${trainer}"] ul' )
-	console.log("trainerbox:", trainerBox)
-	
+		// document.querySelector('[data-num="' + num + '"]'
+	const trainerBox = document.querySelector(`[data-id="${trainer.trainer_id}"] ul`)
+
 	const li = document.createElement('li')
-	const name = li.innerHTML = `${newPokemon.nickname}`
-	// - ${newPokemon.species}
-	
-
-	const div = document.querySelector('div').querySelector('ul')
-	// console.log(div)
-	div.appendChild(li)
-// const pokemonName  = mapIDNumberToPokemons(pokemon.id).attributes.nickname 
-// li.appendChild(document.createTextNode(pokemonName))
-
+	li.innerHTML = `${newPokemon.data.attributes.nickname}  ( ${newPokemon.data.attributes.species} )`
+	trainerBox.appendChild(li)
 
 	let releaseButton = document.createElement("button")
 	releaseButton.className = "release-button"
 	releaseButton.setAttribute('data-pokemon-id', `${newPokemon.id}`)
 	releaseButton.innerHTML = "Release"
-	li.appendChild(releaseButton)
-
-
 	releaseButton.addEventListener('click', (e) => {
 		releasePokemon(trainer, newPokemon.id, e)
 	})	
-
-	div.appendChild(li)
-	li.appendChild(document.createTextNode(name))
+	li.appendChild(releaseButton)
+	
+	
 }
 
 function mapIDNumberToPokemons(id) {
