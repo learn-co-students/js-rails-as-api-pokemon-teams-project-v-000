@@ -13,26 +13,18 @@ class HawksController < ApplicationController
       render json: { message: 'Hawk not found' }
     end
   end
-
+#########################IMPORTANT FOR PORTFOLIO PROJECT########################
+################################################################################
   def create
     hawkData = {
-      name: "A hardwired value for a new hawk's name"
+      # The first value [name:] corresponds to the backend object model
+      # The second value [params[:name]] corresponds to the frontend
+      name: params[:java_script_name],
+      species: params[:java_script_species]
     }
       Hawk.create(hawkData)
       #render json: hawk
   end
-
 end
-
-
-
-# NOTE: this create action works to create a new hawk with the hard-coded
-# name & species values
-# def create
-#   hawkData = {
-#     name: "Sylvester",
-#     species: "Black-Hawk"
-#   }
-#     Hawk.create(hawkData)
-#
-# end
+################################################################################
+################################################################################

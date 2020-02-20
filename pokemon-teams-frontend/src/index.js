@@ -111,19 +111,28 @@ function createCards(){
   });
 }
 
+/////////////////////IMPORTANT FOR PORTFOLIO PROJECT////////////////////////////
 // This section explores how to take inputs from forms on the DOM, and transfer
-// those inputs to the Rails backend database.
+// those inputs to the Rails backend database.  This will be required on the
+// portfolio project but isn't done in any of the labs that I can find
+
+
+// FIRST: you have to setup a queryselector on the submit button //////////////
 let newHawkFormSubmitButton = document.querySelector("form.new-hawk-form input[type='submit']")
 
+// SECOND: you have to setup a queryselector on the form the submit button belongs to //////////////
 let newHawkForm = document.querySelector('form.new-hawk-form')
 
+// THIRD: you have to add an event listener to the user clicking on the submit button
 newHawkFormSubmitButton.addEventListener('click', event => {
-  //event.preventDefault()
+
+  // FOURTH: you have to add an event listener to the submitting of the form
   newHawkForm.addEventListener('submit', event => {
     event.preventDefault()
-    createANewHawk(event.target)
+    createANewHawk(event.target) //target grabs the values you input on the form
   })
 })
+
 
 function createANewHawk(hawk_data){
   fetch('http://localhost:3000/hawks', {
@@ -133,12 +142,9 @@ function createANewHawk(hawk_data){
         Accept: "application/json"
       },
       body: JSON.stringify({
-        "name": "A hardwired value for a new hawk's name"
-
-        // The inputs below should work when the frontend is able to talk to
-        // the (rails) backend
-        //"name": hawk_data.name.value,
-        //"species": hawk_data.species.value
+        // FIFTH: you must define the parameters you want to send to the Rails backend here:
+        "java_script_name": hawk_data.name.value,
+        "java_script_species": hawk_data.species.value
 
       })
     })
