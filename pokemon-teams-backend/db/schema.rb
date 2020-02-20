@@ -10,7 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_27_212417) do
+ActiveRecord::Schema.define(version: 2020_02_20_173929) do
+
+  create_table "hawks", force: :cascade do |t|
+    t.string "name"
+    t.string "species"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "nests", force: :cascade do |t|
+    t.integer "hawk_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["hawk_id"], name: "index_nests_on_hawk_id"
+  end
 
   create_table "pokemons", force: :cascade do |t|
     t.string "species"
@@ -27,5 +41,6 @@ ActiveRecord::Schema.define(version: 2020_01_27_212417) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "nests", "hawks"
   add_foreign_key "pokemons", "trainers"
 end

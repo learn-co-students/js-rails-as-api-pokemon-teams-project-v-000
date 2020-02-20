@@ -38,3 +38,10 @@ trainer_collection.each do |trainer|
     Pokemon.create(nickname: name, species: species, trainer_id: trainer.id)
   end
 end
+
+Hawk.create(name: "Ambrosius", species: "Sparrowhawk")
+Hawk.create(name: "Blasius", species: "Red-Tailed")
+Hawk.create(name: "Cornelius", species: "Osprey")
+Hawk.create(name: "Cyrillus", species: "Kite")
+Hawk.create(name: "Maximus", species: "Griffon")
+Hawk.create(name: "Octavious", species: "Circinae")

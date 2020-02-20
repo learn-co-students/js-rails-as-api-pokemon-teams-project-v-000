@@ -3,6 +3,7 @@
 const BASE_URL = "http://localhost:3000"
 const TRAINERS_URL = `${BASE_URL}/trainers`
 const POKEMONS_URL = `${BASE_URL}/pokemons`
+const HAWKS_URL = `${BASE_URL}/hawks`
 
 console.log("Javascript is being read")
 
@@ -109,42 +110,42 @@ function createCards(){
     }
   });
 }
+
+// This section explores how to take inputs from forms on the DOM, and transfer
+// those inputs to the Rails backend database.
+let newHawkFormSubmitButton = document.querySelector("form.new-hawk-form input[type='submit']")
+
+let newHawkForm = document.querySelector('form.new-hawk-form')
+
+newHawkFormSubmitButton.addEventListener('click', event => {
+  //event.preventDefault()
+  newHawkForm.addEventListener('submit', event => {
+    event.preventDefault()
+    createANewHawk(event.target)
+  })
+})
+
+function createANewHawk(hawk_data){
+  fetch('http://localhost:3000/hawks', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: "application/json"
+      },
+      body: JSON.stringify({
+        "name": "A hardwired value for a new hawk's name"
+
+        // The inputs below should work when the frontend is able to talk to
+        // the (rails) backend
+        //"name": hawk_data.name.value,
+        //"species": hawk_data.species.value
+
+      })
+    })
+    .then(function(json) {
+      console.log(json);
+    });
+}
+
+
 createCards()
-
-// HTML ELEMENTS LAYER BEGINS => These are building blocks used to create the
-// functions above.  When something breaks, copy & paste these in the console
-// and comment out this entire .js file...if these variables don't populate a
-// placeholder HTML block that is properly nested, something's probably changed
-// in the CSS file.
-/*
-let layoutVar1 = document.createElement('div')
-    layoutVar1.setAttribute('class', "card")
-    layoutVar1.setAttribute('data-id', "placeholder-card-number")
-
-let layoutVar2 = document.createElement('p')
-    layoutVar2.innerText = "placeholder-trainer-name"
-
-
-let layoutVar3 = document.createElement('button')
-    layoutVar3.setAttribute('data-trainer-id', "placeholder-trainer-id-number")
-    layoutVar3.innerText = "Add Pokemon"
-
-let layoutVar4 = document.createElement('ul')
-
-let layoutVar5 = document.createElement('li')
-    layoutVar5.innerText = "placeholder-pokemon-nickname (placeholder-pokemon-species)"
-
-let layoutVar6 = document.createElement('button')
-    layoutVar6.setAttribute('class', "release")
-    layoutVar6.setAttribute('data-pokemon-id', "placeholder-pokemon-id-number")
-    layoutVar6.innerText = "Release"
-
-layoutVar1.appendChild(layoutVar2)
-layoutVar1.appendChild(layoutVar3)
-layoutVar1.appendChild(layoutVar4)
-layoutVar4.appendChild(layoutVar5)
-layoutVar5.appendChild(layoutVar6)
-
-let insertPoint = document.querySelector("main")
-insertPoint.appendChild(layoutVar1)
-*/
