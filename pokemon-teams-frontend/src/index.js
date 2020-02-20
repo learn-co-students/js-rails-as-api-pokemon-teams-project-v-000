@@ -17,6 +17,7 @@ function cardCreation(obj){
   div.setAttribute("data-id", obj.id);
   p.innerText = text;
   add_button.setAttribute("data-trainer-id", obj.id);
+  add_button.setAttribute("class", "add-pokemon");
   add_button.innerText = "Add Pokemon"
   const ul = document.createElement("ul");
     pokemonlist(pokemons)
@@ -42,6 +43,46 @@ function cardCreation(obj){
 }
 
 
+function header(type = "POST", formData){
+  let configObj = {
+    method: type,
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    body: JSON.stringify(formData)
+  };
+
+  return configObj
+}
+  
+
+
+function addPokemon(e){
+  const trainerId = e.target.dataset.trainerId
+  const formData = { trainer_id: trainerId }
+  const configHeader = header("POST", {formData})
+  fetch(POKEMONS_URL, configHeader)
+  /*
+  from here we are going to :
+  1. construct a  HEADER by:
+  a) creating a body
+  b) creating a header
+  c) putting the body and header together
+  d) sending a post request to POKEMON server
+  e) receiving a response with the new POKEMON
+  d) updating our HTML 
+  */
+}
+
+function addEventListeners() {
+  let addPokemonList = document.querySelectorAll('[data-trainer-id]');
+  for (let i = 0; i < addPokemonList.length; i++) {
+    addPokemonList[i].addEventListener('click', (e) => { addPokemon(e) })
+  }
+  
+}
+
 function fetchTrainers(TRAINERS_URL){
   fetch(TRAINERS_URL)
   .then(response=> {return response.json()})
@@ -49,6 +90,6 @@ function fetchTrainers(TRAINERS_URL){
   .catch((error)=>{console.log(error)})
 }
 
-window.onload = (fetchTrainers(TRAINERS_URL) )
+window.onload = (fetchTrainers(TRAINERS_URL), setTimeout(() => {addEventListeners()}, 2000)  )
 
 
