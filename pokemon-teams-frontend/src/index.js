@@ -1,8 +1,8 @@
 // NOTE: A graphic is available here showing how I put this Javascript together: https://i.imgur.com/EHW3YhJ.jpg
 
 const BASE_URL = "http://localhost:3000"
-const TRAINERS_URL = `${BASE_URL}/trainers`
-const POKEMONS_URL = `${BASE_URL}/pokemons`
+//const TRAINERS_URL = `${BASE_URL}/trainers`
+//const POKEMONS_URL = `${BASE_URL}/pokemons`
 const HAWKS_URL = `${BASE_URL}/hawks`
 
 console.log("Javascript is being read")
@@ -123,7 +123,7 @@ let newHawkFormSubmitButton = document.querySelector("form.new-hawk-form input[t
 // SECOND: you have to setup a queryselector on the form the submit button belongs to //////////////
 let newHawkForm = document.querySelector('form.new-hawk-form')
 
-// THIRD: you have to add an event listener to the user clicking on the submit button
+// THIRD: you can add an event listener to the user clicking on the submit button but this is not required
 newHawkFormSubmitButton.addEventListener('click', event => {
 
   // FOURTH: you have to add an event listener to the submitting of the form
@@ -135,7 +135,7 @@ newHawkFormSubmitButton.addEventListener('click', event => {
 
 
 function createANewHawk(hawk_data){
-  fetch('http://localhost:3000/hawks', {
+  fetch(HAWKS_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
