@@ -11,9 +11,17 @@ class PokemonsController < ApplicationController
     end
 
     def create
-        user ||= Trainer.find(params[:formData][:trainer_id])
-        pokemon = user.pokemons.create
-        render json:pokemon
+        trainer ||= Trainer.find(params[:data][:trainer_id])
+        pokemon = trainer.pokemons.create
+        if pokemon.valid?
+            render json:pokemon
+        else
+             messages = pokemon.errors.full_messages
+            render :json =>{
+                status: 409,
+                messages: messages
+            }
+        end
     end
     
     
