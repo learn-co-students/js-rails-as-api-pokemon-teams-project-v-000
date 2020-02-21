@@ -2,7 +2,7 @@ class Pokemon < ApplicationRecord
   belongs_to :trainer
   validate :team_size
   
-TEAM_LIMIT = 6
+
   
 private
   def pokemon_generator
