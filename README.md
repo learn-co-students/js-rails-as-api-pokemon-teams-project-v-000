@@ -2,8 +2,11 @@
 
 ## Cool Graphics
 
-- As always, here's a cool graphic to show what I've been up to in this lab.
+- Here is an illustration of my Javascript function-building strategy.
 <a href="https://imgur.com/EHW3YhJ"><img src="https://i.imgur.com/EHW3YhJ.jpg" title="source: imgur.com" /></a>
+<br><br>
+- Here is an illustration of some extra credit not included in the lab as an objective, but something we should all be able to do.
+<a href="https://i.imgur.com/K7jQ6JP.jpg"><img src="https://i.imgur.com/K7jQ6JP.jpg" title="source: imgur.com" /></a>
 
 ## Learning Goals
 
