@@ -44,7 +44,7 @@ function cardCreation(obj){
 
 
 function header(type = "POST", formData){
-  let configObj = {
+  let data = {
     method: type,
     headers: {
       "Content-Type": "application/json",
@@ -53,26 +53,31 @@ function header(type = "POST", formData){
     body: JSON.stringify(formData)
   };
 
-  return configObj
+  return data
 }
   
 
+function append(poke) {
+  const trainer_card = document.querySelector(`div.card:nth-child(${poke.trainer_id})`);
+  let ul = trainer_card.lastChild; 
+  let li = document.createElement("li") 
+  li.innerText = (`${poke.nickname}  (${poke.species})`)
+  let release_button = document.createElement("button");
+  release_button.setAttribute("class", "release")
+  release_button.setAttribute("data-pokemon-id", poke.id)
+  release_button.innerText = "Release"
+  li.append(release_button);
+  ul.appendChild(li);
+}
 
 function addPokemon(e){
   const trainerId = e.target.dataset.trainerId
-  const formData = { trainer_id: trainerId }
-  const configHeader = header("POST", {formData})
+  const data = { trainer_id: trainerId }
+  const configHeader = header("POST", {data})
   fetch(POKEMONS_URL, configHeader)
-  /*
-  from here we are going to :
-  1. construct a  HEADER by:
-  a) creating a body
-  b) creating a header
-  c) putting the body and header together
-  d) sending a post request to POKEMON server
-  e) receiving a response with the new POKEMON
-  d) updating our HTML 
-  */
+  .then((response=>{ return response.json()}))
+  .then((data)=>{append(data)})
+  
 }
 
 function addEventListeners() {
