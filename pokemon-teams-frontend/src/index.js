@@ -75,8 +75,8 @@ function addPokemon(e){
   const data = { trainer_id: trainerId }
   const configHeader = header("POST", {data})
   fetch(POKEMONS_URL, configHeader)
-  .then((data)=>{debugger})
   .then((response=>{ return response.json()}))
+  .then((data)=>{debugger})
   .then((data)=>{append(data)})
   
 }
