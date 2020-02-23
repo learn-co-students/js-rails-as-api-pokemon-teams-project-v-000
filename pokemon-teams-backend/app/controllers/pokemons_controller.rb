@@ -10,8 +10,9 @@ class PokemonsController < ApplicationController
         render json: pokemon     
     end
 
-    def create
+    def create 
         trainer ||= Trainer.find(params[:data][:trainer_id])
+    Pokemon.transaction do
         pokemon = trainer.pokemons.create
         if pokemon.valid?
             render json:pokemon
@@ -19,9 +20,12 @@ class PokemonsController < ApplicationController
              messages = pokemon.errors.full_messages
             render :json =>{
                 status: 409,
-                messages: messages
+                messages: messages,
+                trainer_id: trainer.id
             }
+            raise ActiveRecord::Rollback, "Call tech support!"
         end
+      end
     end
     
     

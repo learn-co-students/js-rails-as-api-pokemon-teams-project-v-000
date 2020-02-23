@@ -1,20 +1,20 @@
 class Pokemon < ApplicationRecord
   belongs_to :trainer
+  validates :nickname, :species, presence: true
   validate :team_size
   
 
   
 private
-  def pokemon_generator
-    self.nickname =Faker::Games::Pokemon.name 
+  def initialize(attributes = nil)
+    super
+     self.nickname =Faker::Games::Pokemon.name 
     self.species =Faker::Games::Pokemon.name
   end
 
   def team_size
-     if self.trainer.pokemons.size >=TEAM_LIMIT
-      errors[:base] << "Team Size Limit Reached, Release a Pokemon before Continuing"
-     else
-      pokemon_generator
+     if self.trainer.pokemons.size > TEAM_LIMIT
+      errors[:base] << "Team Size Limit Reached, Release a Pokemon before Continuing"      
      end
   end
   
