@@ -20,6 +20,7 @@ class PokemonsController < ApplicationController
              messages = pokemon.errors.full_messages
             render :json =>{
                 status: 409,
+                statusText: "OK",
                 messages: messages,
                 trainer_id: trainer.id
             }
@@ -30,3 +31,4 @@ class PokemonsController < ApplicationController
     
     
 end
+
