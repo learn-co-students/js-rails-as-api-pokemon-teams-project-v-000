@@ -70,15 +70,29 @@ function append(poke) {
   ul.appendChild(li);
 }
 
+function validateResponse(response) {
+  if (!response.ok) {
+    throw Error(response.statusText);
+  }
+  return response;
+}
+
+
+function responseValue(response) {
+  
+  if (response.status === 200){
+    return response.json()
+  }
+}
+
 function addPokemon(e){
   const trainerId = e.target.dataset.trainerId
   const data = { trainer_id: trainerId }
   const configHeader = header("POST", {data})
   fetch(POKEMONS_URL, configHeader)
-  .then((response=>{ return response.json()}))
-  .then((data)=>{debugger})
+  .then(response => { return responseValue(response)})
   .then((data)=>{append(data)})
-  
+  .catch( () =>{ console.log("release some pokemon before continuing") } )
 }
 
 function addEventListeners() {
