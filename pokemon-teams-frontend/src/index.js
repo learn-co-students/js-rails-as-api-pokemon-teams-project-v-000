@@ -27,6 +27,7 @@ function cardCreation(obj){
         pokemons.forEach(poke => {
         const release_button = document.createElement("button");
         const li = document.createElement("li") 
+        li.setAttribute("id", `poke_id_${poke.id}`)
         release_button.setAttribute("class","release")
         release_button.setAttribute("data-pokemon-id", poke.id)
         release_button.innerText = "Release"
@@ -56,51 +57,63 @@ function header(type = "POST", formData){
   return data
 }
   
+function validateResponse(response) {
+  if (response.ok) {
+    return response.json()
+  }
+  throw Error(response.statusText);
+}
+
 
 function append(poke) {
   const trainer_card = document.querySelector(`div.card:nth-child(${poke.trainer_id})`);
   let ul = trainer_card.lastChild; 
   let li = document.createElement("li") 
   li.innerText = (`${poke.nickname}  (${poke.species})`)
+  li.setAttribute("id", `poke_id_${poke.id}`)
   let release_button = document.createElement("button");
   release_button.setAttribute("class", "release")
   release_button.setAttribute("data-pokemon-id", poke.id)
   release_button.innerText = "Release"
+  release_button.addEventListener('click', (e) => { releasePokemon(e) }) ;
   li.append(release_button);
   ul.appendChild(li);
 }
 
-function validateResponse(response) {
-  if (!response.ok) {
-    throw Error(response.statusText);
-  }
-  return response;
+function retract(data) {
+  let element = document.getElementById(`poke_id_${data.id.toString()}`);
+  element.parentNode.removeChild(element);
 }
 
-
-function responseValue(response) {
-  
-  if (response.status === 200){
-    return response.json()
-  }
-}
 
 function addPokemon(e){
   const trainerId = e.target.dataset.trainerId
   const data = { trainer_id: trainerId }
   const configHeader = header("POST", {data})
   fetch(POKEMONS_URL, configHeader)
-  .then(response => { return responseValue(response)})
+    .then(response => { return validateResponse(response) })
   .then((data)=>{append(data)})
-  .catch( () =>{ console.log("release some pokemon before continuing") } )
+  .catch( (e) =>{ console.error(e.message, e.name) } )
+}
+
+function releasePokemon(e){
+  const pokemonId = e.target.dataset.pokemonId
+  const trainerId = e.target.parentNode.parentNode.parentNode.dataset.id
+  const data = { pokemon_id: pokemonId, trainerId: trainerId}
+  const configHeader = header("DELETE",{data})
+
+  fetch(`${POKEMONS_URL}/${pokemonId}`, configHeader)
+  .then(response=>{ return validateResponse(response)})
+  .then(data =>{retract(data)})
 }
 
 function addEventListeners() {
   let addPokemonList = document.querySelectorAll('[data-trainer-id]');
-  for (let i = 0; i < addPokemonList.length; i++) {
-    addPokemonList[i].addEventListener('click', (e) => { addPokemon(e) })
-  }
+  let releasePokemonList = document.getElementsByClassName("release");
+  for (let i = 0; i < addPokemonList.length; i++) { addPokemonList[i].addEventListener('click', (e) => { addPokemon(e) }) }
   
+  for (let i = 0; i < releasePokemonList.length; i++) { releasePokemonList[i].addEventListener('click', (e) => { releasePokemon(e)  }) } 
+ 
 }
 
 function fetchTrainers(TRAINERS_URL){

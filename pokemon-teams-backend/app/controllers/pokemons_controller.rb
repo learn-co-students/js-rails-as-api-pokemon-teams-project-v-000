@@ -18,10 +18,18 @@ class PokemonsController < ApplicationController
             render json:pokemon 
         else
             messages = pokemon.errors.full_messages
-            render json: messages, status: 409 #, messages: messages, trainer_id: trainer.id
+            render json: messages, status: 409 
             raise ActiveRecord::Rollback, "Call tech support!"
         end
       end
+    end
+    
+    def destroy
+        pokemon = Pokemon.find(params[:data][:pokemon_id])
+        pokemon.destroy
+        if pokemon.destroyed?
+            render json: pokemon, status: 200
+        end
     end
     
     
