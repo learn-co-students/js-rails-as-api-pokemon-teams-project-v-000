@@ -8,9 +8,5 @@ class TrainersController < ApplicationController
         )
     end
 
-    def show
-        trainer = Trainer.find(params[:id])
-        render json: trainer
-    end
     
 end
