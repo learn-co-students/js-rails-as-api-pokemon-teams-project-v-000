@@ -20,6 +20,14 @@ const POKEMONS_URL = `${BASE_URL}/pokemons`
   // "Release Pokemon" destroys an existing relationship
 // Figure out which routes I need to display (look at examples in lab)
 
+/* FETCH DATA */
+
+let fetchData = function() {
+  return fetch(`http://localhost:3000/trainers`)
+  .then(resp => resp.json())
+  .then(sanitizeFetched(results))
+  .catch(error => console.log(error.message))
+}
 document.addEventListener("DOMContentLoaded", function() {
   fetchData();
 })
