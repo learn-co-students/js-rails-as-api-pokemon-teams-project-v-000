@@ -19,3 +19,7 @@ const POKEMONS_URL = `${BASE_URL}/pokemons`
   // "Add Pokemon" creates a new relationship
   // "Release Pokemon" destroys an existing relationship
 // Figure out which routes I need to display (look at examples in lab)
+
+document.addEventListener("DOMContentLoaded", function() {
+  fetchData();
+})
