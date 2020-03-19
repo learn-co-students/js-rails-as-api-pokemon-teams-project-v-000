@@ -36,6 +36,26 @@ let sanitizeFetched = function(results) {
   let pokemons = results.included;
   return trainers && pokemons;
 }
+
+/* RENDER CARDS */
+
+function renderTrainerCard(){
+  const main = document.getElementsByName("main");
+  trainers.forEach(trainer => {
+    const card = document.createElement("div");
+    card.setAttribute("class", "card");
+    card.setAttribute("data-id", `${trainer.id}`);
+    card.innerHTML = `
+      <p>${trainer.attributes.name}</p>
+      <button data-trainer-id="${trainer.id}">Add Pokemon</button>
+      <ul id="pokemon-team">
+        {/* // Extract other code - single responsibility principle */}
+      </ul>
+      `
+    main.appendChild(card);
+  })
+}
+
 function renderPokemonTeam(){
   const roster = document.getElementById("pokemon-team");
   pokemons.forEach(pokemon => {
