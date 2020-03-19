@@ -4,6 +4,6 @@ class PokemonsController < ApplicationController
     options = {
       include: [:trainer]
     }
-    render json: PokemonSerializer.new(pokemons, options)
+    render json: PokemonSerializer.new(pokemons, options).serialized_json
   end
 end
