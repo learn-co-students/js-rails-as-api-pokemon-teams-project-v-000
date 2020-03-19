@@ -28,6 +28,14 @@ let fetchData = function() {
   .then(sanitizeFetched(results))
   .catch(error => console.log(error.message))
 }
+
+/* PREP DATA FOR CARDS */
+
+let sanitizeFetched = function(results) {
+  let trainers = results.data;
+  let pokemons = results.included;
+  return trainers && pokemons;
+}
 document.addEventListener("DOMContentLoaded", function() {
   fetchData();
 })
