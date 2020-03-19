@@ -36,6 +36,18 @@ let sanitizeFetched = function(results) {
   let pokemons = results.included;
   return trainers && pokemons;
 }
+function renderPokemonTeam(){
+  const roster = document.getElementById("pokemon-team");
+  pokemons.forEach(pokemon => {
+    const poke = document.createElement("li");
+    poke.innerHTML = `${poke.nickname} (${poke.species}) <button class="release" data-pokemon-id="${poke.id}">Release</button>`;
+    roster.appendChild(poke);
+  })
+}
+// This may need to be a closure in order to match up with the specific trainer
+
+// Figure out how to limit roster to 6 pokemons
+
 document.addEventListener("DOMContentLoaded", function() {
   fetchData();
 })
