@@ -25,16 +25,21 @@ const POKEMONS_URL = `${BASE_URL}/pokemons`
 let fetchData = function() {
   return fetch(`http://localhost:3000/trainers`)
   .then(resp => resp.json())
-  .then(sanitizeFetched(results))
-  .catch(error => console.log(error.message))
+  .then(results => renderCards(results))
 }
 
 /* PREP DATA FOR CARDS */
 
-let sanitizeFetched = function(results) {
+let renderCards = function(results) {
+  const container = document.getElementById("container");
   let trainers = results.data;
   let pokemons = results.included;
-  return trainers && pokemons;
+  trainers.forEach(trainer => {
+    createTrainerCard(trainer);
+  });
+  pokemons.forEach(pokemon => {
+    createPokemonTeam(pokemon);
+  });
 }
 
 /* RENDER CARDS */
