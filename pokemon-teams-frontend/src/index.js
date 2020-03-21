@@ -42,23 +42,15 @@ let renderCards = function(results) {
   });
 }
 
-/* RENDER CARDS */
-
-function renderTrainerCard(){
-  const main = document.getElementsByName("main");
-  trainers.forEach(trainer => {
+function createTrainerCard(trainer) {
     const card = document.createElement("div");
     card.setAttribute("class", "card");
     card.setAttribute("data-id", `${trainer.id}`);
     card.innerHTML = `
       <p>${trainer.attributes.name}</p>
       <button data-trainer-id="${trainer.id}">Add Pokemon</button>
-      <ul id="pokemon-team">
-        {/* // Extract other code - single responsibility principle */}
-      </ul>
-      `
-    main.appendChild(card);
-  })
+      <ul id="pokemon-team"></ul>`
+    container.appendChild(card);
 }
 
 function renderPokemonTeam(){
