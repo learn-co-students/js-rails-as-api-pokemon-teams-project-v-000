@@ -53,15 +53,14 @@ function createTrainerCard(trainer) {
     container.appendChild(card);
 }
 
-function renderPokemonTeam(){
-  const roster = document.getElementById("pokemon-team");
-  pokemons.forEach(pokemon => {
+function createPokemonTeam(pokemon) {
+    const trainerId = pokemon.relationships.trainer.data.id;
+    const trainerCard = document.body.querySelector(`[data-id='${trainerId}']`);
+    const roster = trainerCard.querySelector("ul");
     const poke = document.createElement("li");
-    poke.innerHTML = `${poke.nickname} (${poke.species}) <button class="release" data-pokemon-id="${poke.id}">Release</button>`;
+    poke.innerHTML = `${pokemon.attributes.nickname} (${pokemon.attributes.species}) <button class="release" data-pokemon-id="${pokemon.id}">Release</button>`;
     roster.appendChild(poke);
-  })
 }
-// This may need to be a closure in order to match up with the specific trainer
 
 // Figure out how to limit roster to 6 pokemons
 
