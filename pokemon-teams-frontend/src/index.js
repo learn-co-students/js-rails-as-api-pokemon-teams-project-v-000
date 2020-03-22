@@ -78,4 +78,7 @@ let createPokemonTeam = function(pokemon) {
 
 document.addEventListener("DOMContentLoaded", function() {
   fetchData();
+  document.addEventListener("click", function(){
+    addPokemon(event.target.dataset.trainerId)
+  })
 })
