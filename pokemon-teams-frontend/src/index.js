@@ -86,8 +86,8 @@ let postFetch = function(trainerId) {
   };
   return fetch(`http://localhost:3000/pokemons`, obj)
   .then(resp => resp.json())
-  .then(results => results.included.forEach(pokemon => {
-    createPokemonTeam(pokemon);
+  .then(results => results.data.forEach(trainer => {
+    populateTrainerCard(trainer)
   }))
 }
 
