@@ -76,6 +76,23 @@ let createPokemonTeam = function(pokemon) {
 
 // Figure out how to limit roster to 6 pokemons
 
+/* ADD POKEMON TO TEAM */
+
+let addPokemon = function(trainerId) {
+  let obj = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    body: JSON.stringify({"trainer_id": trainerId})
+  };
+  return fetch(`http://localhost:3000/pokemons`, obj)
+  .then(resp => resp.json())
+  .then(results => results.included.forEach(pokemon => {
+    createPokemonTeam(pokemon);
+  }))
+
 document.addEventListener("DOMContentLoaded", function() {
   fetchData();
   document.addEventListener("click", function(){
