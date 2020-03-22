@@ -67,14 +67,11 @@ let populateTrainerCard = function(trainer, card, trainerName, addButton) {
 
 let createPokemonTeam = function(pokemon) {
   const trainerId = pokemon.relationships.trainer.data.id;
-  const trainerCard = document.body.querySelector(`[data-id='${trainerId}']`);
-  const roster = trainerCard.querySelector("ul");
+  const roster = document.body.querySelector(`[data-id='${trainerId}']`).querySelector("ul");
   const poke = document.createElement("li");
   poke.innerHTML = `${pokemon.attributes.nickname} (${pokemon.attributes.species}) <button class="release" data-pokemon-id="${pokemon.id}">Release</button>`;
   roster.appendChild(poke);
 }
-
-// Figure out how to limit roster to 6 pokemons
 
 /* ADD POKEMON TO TEAM */
 
