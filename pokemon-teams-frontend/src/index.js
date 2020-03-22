@@ -20,7 +20,7 @@ const POKEMONS_URL = `${BASE_URL}/pokemons`
   // "Release Pokemon" destroys an existing relationship
 // Figure out which routes I need to display (look at examples in lab)
 
-/* FETCH DATA */
+/* FETCH */
 
 let fetchData = function() {
   return fetch(`http://localhost:3000/trainers`)
@@ -35,31 +35,43 @@ let renderCards = function(results) {
   let trainers = results.data;
   let pokemons = results.included;
   trainers.forEach(trainer => {
-    createTrainerCard(trainer);
+    createCard(trainer);
   });
   pokemons.forEach(pokemon => {
     createPokemonTeam(pokemon);
   });
 }
 
-function createTrainerCard(trainer) {
-    const card = document.createElement("div");
-    card.setAttribute("class", "card");
-    card.setAttribute("data-id", `${trainer.id}`);
-    card.innerHTML = `
-      <p>${trainer.attributes.name}</p>
-      <button data-trainer-id="${trainer.id}">Add Pokemon</button>
-      <ul id="pokemon-team"></ul>`
-    container.appendChild(card);
+/* RENDER TRAINER CARDS WITH POKEMON TEAMS */
+
+let createCard = function(trainer) {
+  const card = document.createElement("div");
+  card.setAttribute("class", "card");
+  const trainerName = document.createElement("p");
+  const addButton = document.createElement("button");
+  addButton.innerText = "Add Pokemon";
+  const pokemonRoster = document.createElement("ul");
+  pokemonRoster.setAttribute("id", "pokemon-team")
+  card.appendChild(trainerName);
+  card.appendChild(addButton);
+  card.appendChild(pokemonRoster);
+  container.appendChild(card);
+  populateTrainerCard(trainer, card, trainerName, addButton);
 }
 
-function createPokemonTeam(pokemon) {
-    const trainerId = pokemon.relationships.trainer.data.id;
-    const trainerCard = document.body.querySelector(`[data-id='${trainerId}']`);
-    const roster = trainerCard.querySelector("ul");
-    const poke = document.createElement("li");
-    poke.innerHTML = `${pokemon.attributes.nickname} (${pokemon.attributes.species}) <button class="release" data-pokemon-id="${pokemon.id}">Release</button>`;
-    roster.appendChild(poke);
+let populateTrainerCard = function(trainer, card, trainerName, addButton) {
+  card.setAttribute("data-id", `${trainer.id}`);
+  trainerName.innerText = `${trainer.attributes.name}`
+  addButton.setAttribute("data-trainer-id", `${trainer.id}`);
+}
+
+let createPokemonTeam = function(pokemon) {
+  const trainerId = pokemon.relationships.trainer.data.id;
+  const trainerCard = document.body.querySelector(`[data-id='${trainerId}']`);
+  const roster = trainerCard.querySelector("ul");
+  const poke = document.createElement("li");
+  poke.innerHTML = `${pokemon.attributes.nickname} (${pokemon.attributes.species}) <button class="release" data-pokemon-id="${pokemon.id}">Release</button>`;
+  roster.appendChild(poke);
 }
 
 // Figure out how to limit roster to 6 pokemons
