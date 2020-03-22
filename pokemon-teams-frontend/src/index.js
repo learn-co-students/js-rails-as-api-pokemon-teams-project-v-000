@@ -89,6 +89,13 @@ let postFetch = function(trainerId) {
   .then(results => results.included.forEach(pokemon => {
     createPokemonTeam(pokemon);
   }))
+}
+
+/* REMOVE POKEMON FROM TEAM */
+
+let removePokemon = function() {
+
+}
 
 document.addEventListener("DOMContentLoaded", function() {
   fetchData();
