@@ -44,7 +44,7 @@ let renderCards = function(results) {
 
 /* RENDER TRAINER CARDS WITH POKEMON TEAMS */
 
-let createCard = function(trainer) {
+let createTrainerCard = function(trainer) {
   const card = document.createElement("div");
   card.setAttribute("class", "card");
   const trainerName = document.createElement("p");
@@ -78,7 +78,7 @@ let createPokemonTeam = function(pokemon) {
 
 /* ADD POKEMON TO TEAM */
 
-let addPokemon = function(trainerId) {
+let postFetch = function(trainerId) {
   let obj = {
     method: "POST",
     headers: {
@@ -96,6 +96,6 @@ let addPokemon = function(trainerId) {
 document.addEventListener("DOMContentLoaded", function() {
   fetchData();
   document.addEventListener("click", function(){
-    addPokemon(event.target.dataset.trainerId)
+    postFetch(event.target.dataset.trainerId)
   })
 })
