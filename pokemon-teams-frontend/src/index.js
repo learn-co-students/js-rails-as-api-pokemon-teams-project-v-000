@@ -20,8 +20,8 @@ fetch(TRAINERS_URL)
     .then(json => {
         //console.log(json[0].name);
         json.forEach(trainer => {
-            const trainerHTML = `<div class='card' data-id='1'><p>${trainer.name}</p>
-            <button data-trainer-id="1">Add Pokemon</button>
+            const trainerHTML = `<div class='card' data-id='${trainer.id}'><p>${trainer.name}</p>
+            <button data-trainer-id="${trainer.id}">Add Pokemon</button>
             <ul></ul>
             </div>`
 
@@ -31,6 +31,13 @@ fetch(TRAINERS_URL)
             main.appendChild(p)
         })
     })
+
+//fetch(POKEMONS_URL)
+ //   .then(resp => resp.pokemons())
+  //  .then(json => {
+  //      json.forEach(pokemons =>
+ //           const pokemon = )
+ //   })
         /*const addPoke = document.querySelector("[data-trainer-id]");
         const ul = document.querySelector("[data-id]").querySelector('ul');
 
