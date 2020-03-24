@@ -22,22 +22,27 @@ fetch(TRAINERS_URL)
         json.forEach(trainer => {
             const trainerHTML = `<div class='card' data-id='${trainer.id}'><p>${trainer.name}</p>
             <button data-trainer-id="${trainer.id}">Add Pokemon</button>
-            <ul></ul>
+            <ul data-trainer-ul-id=${trainer.id}>
+            </ul>
             </div>`
 
             const main = document.querySelector('main');
             const p = document.createElement('p');
             p.innerHTML = trainerHTML
             main.appendChild(p)
+
+            const trainerUl = document.querySelector(`[data-trainer-ul-id='${trainer.id}']`)
+            trainer.pokemons.forEach(pokemon => {
+                const pokeHTML = `<li>${pokemon.name} (${pokemon.species})</li>`;
+                const li = document.createElement('li');
+                li.innerHTML = pokeHTML;
+                trainerUl.appendChild(li)
+
+            })
         })
     })
 
-//fetch(POKEMONS_URL)
- //   .then(resp => resp.pokemons())
-  //  .then(json => {
-  //      json.forEach(pokemons =>
- //           const pokemon = )
- //   })
+
         /*const addPoke = document.querySelector("[data-trainer-id]");
         const ul = document.querySelector("[data-id]").querySelector('ul');
 
