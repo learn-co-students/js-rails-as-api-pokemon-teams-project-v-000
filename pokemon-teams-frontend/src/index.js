@@ -35,7 +35,7 @@ let renderCards = function(results) {
   let trainers = results.data;
   let pokemons = results.included;
   trainers.forEach(trainer => {
-    createCard(trainer);
+    createTrainerCard(trainer);
   });
   pokemons.forEach(pokemon => {
     createPokemonTeam(pokemon);
