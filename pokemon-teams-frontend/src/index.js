@@ -38,7 +38,7 @@ let renderCards = function(results) {
     createTrainerCard(trainer);
   });
   pokemons.forEach(pokemon => {
-    createPokemonTeam(pokemon);
+    createPokemon(pokemon);
   });
 }
 
@@ -65,7 +65,7 @@ let populateTrainerCard = function(trainer, card, trainerName, addButton) {
   addButton.setAttribute("data-trainer-id", `${trainer.id}`);
 }
 
-let createPokemonTeam = function(pokemon) {
+let createPokemon = function(pokemon) {
   const trainerId = pokemon.relationships.trainer.data.id;
   const roster = document.body.querySelector(`[data-id='${trainerId}']`).querySelector("ul");
   const poke = document.createElement("li");
