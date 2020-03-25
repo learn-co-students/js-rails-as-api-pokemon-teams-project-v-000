@@ -10,19 +10,13 @@ let fetchData = function() {
   .then(results => renderCards(results))
 }
 
-/* PREP DATA FOR CARDS */
+/* RENDER TRAINER CARDS */
 
-let renderCards = function(results) {
+function createTrainerCard(trainer) {
   const container = document.getElementById("container");
-  let trainers = results.data;
-  let pokemons = results.included;
-  trainers.forEach(trainer => {
-    createTrainerCard(trainer);
-  });
-  pokemons.forEach(pokemon => {
-    createPokemon(pokemon);
-  });
-}
+  const trainerCard = document.createElement("div");
+  trainerCard.setAttribute("class", "card");
+  trainerCard.setAttribute("data-trainer-id", `${trainer.id}`);
 
 /* RENDER TRAINER CARDS WITH POKEMON TEAMS */
 
