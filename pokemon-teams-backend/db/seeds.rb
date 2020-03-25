@@ -39,3 +39,5 @@ trainer_collection.each do |trainer|
     Pokemon.create(nickname: name, species: species, trainer_id: trainer.id)
   end
 end
+
+puts "Database seeded!"
