@@ -17,36 +17,36 @@ function createTrainerCard(trainer) {
   const trainerCard = document.createElement("div");
   trainerCard.setAttribute("class", "card");
   trainerCard.setAttribute("data-trainer-id", `${trainer.id}`);
-
-/* RENDER TRAINER CARDS WITH POKEMON TEAMS */
-
-let createTrainerCard = function(trainer) {
-  const card = document.createElement("div");
-  card.setAttribute("class", "card");
   const trainerName = document.createElement("p");
+  trainerName.innerText = `${trainer.name}`;
   const addButton = document.createElement("button");
+  addButton.setAttribute("class", "add");
+  addButton.setAttribute("data-trainer-id", `${trainer.id}`);
   addButton.innerText = "Add Pokemon";
   const pokemonRoster = document.createElement("ul");
-  pokemonRoster.setAttribute("id", "pokemon-team")
-  card.appendChild(trainerName);
-  card.appendChild(addButton);
-  card.appendChild(pokemonRoster);
-  container.appendChild(card);
-  populateTrainerCard(trainer, card, trainerName, addButton);
+  pokemonRoster.setAttribute("data-trainer-id", `${trainer.id}`);
+  trainerCard.appendChild(trainerName);
+  trainerCard.appendChild(addButton);
+  trainerCard.appendChild(pokemonRoster);
+  container.appendChild(trainerCard);
+  createPokemonTeam(trainer, pokemonRoster);
+  return container;
 }
+  
+  
+/* CREATE POKEMON TEAMS */
 
-let populateTrainerCard = function(trainer, card, trainerName, addButton) {
-  card.setAttribute("data-id", `${trainer.id}`);
-  trainerName.innerText = `${trainer.attributes.name}`
-  addButton.setAttribute("data-trainer-id", `${trainer.id}`);
-}
-
-let createPokemon = function(pokemon) {
-  const trainerId = pokemon.relationships.trainer.data.id;
-  const roster = document.body.querySelector(`[data-id='${trainerId}']`).querySelector("ul");
-  const poke = document.createElement("li");
-  poke.innerHTML = `${pokemon.attributes.nickname} (${pokemon.attributes.species}) <button class="release" data-pokemon-id="${pokemon.id}">Release</button>`;
-  roster.appendChild(poke);
+function createPokemonTeam(trainer, pokemonRoster) {
+  for (let pokemon of trainer.pokemons) {
+    const poke = document.createElement("li");
+    poke.innerHTML = `${pokemon.nickname} (${pokemon.species})`;
+    const releaseButton = document.createElement("button");
+    releaseButton.setAttribute("class", "release");
+    releaseButton.setAttribute("data-pokemon-id", `${pokemon.id}`);
+    releaseButton.innerText = "Release";
+    poke.appendChild(releaseButton);
+    pokemonRoster.appendChild(poke);
+  }
 }
 
 /* ADD POKEMON TO TEAM */
