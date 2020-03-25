@@ -4,11 +4,12 @@ class PokemonsController < ApplicationController
   def create
     trainer = Trainer.find_by(params[:id])
     pokemon = trainer.pokemons.create(species: Faker::Games::Pokemon.name, nickname: Faker::Name.first_name)
-    redirect_to json: pokemon
+    redirect_to trainers_path
+  end
 
-  def create
-    trainer = Trainer.find_by(params[:id])
-    pokemon = trainer.pokemons.create(species: Faker::Games::Pokemon.name, nickname: Faker::Name.first_name)
+  def destroy
+    pokemon = Pokemon.find_by(params[:id])
+    pokemon.destroy
     redirect_to trainers_path
   end
 end
