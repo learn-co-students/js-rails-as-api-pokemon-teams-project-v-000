@@ -64,11 +64,16 @@ let postFetch = function(trainerId) {
     },
     body: JSON.stringify({"trainer_id": trainerId})
   };
-  return fetch(`http://localhost:3000/pokemons`, obj)
+  return fetch(POKEMONS_URL, obj)
   .then(resp => resp.json())
-  .then(results => results.data.forEach(trainer => {
-    populateTrainerCard(trainer)
-  }))
+  .then(function(pokemon) {
+    if (pokemon.errors) {
+      window.alert(pokemon.errors[0])
+    } else {
+      let pokemonRoster = document.body.querySelector(`[data-trainer-id='${pokemon.trainer_id}']`).querySelector("ul");
+      addPokemonToTeam(pokemon, pokemonRoster);
+    }
+  })
 }
 
 /* REMOVE POKEMON FROM TEAM */
