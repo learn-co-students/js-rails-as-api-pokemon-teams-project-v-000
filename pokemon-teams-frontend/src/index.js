@@ -73,7 +73,10 @@ let postFetch = function(trainerId) {
 
 /* REMOVE POKEMON FROM TEAM */
 
-let removePokemon = function() {
+let removePokemon = function(pokemonId) {
+  let deletePokemon = document.querySelector(`[data-pokemon-id='${pokemonId}']`).parentNode;
+  deletePokemon.remove();
+}
 
 let deleteFetch = function(pokemonId) {
   removePokemon(pokemonId);
