@@ -75,6 +75,17 @@ let postFetch = function(trainerId) {
 
 let removePokemon = function() {
 
+let deleteFetch = function(pokemonId) {
+  removePokemon(pokemonId);
+  let obj = {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    body: JSON.stringify({"pokemon_id": pokemonId})
+  };
+  fetch(`${BASE_URL}/pokemons/${pokemonId}`, obj)
 }
 
 document.addEventListener("DOMContentLoaded", function() {
