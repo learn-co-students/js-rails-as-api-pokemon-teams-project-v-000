@@ -4,10 +4,12 @@ const POKEMONS_URL = `${BASE_URL}/pokemons`
 
 /* FETCH */
 
-let fetchData = function() {
-  return fetch(`http://localhost:3000/trainers`)
-  .then(resp => resp.json())
-  .then(results => renderCards(results))
+async function fetchData() {
+  let response = await fetch(TRAINERS_URL)
+  let trainers = await response.json();
+  return await trainers.forEach(trainer => {
+    createTrainerCard(trainer);
+  })
 }
 
 /* RENDER TRAINER CARDS */
