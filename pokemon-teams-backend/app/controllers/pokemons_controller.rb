@@ -8,8 +8,7 @@ class PokemonsController < ApplicationController
   end
 
   def destroy
-    pokemon = Pokemon.find_by(params[:id])
+    pokemon = Pokemon.find_by(id: params[:id])
     pokemon.destroy
-    redirect_to trainers_path
   end
 end
