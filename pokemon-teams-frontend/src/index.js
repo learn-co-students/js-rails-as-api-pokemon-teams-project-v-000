@@ -38,18 +38,22 @@ function createTrainerCard(trainer) {
 
 function createPokemonTeam(trainer, pokemonRoster) {
   for (let pokemon of trainer.pokemons) {
-    const poke = document.createElement("li");
-    poke.innerHTML = `${pokemon.nickname} (${pokemon.species})`;
-    const releaseButton = document.createElement("button");
-    releaseButton.setAttribute("class", "release");
-    releaseButton.setAttribute("data-pokemon-id", `${pokemon.id}`);
-    releaseButton.innerText = "Release";
-    poke.appendChild(releaseButton);
-    pokemonRoster.appendChild(poke);
+    addPokemonToTeam(pokemon, pokemonRoster);
   }
 }
 
 /* ADD POKEMON TO TEAM */
+
+function addPokemonToTeam(pokemon, pokemonRoster) {
+  const poke = document.createElement("li");
+  poke.innerHTML = `${pokemon.nickname} (${pokemon.species})`;
+  const releaseButton = document.createElement("button");
+  releaseButton.setAttribute("class", "release");
+  releaseButton.setAttribute("data-pokemon-id", `${pokemon.id}`);
+  releaseButton.innerText = "Release";
+  poke.appendChild(releaseButton);
+  pokemonRoster.appendChild(poke);
+}
 
 let postFetch = function(trainerId) {
   let obj = {
