@@ -99,8 +99,21 @@ let deleteFetch = function(pokemonId) {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
-  fetchData();
-  document.addEventListener("click", function(){
-    postFetch(event.target.dataset.trainerId)
-  })
+  
+  fetchData()
+    .then(obj => setButtons())
+  function setButtons() {
+    let addButtons = document.querySelectorAll("button.add");
+    addButtons.forEach(addButton =>
+      addButton.addEventListener("click", function(){
+        postFetch(event.target.dataset.trainerId);
+      })
+    )
+    let releaseButtons = document.querySelectorAll("button.release");
+    releaseButtons.forEach(releaseButton =>
+      releaseButton.addEventListener("click", function(){
+        deleteFetch(event.target.dataset.pokemonId);
+      })
+    )
+  }
 })
