@@ -3,53 +3,40 @@ const TRAINERS_URL = `${BASE_URL}/trainers`
 const POKEMONS_URL = `${BASE_URL}/pokemons`
 
 
+console.log("%c Welcome to pokèmon trainers!", "color: blue;");
+
+const trainersContainer = document.querySelector('main');
 
 
-let fetchData = function() {
-  return fetch(`http://localhost:3000/trainers`)
-  .then(resp => resp.json())
-  .then(sanitizeFetched(results))
-  .catch(error => console.log(error.message))
-}
+fetch(TRAINERS_URL)
+.then(resp => resp.json())
+.then(trainers => {
+  trainers.forEach(renderTrainer);
+});
 
-
-let sanitizeFetched = function(results) {
-  let trainers = results.data;
-  let pokemons = results.included;
-  return trainers && pokemons;
-}
-
-
-function renderTrainerCard(){
-  const main = document.getElementsByName("main");
-  trainers.forEach(trainer => {
-    const card = document.createElement("div");
-    card.setAttribute("class", "card");
-    card.setAttribute("data-id", `${trainer.id}`);
-    card.innerHTML = `
-      <p>${trainer.attributes.name}</p>
-      <button data-trainer-id="${trainer.id}">Add Pokemon</button>
-      <ul id="pokemon-team">
-        {/* // Extract other code - single responsibility principle */}
-      </ul>
-      `
-    main.appendChild(card);
-  })
-}
+function renderTrainer(trainer){
+  const html = `
+    <div class="card" data-id=${trainer.id}><p>${trainer.name}</p>
+      <button data-trainer-id=${trainer.id}>Add Pokemon</button>
+      <ul data-trainer-ul=${trainer.id}></ul>
+    </div>`;
 
 
 
+    trainersContainer.insertAdjacentHTML('beforeend', html);
+    const trainerUl = document.querySelector(`[data-trainer-ul='${trainer.id}']`)
+    // trainer.pokemons.forEach(pokemon => renderPokemon(pokemon, trainerUl));
+};
 
-function renderPokemonTeam(){
-  const roster = document.getElementById("pokemon-team");
-  pokemons.forEach(pokemon => {
-    const poke = document.createElement("li");
-    poke.innerHTML = `${poke.nickname} (${poke.species}) <button class="release" data-pokemon-id="${poke.id}">Release</button>`;
-    roster.appendChild(poke);
-  })
+function renderPokemon(pokemon, trainerUl){
 
+  const html = `
+        <li>
+          ${pokemon.nickname} (${pokemon.species})
+          <button class="release" data-pokemon-id=${pokemon.id}>
+            Release
+          </button>
+        </li>`;
 
-
-document.addEventListener("DOMContentLoaded", function() {
-  fetchData();
-})
+  trainerUl.insertAdjacentHTML('beforeend', html);
+};
