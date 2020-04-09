@@ -25,7 +25,7 @@ function renderTrainer(trainer){
 
     trainersContainer.insertAdjacentHTML('beforeend', html);
     const trainerUl = document.querySelector(`[data-trainer-ul='${trainer.id}']`)
-    // trainer.pokemons.forEach(pokemon => renderPokemon(pokemon, trainerUl));
+    trainer.pokemons.forEach(pokemon => renderPokemon(pokemon, trainerUl));
 };
 
 function renderPokemon(pokemon, trainerUl){
