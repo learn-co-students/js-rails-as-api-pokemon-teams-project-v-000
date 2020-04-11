@@ -54,6 +54,7 @@ GEM
     byebug (11.1.1)
     case_transform (0.2)
       activesupport
+    coderay (1.1.2)
     concurrent-ruby (1.1.6)
     crass (1.0.6)
     erubi (1.9.0)
@@ -85,6 +86,9 @@ GEM
     nio4r (2.5.2)
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
+    pry (0.13.0)
+      coderay (~> 1.1)
+      method_source (~> 1.0)
     puma (3.12.4)
     rack (2.2.2)
     rack-cors (1.1.1)
@@ -149,6 +153,7 @@ DEPENDENCIES
   byebug
   faker (~> 2.10)
   listen (>= 3.0.5, < 3.2)
+  pry
   puma (~> 3.11)
   rack-cors
   rails (~> 5.2.4)

@@ -40,3 +40,40 @@ function renderPokemon(pokemon, trainerUl){
 
   trainerUl.insertAdjacentHTML('beforeend', html);
 };
+
+
+trainersContainer.addEventListener('click',(e) => {
+  if(e.target.innerText === "Add Pokemon"){
+    const trainerUl = e.target.nextElementSibling
+    const trainerId = e.target.dataset.trainerId;
+
+  if(trainerUl.children.length < 6){
+    fetch(POKEMONS_URL, {
+      method: 'POST',
+      headers:{
+        'CONTENT-TYPE': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify({
+        "trainer_id": trainerId
+      })
+    })
+    .then(resp => resp.json())
+    .then(pokemon => renderPokemon(pokemon, trainerUl))
+
+   };
+ };
+
+
+
+
+  if (e.target.classList.contains("release")){
+      const pokemonId = e.target.dataset.pokemonId;
+      fetch(`${POKEMONS_URL}/${pokemonId}`, {
+        method: 'DELETE'
+      })
+      .then(resp => resp.json())
+      .then(() => e.target.parentNode.remove());
+    }
+
+})
