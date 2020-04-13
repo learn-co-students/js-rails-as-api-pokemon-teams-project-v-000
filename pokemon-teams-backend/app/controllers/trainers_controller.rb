@@ -1,2 +1,8 @@
 class TrainersController < ApplicationController
-end
+
+    def index
+      trainers = Trainer.all
+  
+      render json: trainers
+    end
+  end
