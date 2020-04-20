@@ -24,10 +24,14 @@ function createTrainerCard(trainer) {
   div.setAttribute("class", "card")
   div.setAttribute("data-id", `${trainer.id}`)
   
-  p.innerText = trainer.name
+  p.innerText = `${trainer.name}`
   
   addButton.setAttribute("data-trainer-id", `${trainer.id}`)
+  addButton.setAttribute("class", "add")
   addButton.innerText = "Add Pokemon"
+  addButton.addEventListener("click", function() {
+    addPokemonToTeam(trainer)
+  })
   
   main.append(div)
   div.append(p)
@@ -43,8 +47,39 @@ function createTrainerCard(trainer) {
     releaseButton.setAttribute("class", "release")
     releaseButton.setAttribute("data-pokemon-id", `${pokemon.id}`)
     releaseButton.innerText = "Release"
+    releaseButton.addEventListener("click", function() {
+      releasePokemonFromTeam(pokemon)
+    })
 
     ul.append(li)
     li.append(releaseButton)
   })
+}
+
+function addPokemonToTeam(trainer) {
+  fetch(POKEMONS_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    body: JSON.stringify({
+      trainer_id: trainer.id,
+    })
+  })
+  .then(json => window.location.reload(true))
+}
+
+function releasePokemonFromTeam(pokemon) {
+  fetch(`${BASE_URL}/pokemons/${pokemon.id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    body: JSON.stringify({
+      pokemon_id: pokemon.id,
+    })
+  })
+  .then(json => window.location.reload(true))
 }
