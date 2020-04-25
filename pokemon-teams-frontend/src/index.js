@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3000"
+const BASE_URL = "https://localhost:3000"
 const TRAINERS_URL = `${BASE_URL}/trainers`
 const POKEMONS_URL = `${BASE_URL}/pokemons`
 
@@ -86,7 +86,6 @@ let removePokemon = function(pokemonId) {
 }
 
 let deleteFetch = function(pokemonId) {
-  removePokemon(pokemonId);
   let obj = {
     method: "DELETE",
     headers: {
@@ -96,6 +95,7 @@ let deleteFetch = function(pokemonId) {
     body: JSON.stringify({"pokemon_id": pokemonId})
   };
   fetch(`${BASE_URL}/pokemons/${pokemonId}`, obj)
+  removePokemon(pokemonId);
 }
 
 document.addEventListener("DOMContentLoaded", function() {
