@@ -1,6 +1,6 @@
 class TrainerSerializer
     include FastJsonapi::ObjectSerializer
-    attributes :name
+    attributes :name, :id
     has_many :pokemons
     def initialize(trainer_object)
         @trainer = trainer_object
