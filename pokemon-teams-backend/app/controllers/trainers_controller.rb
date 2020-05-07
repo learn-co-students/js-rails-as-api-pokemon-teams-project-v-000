@@ -6,11 +6,6 @@ class TrainersController < ApplicationController
 
     def show
         trainer = Trainer.find_by(id: params[:id])
-        options = {
-          include: [:name]
-        }
-        render json: TrainerSerializer.new(trainer, options)
-      end
-    
-       
+        render json: TrainerSerializer.new(trainer)
+    end
 end
