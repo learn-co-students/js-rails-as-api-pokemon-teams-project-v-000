@@ -55,6 +55,11 @@ body {
     float: right;
     background-color: #E1332D;
   }
+
+  h1.error-heading {
+    color: #E1332D;
+    border: 5px solid black;
+  }
   
   @media only screen and (min-width: 500px) {
     main {
