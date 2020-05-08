@@ -3,12 +3,7 @@ class TrainersController < ApplicationController
         trainers = Trainer.all
         # byebug
         options = {
-
-
-             include: [:pokemons]
-            # include: [:pokemon]
-            # includes: [:pokemons]
-            #includes: [:pokemon]
+            include: [:pokemons]
         }
         # render json: [trainers, options]
         render json: TrainerSerializer.new(trainers).to_serialized_json
@@ -20,7 +15,6 @@ class TrainersController < ApplicationController
             # include: [:pokemons].
             include: [:pokemon]
         }
-        # render json: TrainerSerializer.new(trainer) #DID NOT WORK
         render json: trainer
     end
 end

@@ -12,6 +12,7 @@ class TrainerSerializer #< ActiveModel::Serializer
     #     })
     # end
 
+# Diplays the Trainer (attributes) and Nested Pokemon(attributes)
     def to_serialized_json
         options = {}
         options[:include] = {
