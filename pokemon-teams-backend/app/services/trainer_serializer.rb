@@ -16,7 +16,7 @@ class TrainerSerializer #< ActiveModel::Serializer
         options = {}
         options[:include] = {
             pokemons: {
-                only: [:nickname, :species]
+                only: [:nickname, :species, :trainer_id]
             }
         }
         @trainer.to_json(options)

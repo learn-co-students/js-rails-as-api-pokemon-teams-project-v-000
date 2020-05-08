@@ -10,7 +10,6 @@ class TrainersController < ApplicationController
             # includes: [:pokemons]
             #includes: [:pokemon]
         }
-        # render json: TrainerSerializer.new(trainers).to_json #DID NOT WORK
         # render json: [trainers, options]
         render json: TrainerSerializer.new(trainers).to_serialized_json
     end
