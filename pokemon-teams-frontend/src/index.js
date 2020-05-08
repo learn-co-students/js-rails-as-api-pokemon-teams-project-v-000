@@ -10,8 +10,7 @@ function addErrorMessage(error) {
   document.body.prepend(errorHeading);
 }
 
-function deletePokemon(pokemon) {
-  // console.log(`${pokemon.nickname} (${pokemon.species}) released!`);
+function deletePokemon(pokemon, pokeLi) {
   let POKEMON_URL = `${POKEMONS_URL}/${pokemon.id}`;
 
   let configObject = {
@@ -28,15 +27,13 @@ function deletePokemon(pokemon) {
   fetch(POKEMON_URL, configObject)
     .then(resp => resp.json())
     .then(function(deletedPokemon) {
+      pokeLi.remove();
       console.log(`${deletedPokemon.nickname} successfully released!`)
-      // Update the DOM here, probably by deleting the parent of the button whose data-pokemon-id is the deletedPokemon's id.
-      // I have to also update the trainer somewhere, by removing this Pokemon from their 'pokemons' object.
-      // But this may not be needed at all!
     })
     .catch(error => addErrorMessage(error));
 }
 
-function addPokemon(pokemon, trainer) {
+function addPokemon(pokemon) {
   const pokeLi = document.createElement('li');
   const releaseBtn = document.createElement('button');
 
@@ -48,15 +45,17 @@ function addPokemon(pokemon, trainer) {
   pokeLi.appendChild(releaseBtn);
 
   releaseBtn.addEventListener("click", function () {
-    const pokeIndex = trainer.pokemons.indexOf(pokemon);
-
-    deletePokemon(pokemon);
-    pokeLi.remove(); // If I do this here, how do I update the trainer?
-    // Now that I have the trainer here, I can remove the pokemon (I think).
-    // But how to properly remove a pokemon hash from an array? Like this:
-    trainer.pokemons = trainer.pokemons.splice(pokeIndex, 1);
-    // That almost got it, but now I'm getting the same bug as before: Being able to add too many Pokemon after the fact!
+    deletePokemon(pokemon, pokeLi);
   });
+  // const pokeIndex = trainer.pokemons.indexOf(pokemon); (Not needed now)
+  // deletePokemon(pokemon, pokeLi);
+  // pokeLi.remove();
+  // If I do this here, how do I update the trainer?
+  // Now that I have the trainer here, I can remove the pokemon (I think).
+  // But how to properly remove a pokemon hash from an array? Like this:
+  // trainer.pokemons = trainer.pokemons.splice(pokeIndex, 1);
+  // That almost got it, but now I'm getting the same bug as before: Being able to add too many Pokemon after the fact!
+  // Update: I fixed this by having the "Add Pokemon" button count pokemon li's instead of the JSON object/trainer's pokemon.
 
   return pokeLi;
 }
@@ -70,21 +69,22 @@ function newPokemonFor (trainer, pokemonList) { // Create the new Pokemon, then 
     },
     body: JSON.stringify({
       trainer_id: trainer.id
-    }) // This body technically isn't needed.
+    }) // This body technically isn't needed, but it can't hurt.
   };
 
   fetch(POKEMONS_URL, configObject)
     .then(resp => resp.json())
     .then(function(pokeJson) {
-      pokemonList.appendChild( addPokemon(pokeJson, trainer) );
+      pokemonList.appendChild( addPokemon(pokeJson) );
       
       // The code below fixes a bug in the "Add Pokemon" button.
       // It tells the trainer object that it has a new Pokemon.
-      trainer.pokemons.push(pokeJson); 
+      // Update: This is no longer needed.
+      // trainer.pokemons.push(pokeJson); 
 
-      // return addPokemon(pokeJson);
+      // return addPokemon(pokeJson); (None of this worked.)
       // newPokemon = addPokemon(pokeJson);
-      // console.log(newPokemon) // None of this worked.
+      // console.log(newPokemon);
     })
     .catch(error => addErrorMessage(error));
 
@@ -112,7 +112,7 @@ function createTrainerCard (trainer) {
   card.appendChild(addPokemonBtn);
 
   for (const pokemon of trainerPokemons) {
-    pokemonList.appendChild( addPokemon(pokemon, trainer) );
+    pokemonList.appendChild( addPokemon(pokemon) );
   }
   card.appendChild(pokemonList);
 
@@ -127,7 +127,19 @@ function createTrainerCard (trainer) {
 
     // The question is: What do I change? And where?
     // The solution that I found: Update the trainer object (not the model) when a new Pokemon is created!
-    if (trainer.pokemons.length < 6) {
+    // if (trainer.pokemons.length < 6) {
+    //   newPokemonFor(trainer, pokemonList);
+    //   console.log(`New Pokemon added to ${trainer.name}'s team!`);
+    // } else {
+    //   console.log(`Sorry. ${trainer.name} has enough Pokemon!`);
+    // }
+
+    // Update: I don't want to use the trainer JSON at all! I need to use the trainer card itself!
+    // That, unlike the JSON, is what gets changed here when a Pokemon is added or released!
+
+    const trainerPokemonCount = card.getElementsByTagName('li').length;
+
+    if (trainerPokemonCount < 6) {
       newPokemonFor(trainer, pokemonList);
       console.log(`New Pokemon added to ${trainer.name}'s team!`);
     } else {
