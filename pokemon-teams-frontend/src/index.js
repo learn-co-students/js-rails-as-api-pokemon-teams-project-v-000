@@ -45,6 +45,15 @@ function createTrainerCard (trainer) {
   }
   card.appendChild(pokemonList);
 
+  addPokemonBtn.addEventListener("click", function() {
+    if (trainer.pokemons.length < 6) {
+      // pokemonList.appendChild( newPokemon );
+      console.log("New Pokemon added to team!");
+    } else {
+      console.log(`Sorry. ${trainer.name} has enough Pokemon!`);
+    }
+  })
+
   return card;
 }
 
