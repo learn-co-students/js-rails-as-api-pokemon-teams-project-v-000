@@ -19,6 +19,7 @@ function fetchAllTrainers() {
     .then(resp => resp.json())
     .then(json => {
         json.forEach(trainer => renderTrainer(trainer))
+        // json.forEach(trainer => console.log(trainer))
     
     })
 }
@@ -48,7 +49,7 @@ function renderTrainer(trainer) {
   // card.className = "card"
   div.setAttribute("class", "card")
   div.setAttribute("data-id", trainer.id)
-
+  console.log(trainer.id)
 
 // create id for each trainer
 //     // card.id = trainer.id //index.js:41 Uncaught (in promise) ReferenceError: trainer is not defined
