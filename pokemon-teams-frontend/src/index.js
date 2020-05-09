@@ -36,7 +36,8 @@ function showTrainers(trainer){
     addButton.innerText = "Add Pokemon"
     cardDiv.appendChild(addButton) 
     //need to make it click 
-    addButton.addEventListener("click", function() {createPokemon(trainer["id"])})
+    //addButton.addEventListener("click", function() {createPokemon(trainer["id"])})
+    addButton.addEventListener("click", createPokemon)
 
 
     let ulTag = document.createElement("ul")
@@ -62,10 +63,27 @@ function showPokemon(pokemon) {
 
     pokeListing.append(releaseButton)
 
-
-    
-
-
-
 }
 
+
+
+const createPokemon = (e) => {
+    //e.preventDefault()
+    e.preventDefault()
+   
+    const configObj = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+        body: JSON.stringify({trainer_id: e.target.dataset.trainerId})
+    }
+
+    fetch(POKEMONS_URL, configObj)
+        .then(res => res.json())
+        .then(json => {
+            showPokemon(json)
+            //console.log(json)
+        })
+}
