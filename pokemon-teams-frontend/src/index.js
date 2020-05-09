@@ -60,6 +60,7 @@ function showPokemon(pokemon) {
     releaseButton.setAttribute("data-pokemon-id", pokemon.id)
     releaseButton.innerText = "Release"
     //need to add click event
+    releaseButton.addEventListener("click", deletePokemon)
 
     pokeListing.append(releaseButton)
 
@@ -87,3 +88,20 @@ const createPokemon = (e) => {
             //console.log(json)
         })
 }
+
+
+const deletePokemon = (e) => {
+
+    e.preventDefault()
+
+    const configObj = {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+        }
+
+        fetch(`${POKEMONS_URL}/${e.target.dataset.pokemonId}`, configObj)
+        e.target.parentElement.remove()  
+}   
