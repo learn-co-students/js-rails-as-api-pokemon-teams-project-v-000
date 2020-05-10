@@ -87,8 +87,7 @@ function renderTrainer(trainer) {
 
 //  create ul tag
     const ul = document.createElement("ul")
-    ul.setAttribute("li", trainer.id.pokemon.nickname)
-    console.log(trainer[0].pokemon.nickname)
+    // ul.setAttribute("li", trainer.pokemons[0].nickname)
     //console.log(ul)
 
     // Object.keys(obj).forEach(function(key,index) {
@@ -99,8 +98,11 @@ function renderTrainer(trainer) {
 //  Create li tag
     const li = document.createElement("li")
 //  li tag with the nickname(species)
-
-//     // Set pokemon nickname(pokemon species)
+//  // Set pokemon nickname(pokemon species)
+    console.log(trainer.pokemons[0].nickname)
+    console.log(trainer.pokemons[0].species)
+    // console.log(trainer.pokemons[1].nickname)
+    // console.log(trainer.pokemons[1].species)
 //     pokemonNickname = pokemonNickname
 //     pokemonSpecies = pokemonSpecies
 //     li.innerHTML = pokemonNickname(pokemonSpecies)
