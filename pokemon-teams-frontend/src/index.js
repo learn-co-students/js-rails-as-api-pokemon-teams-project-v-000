@@ -115,6 +115,11 @@ function addPokemon(pokemon) {
     // Set innerHTML of button to Release
     button.innerHTML = "Release"
 
+  // Add Event Listener "click" to Release Pokemon Button
+  button.addEventListener("click", () => {
+
+  })
+
   // Append Child(button) to li (Parent)
     li.appendChild(button)
   // Append Child(li) to ul (Parent)
