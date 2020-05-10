@@ -53,9 +53,10 @@ function renderTrainer(trainer) {
   div.setAttribute("data-id", trainer.id)
   //console.log(trainer.id)
 
-// <button data-trainer-id="1">Add Pokemon</button>
 // CREATE ADD POKEMON BUTTON
   const button = document.createElement("button")
+
+// <button data-trainer-id="1">Add Pokemon</button>
   button.setAttribute("data-trainer-id", trainer.id)
   // console.log(trainer.id)
 
@@ -90,12 +91,13 @@ function renderTrainer(trainer) {
 
     // Append Child (div) to the main (Parent)
     main.appendChild(div)
-    trainer.pokemons.forEach(pokemon => addPokemon(pokemon))
+    trainer.pokemons.forEach(pokemon => addPokemon) // addPokemon(pokemon
+
 }
 
-function addPokemon(pokemon) {
+function addPokemon() { // function addPokemon(pokemon) 
 // <ul>
-{/* <li>Jacey (Kakuna) <button class="release" data-pokemon-id="140">Release</button></li> */}
+// li Jacey (Kakuna) button class="release" data-pokemon-id="140" Release button li
     //  querySelector for ul tags
     // Retrieve ul
     const ul = document.querySelector(`div[data-id="${pokemon.trainer_id}"]`)
@@ -116,14 +118,13 @@ function addPokemon(pokemon) {
     button.innerHTML = "Release"
 
   // Add Event Listener "click" to Release Pokemon Button
-  button.addEventListener("click", () => {
-
-  })
-
+  button.addEventListener("click", releasePokemon)
+  
   // Append Child(button) to li (Parent)
     li.appendChild(button)
   // Append Child(li) to ul (Parent)
     ul.appendChild(li)
+}
 
 //Release Button Event Listener
 //    releasePokemonButton.addEventListener("click", updateTrainerPokemons)
@@ -144,4 +145,8 @@ function addPokemon(pokemon) {
     // })
     //   .then(resp => resp.json())
     //   .then(resp => addPokemon(resp))
+
+
+function releasePokemon() {
+
 }
