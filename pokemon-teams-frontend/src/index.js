@@ -48,22 +48,24 @@ function renderTrainer(trainer) {
   const div = document.createElement("div")
   // card.className = "card"
   div.setAttribute("class", "card")
+  // create id for each trainer
   div.setAttribute("data-id", trainer.id)
-  console.log(trainer.id)
+  //console.log(trainer.id)
 
-// create id for each trainer
-//     // card.id = trainer.id //index.js:41 Uncaught (in promise) ReferenceError: trainer is not defined
-//     card.id = trainers.id //index.js:41 Uncaught (in promise) ReferenceError: trainers is not defined
 // CREATE ADD POKEMON BUTTON
-//     //<button data-trainer-id="1">Add Pokemon</button>
+// <button data-trainer-id="1">Add Pokemon</button>
   const button = document.createElement("button")
-// const addPokemonButton = document.createElement("button").data-trainer-id
-//     // button with a class name of "add-btn"
-//     addPokemonButton.className = "add-btn"
-//     // Sets addButton
-//     addButton = addPokemonButton
-//     // Adds the innerHTML of the likeButton to "Like"
-//     addButton.innerHTML = "Add Pokemon"
+  button.setAttribute("data-trainer-id", trainer.id)
+  // console.log(trainer.id)
+
+  // Adds the innerHTML of the likeButton to "Like"
+  button.innerHTML = "Add Pokemon"
+
+  // Add Event Listener "click" to Add Pokemon Button
+  button.addEventListener("click", () => {
+
+  })
+
 //     // Sets img attribute "src" to toyImage
 //     // addPokemonButton.src = addButton
 //    //Add addPokeonButton Event Listener
@@ -78,11 +80,21 @@ function renderTrainer(trainer) {
     // Set trainer name
     // Adds the innerHTML of the p to trainerName
     p.innerHTML = trainer.name
+    //console.log(trainer.name)
+
 //      // Appends child "p" to the parent "card"
 //        card.appendChild(p)
 
 //  create ul tag
     const ul = document.createElement("ul")
+    ul.setAttribute("li", trainer.id.pokemon.nickname)
+    console.log(trainer[0].pokemon.nickname)
+    //console.log(ul)
+
+    // Object.keys(obj).forEach(function(key,index) {
+    //   // key: the name of the object key
+    //   // index: the ordinal position of the key within the object 
+    // });
 
 //  Create li tag
     const li = document.createElement("li")
@@ -111,6 +123,14 @@ function renderTrainer(trainer) {
  
 //     // CARD HAS TO BE APPENDED TO THE NODE ON THE WEBPAGE
 //     document.getElementById("card").appendChild(card)
+
+    div.appendChild(p)
+    div.appendChild(button)
+    div.appendChild(ul)
+    div.appendChild(li)
+    div.appendChild(button)
+  // Append Child (div) to the main
+    main.appendChild(div)
 }
 
 // function addNewPokemon(event) {
