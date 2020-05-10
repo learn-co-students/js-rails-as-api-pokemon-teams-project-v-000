@@ -44,7 +44,8 @@ function fetchAllTrainers() {
 // }
 
 function renderTrainer(trainer) {
-  
+
+// <div class="card" data-id="1"> 
   const div = document.createElement("div")
   // card.className = "card"
   div.setAttribute("class", "card")
@@ -52,8 +53,8 @@ function renderTrainer(trainer) {
   div.setAttribute("data-id", trainer.id)
   //console.log(trainer.id)
 
-// CREATE ADD POKEMON BUTTON
 // <button data-trainer-id="1">Add Pokemon</button>
+// CREATE ADD POKEMON BUTTON
   const button = document.createElement("button")
   button.setAttribute("data-trainer-id", trainer.id)
   // console.log(trainer.id)
@@ -66,15 +67,9 @@ function renderTrainer(trainer) {
 
   })
 
-//     // Sets img attribute "src" to toyImage
-//     // addPokemonButton.src = addButton
-//    //Add addPokeonButton Event Listener
-//     addPokemonButton.addEventListener("click", updateTrainerPokemons)
-//     // Appends child "button" to the parent "card"
-//     card.appendChild(addPokemonButton)
-
 //  CREATE TRAINER ELEMENT
 //  p tag with the trainer's name
+// <p>Prince</p>
 //  Create  p tag 
     const p = document.createElement("p")
     // Set trainer name
@@ -82,73 +77,66 @@ function renderTrainer(trainer) {
     p.innerHTML = trainer.name
     //console.log(trainer.name)
 
-//      // Appends child "p" to the parent "card"
-//        card.appendChild(p)
-
-//  create ul tag
+// <ul>
+//  Create ul tag
     const ul = document.createElement("ul")
     // ul.setAttribute("li", trainer.pokemons[0].nickname)
     //console.log(ul)
 
-    // Object.keys(obj).forEach(function(key,index) {
-    //   // key: the name of the object key
-    //   // index: the ordinal position of the key within the object 
-    // });
-
-//  Create li tag
-    const li = document.createElement("li")
-//  li tag with the nickname(species)
-//  // Set pokemon nickname(pokemon species)
-    console.log(trainer.pokemons[0].nickname)
-    console.log(trainer.pokemons[0].species)
-    // console.log(trainer.pokemons[1].nickname)
-    // console.log(trainer.pokemons[1].species)
-//     pokemonNickname = pokemonNickname
-//     pokemonSpecies = pokemonSpecies
-//     li.innerHTML = pokemonNickname(pokemonSpecies)
-    
-//     // CREATE RELEASE BUTTON
-//     //<button data-trainer-id="1">Add Pokemon</button>
-//     releasePokeonButton = document.createElement("button").data-pokemon-id
-//     // button with a class name of "add"
-//     releasePokemonButton.className = "release"
-//     // Sets releaseButton
-//     releaseButton = releasePokemonButton
-//     // Adds the innerHTML of the releaseButton to "Release"
-//     releaseButton.innerHTML = "Release"
-//     // Sets img attribute "src" to toyImage
-//     // releasePokemonButton.src = releaseButton
-//    //Release Button Event Listener
-//    releasePokemonButton.addEventListener("click", updateTrainerPokemons)
-//     // Appends child "button" to the parent "card"
-//     card.appendChild(releasePokemonButton)
- 
-//     // CARD HAS TO BE APPENDED TO THE NODE ON THE WEBPAGE
-//     document.getElementById("card").appendChild(card)
-
+  // Append Each Child (p, button and  ul  to div (Parent)
     div.appendChild(p)
     div.appendChild(button)
     div.appendChild(ul)
-    div.appendChild(li)
-    div.appendChild(button)
-  // Append Child (div) to the main
+
+    // Append Child (div) to the main (Parent)
     main.appendChild(div)
     trainer.pokemons.forEach(pokemon => addPokemon(pokemon))
 }
 
 function addPokemon(pokemon) {
+// <ul>
+{/* <li>Jacey (Kakuna) <button class="release" data-pokemon-id="140">Release</button></li> */}
+    //  querySelector for ul tags
+    // Retrieve ul
+    const ul = document.querySelector(`div[data-id="${pokemon.trainer_id}"]`)
+    // Create li tag
+    const li = document.createElement("li")
+   // CREATE RELEASE BUTTON
+    const button = document.createElement("button")
+
+    // pokemon.nickname (pokemon.species) using Interpolation
+    li.innerHTML = `${pokemon.nickname} (${pokemon.species})`
+
+// <button class="release" data-pokemon-id="141">Release</button>
+    // Button Set Attribute class release
+    button.setAttribute("class", "release")
+    // Button Set Attribute data-pokemon-id pokemon.id
+    button.setAttribute("data-pokemon-id", "pokemon.id")
+    // Set innerHTML of button to Release
+    button.innerHTML = "Release"
+
+  // Append Child(button) to li (Parent)
+    li.appendChild(button)
+  // Append Child(li) to ul (Parent)
+    ul.appendChild(li)
+
+//Release Button Event Listener
+//    releasePokemonButton.addEventListener("click", updateTrainerPokemons)
+// Appends child "button" to the parent "card"
+//     card.appendChild(releasePokemonButton)    
+
     //  a POST request is sent to http://localhost:3000/trainers
-    fetch(POKEMONS_URL, {
-      method: "POST", 
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      },
-      body: JSON.stringify({
-        trainer_id: pokemon.trainer_id,
-        // index.js:141 POST http://localhost:3000/trainers 404 (Not Found)
-       })
-    })
-      .then(resp => resp.json())
-      .then(resp => addPokemon(resp))
+    // fetch(POKEMONS_URL, {
+    //   method: "POST", 
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     "Accept": "application/json"
+    //   },
+    //   body: JSON.stringify({
+    //     trainer_id: pokemon.trainer_id,
+    //     // index.js:141 POST http://localhost:3000/trainers 404 (Not Found)
+    //    })
+    // })
+    //   .then(resp => resp.json())
+    //   .then(resp => addPokemon(resp))
 }
