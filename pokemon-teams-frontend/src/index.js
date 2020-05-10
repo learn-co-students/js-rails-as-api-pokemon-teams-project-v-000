@@ -133,20 +133,22 @@ function renderTrainer(trainer) {
     div.appendChild(button)
   // Append Child (div) to the main
     main.appendChild(div)
+    trainer.pokemons.forEach(pokemon => addPokemon(pokemon))
 }
 
-// function addNewPokemon(event) {
-//     //  a POST request is sent to http://localhost:3000/trainers
-//     fetch("http://localhost:3000/trainers", {
-//       method: "POST", 
-//       headers: {
-//         "Content-Type": "application/json",
-//         "Accept": "application/json"
-//       },
-//       body: JSON.stringify({
-//         trainer_id: event.target[0].value, // Test
-//        })
-//     })
-//       .then(resp => resp.json())
-//       .then(resp => renderTrainer(resp))
-// }
+function addPokemon(pokemon) {
+    //  a POST request is sent to http://localhost:3000/trainers
+    fetch(POKEMONS_URL, {
+      method: "POST", 
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        trainer_id: pokemon.trainer_id,
+        // index.js:141 POST http://localhost:3000/trainers 404 (Not Found)
+       })
+    })
+      .then(resp => resp.json())
+      .then(resp => addPokemon(resp))
+}
