@@ -91,11 +91,11 @@ function renderTrainer(trainer) {
 
     // Append Child (div) to the main (Parent)
     main.appendChild(div)
-    trainer.pokemons.forEach(pokemon => addPokemon) // addPokemon(pokemon
+    trainer.pokemons.forEach(pokemon => addPokemon) 
 
 }
 
-function addPokemon() { // function addPokemon(pokemon) 
+function addPokemon() { 
 // <ul>
 // li Jacey (Kakuna) button class="release" data-pokemon-id="140" Release button li
     //  querySelector for ul tags
