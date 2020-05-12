@@ -1,3 +1,4 @@
+require 'pry'
 class PokemonsController < ApplicationController
     def index
         pokemons = Pokemon.all
@@ -5,7 +6,7 @@ class PokemonsController < ApplicationController
     end
 
     def show
-        pokemon = Pokemon.find_by(id: params[:id])
+        pokemon = Pokemon.find(params[:id])
         options = {
             include: [:trainer]
         }
@@ -14,10 +15,18 @@ class PokemonsController < ApplicationController
 
     def create
         trainer = Trainer.find(params[:trainer_id])
-    end
+        pokemon = trainer.pokemons.build({
+            # db/seeds.rb defined
+            nickname: Faker::Name.first_name,
+            species: Faker::Games::Pokemon.name
+        })
+        #                           If          Else
+        render json: pokemon.save ? pokemon : {message: pokemon.errors.mesages[:team_max][0]}
+     end
 
     def destroy
-
+        pokemon = Pokemon.find(params[:id])
+        pokemon.destroy
     end
 
 end
