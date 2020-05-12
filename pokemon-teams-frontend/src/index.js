@@ -91,6 +91,7 @@ const createPokemon = (e) => {
   fetch(POKEMONS_URL, configObj)
     .then(res => res.json())
     .then(res => {
+      // console.log("YIPPEE!!!")
 
     if (json.message) {
       alert(json.message)
