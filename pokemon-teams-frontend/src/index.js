@@ -60,9 +60,11 @@ const renderPokemon = (pokemon) => {
   // pokemon.nickname (pokemon.species) using Interpolation
   li.innerHTML = `${pokemon.nickname} (${pokemon.species})`
   
-  //Button Set First Attribute class release
+  // First Attribute button.className = "telease"
+  button.setAttribute("class", "release")
+  //Button Set Second Attribute class release
   button.setAttribute("button", "release")
-  // Button Set Second Attribute data-pokemon-id pokemon.id
+  // Button Set Third Attribute data-pokemon-id pokemon.id
   button.setAttribute("data-pokemon-id", "pokemon.id")
   // Set innerHTML of button to Release
   button.innerHTML = "Release"

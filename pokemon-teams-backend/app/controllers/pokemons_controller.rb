@@ -14,7 +14,7 @@ class PokemonsController < ApplicationController
     end
 
     def create
-        trainer = Trainer.find(params[:trainer_id])
+        trainer = Trainer.find_by(trainer_id: params[:trainer_id])
         pokemon = trainer.pokemons.build({
             # db/seeds.rb defined
             nickname: Faker::Name.first_name,
