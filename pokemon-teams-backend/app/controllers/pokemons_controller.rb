@@ -29,12 +29,10 @@ class PokemonsController < ApplicationController
             render json: pokemon.save ? pokemon : {message: pokemon.errors.messages[:team_max][0]}
 
         end
-
      end
 
     def destroy
         pokemon = Pokemon.find(params[:id])
         pokemon.destroy
     end
-
 end

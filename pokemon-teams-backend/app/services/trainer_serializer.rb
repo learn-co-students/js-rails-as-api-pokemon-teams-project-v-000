@@ -7,12 +7,6 @@ class TrainerSerializer #< ActiveModel::Serializer
         @trainer = trainer_object
     end
 
-    # def to_serialized_json
-    #     @trainer.to_json(:include => {
-    #       :pokemon => {:only => [:nickname, :species, trainer_id]}
-    #     })
-    # end
-
 # Diplays the Trainer (attributes) and Nested Pokemon(attributes)
     def to_serialized_json
         options = {}
