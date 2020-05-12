@@ -65,7 +65,7 @@ const renderPokemon = (pokemon) => {
   //Button Set Second Attribute class release
   button.setAttribute("button", "release")
   // Button Set Third Attribute data-pokemon-id pokemon.id
-  button.setAttribute("data-pokemon-id", "pokemon.id")
+  button.setAttribute("data-pokemon-id", pokemon.id)
   // Set innerHTML of button to Release
   button.innerHTML = "Release"
 
@@ -76,7 +76,6 @@ const renderPokemon = (pokemon) => {
   // Append Child(li) to ul (Parent)
   ul.appendChild(li)
 }
-
 
 const createPokemon = (e) => {
   e.preventDefault()
@@ -90,15 +89,22 @@ const createPokemon = (e) => {
   }
   fetch(POKEMONS_URL, configObj)
     .then(res => res.json())
-    .then(res => {
-      // console.log("YIPPEE!!!")
+    .then(json => {
+      // console.log("YIPPEE!!!") HITS
+      // console.log(json) 
+      // console.log(res)
+
+    // if (res.message) {
+    //   alert(json.message)
+    //     } else {
+    //       renderPokemon(json)
 
     if (json.message) {
       alert(json.message)
         } else {
           renderPokemon(json)
-        }
-    })
+    }
+  })
 }
 
 const deletePokemon = (e) => {
