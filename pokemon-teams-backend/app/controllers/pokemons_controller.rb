@@ -6,7 +6,7 @@ class PokemonsController < ApplicationController
     end
 
     def show
-        pokemon = Pokemon.find(params[:id])
+        pokemon = Pokemon.find_by(id: params[:id])
         options = {
             include: [:trainer]
         }
@@ -25,7 +25,7 @@ class PokemonsController < ApplicationController
      end
 
     def destroy
-        pokemon = Pokemon.find(params[:id])
+        pokemon = Pokemon.find_by(id: params[:id])
         pokemon.destroy
     end
 

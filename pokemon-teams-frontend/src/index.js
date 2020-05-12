@@ -96,16 +96,6 @@ const createPokemon = (e) => {
           renderPokemon(json)
         }
     })
-
-  // fetch(POKEMONS_URL, configObj)
-  // .then(resp => resp.json())
-  // .then(resp => {
-  //   if (json.message) {
-  //     alert(json.message)
-  //   } else {
-  //     renderPokemon(json)
-  //   }
-  // })
 }
 
 const deletePokemon = (e) => {
