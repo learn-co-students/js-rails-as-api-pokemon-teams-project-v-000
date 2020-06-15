@@ -1,3 +1,9 @@
+# This began as a Flatiron lab, which gave us only some basic structures and CSS. The entire JS Frontend was written by me, as was the Rails backend, and it was the first project in which I fully understood and could debug the entire fullstack process. 
+
+There's lots of refactoring I would do, and if this weren't a lab, I would have used React and made these very long functions into much smaller and reusable modules. Also, I made the delete function more complex than it needed to be for the lab, but it was good practice in how to organize nested resources in a delete call. 
+
+-- Miriam 
+
 # Pokemon Teams Project
 
 ## Learning Goals

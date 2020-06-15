@@ -1,0 +1,18 @@
+Todo: 
+
+Backend
+* create relationships 
+* create serializers
+* make sure gemfile is right 
+* work on routes 
+* migrate database 
+
+
+
+
+Frontend
+
+
+
+Connecting the two: with fetch(), then putting the data where it belongs 
+
