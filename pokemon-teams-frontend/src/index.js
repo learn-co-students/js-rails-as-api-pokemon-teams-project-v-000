@@ -7,7 +7,7 @@ function fetchTrainersAndPokemons() {
     console.log("fetchData");
     fetch(TRAINERS_URL)
         .then(resp => resp.json())
-        .then(json => json.forEach(elem => buildTrainerCard(elem)))
+        .then(json => json.forEach(trainer => buildTrainerCard(trainer)))
         .catch(error => console.log(`My Error: ${error}`));
 
 }
@@ -15,47 +15,51 @@ function fetchTrainersAndPokemons() {
 function buildTrainerCard(trainer) {
     console.log(trainer);
     const cardContainerDiv = document.createElement("div");
-    const trainerNameP = document.createElement("p");
-    const addPokemonButton = document.createElement("button");
-    const pokemonContainerList = document.createElement("ul");
-
-
     cardContainerDiv.setAttribute("class", "card");
     cardContainerDiv.setAttribute("data-id", trainer.id);
 
-    trainerNameP.textContent = trainer.name;
+    cardContainerDiv.appendChild(buildTrainerPElem(trainer));
 
-    addPokemonButton.setAttribute("data-trainer-id", trainer.id);
-    addPokemonButton.addEventListener("click", addPokemon);
-    addPokemonButton.textContent = "Add Pokemon";
+    cardContainerDiv.appendChild(buildAddPokemonButton(trainer));
 
-    // buildPokemonList(trainer.pokemons);
-    trainer.pokemons.forEach(pokemon => {
-        const pokemonListElem = document.createElement("li");
-        pokemonListElem.textContent = pokemon.nickname;
-        const relPokemonButton = document.createElement("button");
-        relPokemonButton.setAttribute("class", "release");
-        relPokemonButton.setAttribute("data-pokemon-id", pokemon.id);
-        relPokemonButton.addEventListener("click", releasePokemon);
-        relPokemonButton.textContent = "Release";
-
-        pokemonListElem.appendChild(relPokemonButton);
-        pokemonContainerList.appendChild(pokemonListElem);
-    });
+    cardContainerDiv.appendChild(buildPokemonListContainer(trainer.pokemons));
 
     document.querySelector("main").appendChild(cardContainerDiv);
 
-    cardContainerDiv.appendChild(trainerNameP);
-    cardContainerDiv.appendChild(addPokemonButton);
-    cardContainerDiv.appendChild(pokemonContainerList);
 }
 
-function buildPokemonList(pokemons) {
-    pokemons.forEach(elem => {
-        const pokemonListElem = document.createElement("li");
+function buildTrainerPElem(trainer) {
+    const trainerNameP = document.createElement("p");
+    trainerNameP.textContent = trainer.name;
+    return trainerNameP;
+}
 
-        pokemonContainerList.appendChild(pokemonListElem);
-    });
+function buildAddPokemonButton(trainer) {
+    const addPokemonButton = document.createElement("button");
+    addPokemonButton.setAttribute("data-trainer-id", trainer.id);
+    addPokemonButton.addEventListener("click", addPokemon);
+    addPokemonButton.textContent = "Add Pokemon";
+    return addPokemonButton;
+}
+
+function buildPokemonListContainer(pokemons) {
+    const pokemonListContainer = document.createElement("ul");
+    pokemons.forEach(pokemon => pokemonListContainer.appendChild(buildPokemonElem(pokemon)));
+    return pokemonListContainer;
+
+}
+
+function buildPokemonElem(pokemon) {
+    const pokemonListElem = document.createElement("li");
+    pokemonListElem.textContent = pokemon.nickname;
+    const relPokemonButton = document.createElement("button");
+    relPokemonButton.setAttribute("class", "release");
+    relPokemonButton.setAttribute("data-pokemon-id", pokemon.id);
+    relPokemonButton.addEventListener("click", releasePokemon);
+    relPokemonButton.textContent = "Release";
+
+    pokemonListElem.appendChild(relPokemonButton);
+    return pokemonListElem;
 }
 
 function addPokemon() {
