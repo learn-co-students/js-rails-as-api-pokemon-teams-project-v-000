@@ -1,3 +1,4 @@
+require 'faker'
 class TrainersController < ApplicationController
     def index
         trainers = Trainer.all
@@ -9,5 +10,4 @@ class TrainersController < ApplicationController
             },
             except:[:created_at, :updated_at])
     end
-
 end
