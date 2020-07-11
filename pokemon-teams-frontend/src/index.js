@@ -112,4 +112,4 @@ function releasePokemon(event) {
         .then(resp => resp.json())
         .then(pokemon => currentNode.closest("ul").removeChild(currentNode.parentNode))
         .catch(error => console.log(`Bad things have happend!: ${error}`));
-}
+} 
