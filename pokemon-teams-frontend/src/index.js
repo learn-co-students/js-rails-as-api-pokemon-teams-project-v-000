@@ -17,9 +17,7 @@ function buildTrainerCard(trainer) {
     let trainerCardContainer = buildTrainerCardContainer(trainer);
 
     trainerCardContainer.appendChild(buildTrainerPElem(trainer));
-
     trainerCardContainer.appendChild(buildAddPokemonButton(trainer));
-
     trainerCardContainer.appendChild(buildPokemonListContainer(trainer.pokemons));
 
     document.querySelector("main").appendChild(trainerCardContainer);
@@ -28,7 +26,7 @@ function buildTrainerCard(trainer) {
 
 function buildTrainerCardContainer(trainer) {
     const cardContainerDiv = document.createElement("div");
-    cardContainerDiv.setAttribute("class", "card");
+    cardContainerDiv.className = 'card';
     cardContainerDiv.setAttribute("data-id", trainer.id);
     return cardContainerDiv;
 }
@@ -54,12 +52,12 @@ function buildPokemonListContainer(pokemons) {
 }
 
 function buildPokemonElem(pokemon) {
+    const relPokemonButton = document.createElement("button");
     const pokemonListElem = document.createElement("li");
+
     pokemonListElem.textContent = pokemon.nickname;
 
-    const relPokemonButton = document.createElement("button");
-
-    relPokemonButton.setAttribute("class", "release");
+    relPokemonButton.className = 'release';
     relPokemonButton.setAttribute("data-pokemon-id", pokemon.id);
     relPokemonButton.addEventListener("click", releasePokemon);
     relPokemonButton.textContent = "Release";
@@ -70,27 +68,48 @@ function buildPokemonElem(pokemon) {
 
 function addPokemon(event) {
     let currentNode = event.target
+    console.log(`Processing to add: ${currentNode}`);
     let trainer_id = currentNode.getAttribute("data-trainer-id")
 
-    console.log(`trainer_id: ${trainer_id}`);
     configurationObject = {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json"
         },
-        body: JSON.stringify({ trainer_id: trainer_id })
+        // body: JSON.stringify({ trainer_id: trainer_id })
     };
-    return fetch(POKEMONS_URL, configurationObject)
+    // return fetch(POKEMONS_URL, configurationObject)
+    return fetch(`${TRAINERS_URL}/${trainer_id}/pokemons`, configurationObject)
         .then(resp => resp.json())
         .then(json => {
-            if (json.hasOwnProperty("nickname")) {
+            if (json.hasOwnProperty("message")) {
+                console.log(json["message"]);
+            } else {
                 currentNode.nextElementSibling.appendChild(buildPokemonElem(json))
             }
         })
-        // .then(new_pokemon => currentNode.nextElementSibling.appendChild(buildPokemonElem(new_pokemon)));
+        .catch(error => console.log(`Bad things have happend!: ${error}`));
 }
 
-function releasePokemon() {
-    console.log("Removed!");
+function releasePokemon(event) {
+    let currentNode = event.target
+    console.log(`Processing to remove: ${currentNode}`);
+
+    let pokemon_id = currentNode.getAttribute("data-pokemon-id")
+    let trainerCardDiv = currentNode.closest("div");
+    let trainer_id = trainerCardDiv.querySelector("button").getAttribute("data-trainer-id");
+
+    configurationObject = {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+    };
+
+    return fetch(`${TRAINERS_URL}/${trainer_id}/pokemons/${pokemon_id}`, configurationObject)
+        .then(resp => resp.json())
+        .then(pokemon => currentNode.closest("ul").removeChild(currentNode.parentNode))
+        .catch(error => console.log(`Bad things have happend!: ${error}`));
 }
