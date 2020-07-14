@@ -72,7 +72,7 @@ function addPokemon(event){
 
 function deletePokemon(event){
     event.preventDefault();
-    fetch(`POKEMONS_URL/${event.toElement.dataset.pokemonId}`, {
+    fetch(`${POKEMONS_URL}/${event.toElement.dataset.pokemonId}`, {
         method: "DELETE", 
         headers: {
             'Content-Type': 'application/json',
