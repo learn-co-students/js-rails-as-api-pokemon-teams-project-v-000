@@ -35,9 +35,9 @@ rendering JSON to try and solve these challenges.
 not work. Rather, your task is to build towards the goals below by constructing
 both a Rails API and JavaScript frontend together. The specific implementation
 for achieving these goals is left to you.
-
+<!-- 
 - When a user loads the page, they should see all trainers, with their current
-  team of Pokemon.
+  team of Pokemon. -->
 - Whenever a user hits "Add Pokemon" and they have space on their team, they
   should get a new Pokemon.
 - Whenever a user hits "Release Pokemon" on a specific Pokemon team, that
@@ -45,11 +45,11 @@ for achieving these goals is left to you.
 
 ## Backend
 
-Create a backend from scratch inside this lesson using an API-only Rails build.
+<!-- Create a backend from scratch inside this lesson using an API-only Rails build.
 Exactly how you choose to structure things and the following guidelines to get
-started:
+started: -->
 
-```sh
+<!-- ```sh
 rails new pokemon-teams-backend --api
 ```
 
@@ -57,15 +57,15 @@ Once the backend is created, navigate into the new folder. Within this new Rails
 build, add the following gem to the Gemfile:
 
 ```rb
-gem 'faker'
-```
+# gem 'faker'
+``` -->
 
-While we are in the Gemfile, uncomment `gem 'rack-cors'`, then run 
+<!-- While we are in the Gemfile, uncomment `gem 'rack-cors'`, then run 
 `bundle install`. If you recall, `rack-cors` is necessary for cross-origin
 resource sharing. To get rack-cors working, once the gem is installed, uncomment
-the following code in `config/initializers/cors.rb`:
+the following code in `config/initializers/cors.rb`: -->
 
-```rb
+<!-- ```rb
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
     origins "*"
@@ -75,19 +75,19 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
       methods: [:get, :post, :put, :patch, :delete, :options, :head]
   end
 end
-```
+``` -->
 
-> **Aside**: Notice that we've put this in `config/initializers/cors.rb`. We've
+<!-- > **Aside**: Notice that we've put this in `config/initializers/cors.rb`. We've
 also seen this code being placed in `config/application.rb`. Both will work, but
 Rails provides the `cors.rb` file specifically for defining our rules for
-cross-origin HTTP requests.
+cross-origin HTTP requests. -->
 
-The string after `origins` specifies which hosts will be allowed to make
+<!-- The string after `origins` specifies which hosts will be allowed to make
 requests to your API. Your brand-new rails app probably comes with the string
 `"example.com"` there — change it to "*" to allow all hosts. In a production
-application, you might want to specify a particular hostname.
+application, you might want to specify a particular hostname. -->
 
-If you already have a rails server running, stop and restart it so that your
+<!-- If you already have a rails server running, stop and restart it so that your
 configuration changes can take effect.
 
 With these gems installed, use the following resource generators to create
@@ -96,9 +96,9 @@ resources for this API:
 ```sh
 rails g resource trainer name
 rails g resource pokemon species nickname trainer:references
-```
+``` -->
 
-Run `rails db:migrate` to execute our migration files, and create database and schema. Using
+<!-- Run `rails db:migrate` to execute our migration files, and create database and schema. Using
 `trainer:references` will set up `belongs_to :trainer` in the `Pokemon` model,
 though it won't update the other side of the relationship. You will need to add
 the `has_many :pokemons` in the `Trainer` model yourself.
@@ -124,38 +124,38 @@ trainers_name = [
   'Ashley'
 ]
 
-trainer_collection = []
+trainer_collection = [] -->
 
-trainers_name.each do |name|
-  trainer_collection << Trainer.create(name: name)
-end
+<!-- # trainers_name.each do |name|
+#   trainer_collection << Trainer.create(name: name)
+# end
 
-trainer_collection.each do |trainer|
-  team_size = (SecureRandom.random_number(6) + 1).floor
+# trainer_collection.each do |trainer|
+#   team_size = (SecureRandom.random_number(6) + 1).floor
 
-  (1..team_size).each do |poke|
-    name = Faker::Name.first_name
-    species = Faker::Games::Pokemon.name
-    Pokemon.create(nickname: name, species: species, trainer_id: trainer.id)
-  end
-end
-```
+#   (1..team_size).each do |poke|
+#     name = Faker::Name.first_name
+#     species = Faker::Games::Pokemon.name
+#     Pokemon.create(nickname: name, species: species, trainer_id: trainer.id)
+#   end
+# end
+# ```
 
-At this point, you should be able to run `rails console` and confirm that you
-have populated your tables with seed data.
+# At this point, you should be able to run `rails console` and confirm that you
+# have populated your tables with seed data. -->
 
-## Frontend
+<!-- ## Frontend
 
 Some basic structure is provided in the folder `pokemon-teams-frontend`, including
-an HTML, CSS and JS file set up to work together.
+an HTML, CSS and JS file set up to work together. -->
 
 ## Running the Server
 
-The API server should be started by accessing the folder pokemon-teams-backend (`cd pokemon-teams-backend`) and running `rails s` from a terminal window. It should run on port :3000 since the `pokemon-teams-frontend/src/index.js` file has a constant `BASE_URL` setup to use that port.
+<!-- The API server should be started by accessing the folder pokemon-teams-backend (`cd pokemon-teams-backend`) and running `rails s` from a terminal window. It should run on port :3000 since the `pokemon-teams-frontend/src/index.js` file has a constant `BASE_URL` setup to use that port. -->
 
-If for any reason you had to quit the running server and have to restart it, you might see an error saying **port 3000 already in use**. In this case, do the following:
+<!-- If for any reason you had to quit the running server and have to restart it, you might see an error saying **port 3000 already in use**. In this case, do the following: -->
 
-Run `lsof -i :3000` to inspect what's running on port 3000 (alternatively, you can try `ps aux | grep 3000`).
+<!-- Run `lsof -i :3000` to inspect what's running on port 3000 (alternatively, you can try `ps aux | grep 3000`).
 You will see something like the following:
 ```
 COMMAND PID USER FD TYPE DEVICE SIZE/OFF NODE NAME 
@@ -164,15 +164,15 @@ ruby 9639 matteo 29u IPv6 0x89939dfa2ef1897 0t0 TCP localhost:hbci (LISTEN)
 ```
 
 Kill the process running by doing `kill -9 <PID_HERE>`, so in the case of my example `kill -9 9639`.
-Now the `rails s` command should start the server on port 3000 without issues.
+Now the `rails s` command should start the server on port 3000 without issues. -->
 
-> **Aside**: In general, you can always specify what port to use when running the server, by running: `rails s -p PORT_NUMBER` (eg: `rails s -p 3001`).
+<!-- > **Aside**: In general, you can always specify what port to use when running the server, by running: `rails s -p PORT_NUMBER` (eg: `rails s -p 3001`).
 
-The frontend should be started by accessing the folder pokemon-teams-frontend (`cd pokemon-teams-frontend`) and, in a new terminal window, run `open index.html` or simply right-click on the file name and select `open in browser` if this option is available.
+The frontend should be started by accessing the folder pokemon-teams-frontend (`cd pokemon-teams-frontend`) and, in a new terminal window, run `open index.html` or simply right-click on the file name and select `open in browser` if this option is available. -->
 
-**Keep the rails server running since our frontend will fire requests to our backend API in order to retrieve the existing Trainers and Pokemons, as well as performing other actions like creating and deleting Pokemons.**
+<!-- **Keep the rails server running since our frontend will fire requests to our backend API in order to retrieve the existing Trainers and Pokemons, as well as performing other actions like creating and deleting Pokemons.** -->
 
-### Suggested HTML
+<!-- ### Suggested HTML
 
 As CSS is already provided, you can use this sample HTML as a guide when
 building out your frontend JavaScript:
@@ -188,20 +188,20 @@ building out your frontend JavaScript:
     <li>Rod (Beedrill) <button class="release" data-pokemon-id="151">Release</button></li>
   </ul>
 </div>
-```
+``` -->
 
 ### Building out the rest of the project
 
 Remember that your user stories are:
 
-- When a user loads the page, they should see all trainers, with their current
-  team of Pokemon.
+<!-- - When a user loads the page, they should see all trainers, with their current
+  team of Pokemon. -->
 - Whenever a user hits "Add Pokemon" and they have space on their team, they
   should get a new Pokemon.
 - Whenever a user hits "Release Pokemon" on a specific Pokemon team, that
   specific Pokemon should be released from the team.
 
-You should build out just enough of your Rails API to achieve the above. You
+<!-- You should build out just enough of your Rails API to achieve the above. You
 _should not_ build out full CRUD on each model. For example, the frontend will
 not have the ability to create a new Trainer, so your backend should not have a
 `POST /trainers` route.
@@ -240,7 +240,8 @@ GET /trainers
   }
   // ...
 ]
-```
+``` -->
+
 
 ### Adding a Pokemon
 
@@ -271,7 +272,7 @@ Required Body:
 }
 ```
 
-### Releasing a Pokemon
+<!-- ### Releasing a Pokemon
 
 ```text
 #=> Example Request
@@ -284,4 +285,4 @@ DELETE /pokemons/:pokemon_id
   "species":"Weepinbell",
   "trainer_id":1
 }
-```
+``` -->
