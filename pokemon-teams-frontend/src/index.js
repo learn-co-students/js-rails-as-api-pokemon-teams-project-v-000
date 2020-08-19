@@ -51,3 +51,5 @@ function fetchTrainers() {
   document.addEventListener('DOMContentLoaded', function() {
     fetchTrainers()
   })
+
+  document.addEventListener('click')
