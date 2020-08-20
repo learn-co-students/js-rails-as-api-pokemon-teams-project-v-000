@@ -37,10 +37,54 @@ function fetchTrainers() {
           button.className = 'release'
           button.dataset.pokemonId = pokemon.id
           button.innerHTML = 'Release'
+          button.addEventListener('click', function(event){
+            fetch(`http://localhost:3000/pokemons/${pokemon.id}`, {
+              method: "DELETE"
+            })
+            ul.removeChild(li)
+          })
           
           li.appendChild(button)
           ul.appendChild(li)
       })
+
+      button1.addEventListener('click',function(event){
+        fetch("http://localhost:3000/pokemons", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify({
+            trainer_id: trainer.id
+          })
+        })
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(pokemon) {
+          const li = document.createElement('li')
+          li.innerHTML += `${pokemon.nickname} (${pokemon.species})`
+          
+          const button = document.createElement('button')
+          button.className = 'release'
+          button.dataset.pokemonId = pokemon.id
+          button.innerHTML = 'Release'
+          button.addEventListener('click', function(event){
+            fetch(`http://localhost:3000/pokemons/${pokemon.id}`, {
+              method: "DELETE"
+            })
+            ul.removeChild(li)
+          })
+          
+          li.appendChild(button)
+          if(pokemon.id!=null){
+            ul.appendChild(li)
+          }
+        
+        });
+      });
+
 
       div.appendChild(ul)
 
@@ -52,4 +96,4 @@ function fetchTrainers() {
     fetchTrainers()
   })
 
-  document.addEventListener('click')
+  
