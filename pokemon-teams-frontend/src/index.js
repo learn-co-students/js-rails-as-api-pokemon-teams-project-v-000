@@ -11,9 +11,7 @@ function renderData(json) {
     card.setAttribute("data-id", element.id);
     main.appendChild(card);
 
-    const pTag = document.createElement("p");
-    pTag.innerHTML = element.name;
-    card.appendChild(pTag);
+    createPtag(element, card);
 
     const addBtn = document.createElement("button");
     addBtn.innerHTML = "Add Pokemon";
@@ -25,19 +23,7 @@ function renderData(json) {
       .then((resp) => resp.json())
       .then((pokemons) => {
         for (const pokemon of pokemons) {
-          const li = document.createElement("li");
-          li.innerHTML = `${pokemon.nickname}(${pokemon.species})`;
-
-          const releaseBtn = document.createElement("button");
-          releaseBtn.classList.add("release");
-          releaseBtn.setAttribute("data-pokemon-id", pokemon.id);
-          releaseBtn.innerHTML = "Release";
-          releaseBtn.addEventListener("click", (e) => {
-            deleteData(pokemon.id);
-            e.target.parentNode.remove();
-          });
-          li.appendChild(releaseBtn);
-          ul.appendChild(li);
+          appendPokemon(pokemon, ul);
         }
         card.appendChild(ul);
       });
@@ -45,8 +31,8 @@ function renderData(json) {
     addBtn.addEventListener("click", (e) => {
       console.log(ul);
       submitData(element.id).then((pokemon) => {
-        //append pokemon to UL
-      }));
+        appendPokemon(pokemon, ul);
+      });
     });
   }
 }
@@ -91,6 +77,42 @@ function submitData(trainerId) {
     .catch(function (error) {
       //what to do if error
     });
+}
+
+function createCard(card, tag) {
+  card.classList.add("card");
+  card.setAttribute("data-id", element.id);
+  main.appendChild(card);
+}
+
+function createPtag(element, card) {
+  const pTag = document.createElement("p");
+  pTag.innerHTML = element.name;
+  card.appendChild(pTag);
+}
+
+function createReleaseButton(pokemon) {
+  const button = document.createElement("button");
+  button.classList.add("release");
+  button.setAttribute("data-pokemon-id", pokemon.id);
+  button.innerHTML = "Release";
+
+  button.addEventListener("click", (e) => {
+    deleteData(pokemon.id);
+    e.target.parentNode.remove();
+  });
+  return button;
+}
+
+function appendPokemon(pokemon, ul) {
+  const li = document.createElement("li");
+  li.innerHTML = `${pokemon.nickname}(${pokemon.species})`;
+
+  const releaseBtn = createReleaseButton(pokemon);
+
+  li.appendChild(releaseBtn);
+
+  ul.appendChild(li);
 }
 
 document.addEventListener("DOMContentLoaded", function () {
