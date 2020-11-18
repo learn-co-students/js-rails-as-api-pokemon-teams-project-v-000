@@ -3,6 +3,9 @@ const TRAINERS_URL = `${BASE_URL}/trainers`
 const POKEMONS_URL = `${BASE_URL}/pokemons`
 const main = document.querySelector("main")
 
+document.addEventListener("DOMContentLoaded", ready);
+
+
 function ready() {
 fetch(TRAINERS_URL)
   .then(response => response.json())
@@ -22,6 +25,7 @@ const renderTrainer = (trainerHash) => {
 	p.innerHTML = trainerHash.name
 	button.setAttribute("data-trainer-id", trainerHash.id)
 	button.innerHTML = "Add Pokemon"
+	button.addEventListener("click", createPokemon)
 
 	div.appendChild(p)
 	div.appendChild(button)
@@ -29,8 +33,38 @@ const renderTrainer = (trainerHash) => {
 
 
 	main.appendChild(div)
+	trainerHash.pokemons.forEach(pokemon => renderPokemon(pokemon))
 
 }
 
-document.addEventListener("DOMContentLoaded", ready);
+const renderPokemon = (pokemon) => {
+	const ul = document.querySelector(`div[data-id="${pokemon.trainer_id}"]`)
+	const li = document.createElement("li")
+	const button = document.createElement("button")
+
+	li.innerHTML = `${pokemon.nickname} (${pokemon.species})`
+	button.setAttribute("button", "release")
+	button.setAttribute("data-pokemon-id", pokemon.id)
+	button.innerHTML = "Relase"
+	button.addEventListener("click", deletePokemon)
+
+
+	li.appendChild(button)
+	ul.appendChild(li)
+
+}
+
+
+const createPokemon = () => {
+
+}
+
+const deletePokemon = () => {
+	
+}
+
+
+
+
+
 
