@@ -2,6 +2,9 @@ const BASE_URL = "http://localhost:3000"
 const TRAINERS_URL = `${BASE_URL}/trainers`
 const POKEMONS_URL = `${BASE_URL}/pokemons`
 
+//reference:  https://dev.to/maylenepoulsen/basic-fetch-requests-with-js-rails-1a40
+
+
 document.addEventListener('DOMContentLoaded', () => {
 
     let main = document.querySelector('#main')
