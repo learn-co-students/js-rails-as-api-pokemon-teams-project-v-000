@@ -34,22 +34,17 @@ document.addEventListener('DOMContentLoaded', () => {
             addPokemon.innerText = "Add Pokemon" 
             addPokemon.id = trainer.id
 
-            //add Event Listener to 'Add Pokemon' button
-            addPokemon.addEventListener('click', () => {
-                if (pokemonsOfTrainer.length < 6) {
-                    console.log('hello')
-                }
-            })
-
             //add ul within card
             const ul = document.createElement('ul')
             card.appendChild(ul)
+
             
             pokemonsOfTrainer.forEach(pokemon => {
                 //add pokemon li within ul
                 const pokemonLine = document.createElement('li')
                 ul.appendChild(pokemonLine)
                 pokemonLine.innerText = `${pokemon.species} (${pokemon.nickname})`
+                pokemonLine.id = pokemon.id //needed for line 70 (only item with pokemon id)
 
                 //add button within li
                 const buton = document.createElement('button')
@@ -63,10 +58,61 @@ document.addEventListener('DOMContentLoaded', () => {
                     fetch(`http://localhost:3000/pokemons/${pokemon.id}`, {
                         method: "DELETE"
                     })
+                    //response is deleted pokemon 
+                    .then(resp => resp.json())
+                    .then(deletedPokemon => {
+                        const pokemonLi = document.getElementById(`${deletedPokemon.data.attributes.id}`) //from line 54 - only element with pokemon id
+                        console.log(pokemonLi)
+                        ul.removeChild(pokemonLi) //remove from DOM
+                    })
                 })
-            }) 
+            })
+            
+            
+            //add Event Listener to 'Add Pokemon' button
+            addPokemon.addEventListener('click', () => {
+                if (pokemonsOfTrainer.length < 6) {
+                    console.log('hello')
+                    data = {trainer_id: trainer.id}
+                    fetch('http://localhost:3000/pokemons', {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept":"application/json"
+                        },
+                        body: JSON.stringify(data)
+                    })
+                    .then(resp => resp.json())
+                    .then(newPokemon => {
+                        const newPokemonLine = document.createElement('li')
+                        newPokemonLine.innerText = `${newPokemon.species} (${newPokemon.nickname})`
+                        newPokemonLine.id = newPokemon.id
+                        ul.appendChild(newPokemonLine)
+
+                        const buton = document.createElement('button')
+                        newPokemonLine.appendChild(buton)
+                        buton.classList.add("release")
+                        buton.innerText = "Release"
+                        buton.id = newPokemon.id
+                        console.log(newPokemon)
+                    
+
+                        //add Event Listener to 'Release' button
+                        buton.addEventListener('click', () => {
+                            fetch(`http://localhost:3000/pokemons/${newPokemon.id}`, {
+                                method: "DELETE"
+                            })
+                            //response is deleted pokemon 
+                            .then(resp => resp.json())
+                            .then(deletedPokemon => {
+                                const pokemonLi = document.getElementById(`${deletedPokemon.data.attributes.id}`) //from line 96 - only element with pokemon id
+                                console.log(pokemonLi)
+                                ul.removeChild(pokemonLi) //remove from DOM
+                            })
+                        })
+                    })
+                }
+            })
         }
     }
-
-    
 })
