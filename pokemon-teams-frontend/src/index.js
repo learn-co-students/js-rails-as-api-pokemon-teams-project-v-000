@@ -24,5 +24,6 @@ document.addEventListener("DOMContentLoaded", function() {
  function displayPokemons(value){
   // console.log(value.species)
   // console.log(value.nickname)
+  //test git
  }
  
