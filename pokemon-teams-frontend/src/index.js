@@ -31,9 +31,10 @@ document.addEventListener("DOMContentLoaded", function() {
     div.classList.add("card");
     p.innerText = value.attributes.name;
     button.innerText = "Add Pokemon"
+    button.addEventListener('click', addPokemon);
 
     value.attributes.pokemons.forEach(element => displayPokemons(element, ul));
- }
+ };
 
 
  function displayPokemons(element, ul) {
@@ -46,9 +47,29 @@ document.addEventListener("DOMContentLoaded", function() {
     ul.appendChild(li);
     li.appendChild(button)
     button.innerText = "Release"
-  }
+    button.addEventListener('click', deletePokemon);
+  };
 
 
+//   THESE DONT WORK YET - also need to add in the trainer ids and such
+function addPokemon(event) {
+   const trainerId = event.target.trainerId;
+   data = {trainer_id: trainerId};
+
+   fetch(POKEMONS_URL, {
+      method: 'POST',
+      header: {
+         "Content-Type": "application/json",
+         "Accept": "application/json"
+      },
+      body: JSON.stringify(data)
+   })
+   
+};
+
+function deletePokemon(event) {
+
+};
  
 
  
