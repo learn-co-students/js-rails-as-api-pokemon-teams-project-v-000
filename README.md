@@ -285,3 +285,10 @@ DELETE /pokemons/:pokemon_id
   "trainer_id":1
 }
 ```
+
+
+User Stories to Track in Jira
+
+1.) When a user loads the page, they should see all trainers, with their current team of Pokemon.
+2.) Whenever a user hits "Add Pokemon" and they have space on their team, they should get a new Pokemon.
+3.) Whenever a user hits "Release Pokemon" on a specific Pokemon team, that specific Pokemon should be released from the team.
