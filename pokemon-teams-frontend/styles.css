@@ -1,19 +1,20 @@
 body {
     margin: 0;
     padding: 0;
+    font-family: Candara, Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
   }
-  
+
   header {
     background-color: #4caf50;
     margin: 0 auto;
-    height: 50px;
+    height: 75px;
   }
-  
+
   header h2 {
-    padding: 10px;
+    padding: 20px;
     margin: 0;
   }
-  
+
   main {
     display: grid;
     grid-template-columns: 1fr;
@@ -22,49 +23,73 @@ body {
     padding-top: 10px;
     padding-bottom: 30px;
   }
-  
+
+  #messageBanner{
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    font-size: 30px;
+  }
+
+  .hidden{
+    display:none;
+  }
+
+  /* .success{
+    background: #00750a;
+  } */
+
+  .error{
+    background: #750000;
+  }
+
   div.card {
     background-color: #eeeeee;
-    height: 250px;
+    height: 430px;
     width: 300px;
     box-shadow: 10px 10px grey;
     padding: 10px;
     border-radius: 10px;
   }
-  
+
   p {
     font-size: 1.5em;
     color: black;
     font-family: Helvetica;
   }
-  
-  li {
-    font-size: 1.05em;
-    list-style: none;
-    padding-right: 20px;
+
+  ul{
+    margin-top: 40px;
+    padding-left: 10px;
   }
-  
+
+  li {
+    font-size: .80em;
+    list-style: none;
+    margin-bottom: 20px;
+  }
+
   button {
     font-size: .65em;
     color: #fff;
     background-color: green;
     border-radius: 10px;
+    padding: 3px 5px;
   }
-  
+
   button.release {
     float: right;
     background-color: #E1332D;
   }
-  
+
   @media only screen and (min-width: 500px) {
     main {
       grid-template-columns: 1fr 1fr;
     }
   }
-  
+
   @media only screen and (min-width: 850px) {
     main {
       grid-template-columns: 1fr 1fr 1fr 1fr;
     }
   }
-  
