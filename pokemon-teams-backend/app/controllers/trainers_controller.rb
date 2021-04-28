@@ -2,9 +2,11 @@ class TrainersController < ApplicationController
 
     def index
         trainers = Trainer.all
-        options = {include: [:pokemons]}
-        render json: TrainerSerializer.new(trainers, options)
-     
+      #  options = {}
+      #  options[:include] = [:pokemons, :'pokemons.attributes']
+       # options = {include: [:pokemons]}
+      #  options = {include: [:pokemons, :'pokemons.nickname', :'pokemons.species']}
+        render json: TrainerSerializer.new(trainers).serialized_json
     end
 
     def show
