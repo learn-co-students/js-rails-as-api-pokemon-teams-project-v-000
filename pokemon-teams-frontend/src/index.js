@@ -34,3 +34,40 @@ function renderCard(arg) {
         })
     })
 };
+container.addEventListener('click', (e) => {
+    if (e.target.dataset.action === "add"){
+        debugger
+        const trainerId = e.target.dataset.trainerId;
+        const trainerUl = e.target.parentNode.querySelector('ul');
+        if (trainerUl.children.length < 6){
+            fetch(POKEMONS_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "trainer_id": trainerId
+                })
+            })
+            .then(resp => resp.json())
+            .then(makeNewPokemon);
+        });
+        
+    function makeNewPokemon(arg) {
+            const newPokemon = arg['data']
+            debugger
+            const pokemonHTML = `
+            <li>${newPokemon.nickname} (${newPokemon.species})
+            <button class='release' data-pokemon-id=${newPokemon.id}>
+            Release</button></li>`;
+            trainerUl.insertAdjacentHTML('beforeend', pokemonHTML);
+            }
+
+     if (e.target.classList.contains("release")){
+         const pokemonId = e.target.dataset.pokemonId;
+         fetch(`${POKEMONS_URL}/${pokemonId}`, {
+             method: 'DELETE'})
+             .then(resp => resp.json())
+             .then(() => e.target.parentNode.remove());
+         }
+     
