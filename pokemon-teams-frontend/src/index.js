@@ -72,7 +72,8 @@ function deletePokemon(e){
     
      console.log( pokemonId)    
 
-        fetch(myPokemonurl+"/"+pokemonId, {method: "DELETE"})
+        fetch(myP
+            okemonurl+"/"+pokemonId, {method: "DELETE"})
             .then(e.target.parentElement.remove())  //remove li
             .catch((reason)=> { console.log(reason)})
 
