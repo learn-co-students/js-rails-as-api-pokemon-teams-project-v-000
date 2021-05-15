@@ -7,6 +7,7 @@ class PokemonsController < ApplicationController
             pokemon = Pokemon.create(nickname: name, species: species, trainer_id: params[:trainer_id])
             render json: pokemon
         else
+          # capture this in front-end to handle
             render json: { message: "Team is full" }
         end
     end
